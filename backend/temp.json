@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "color": "#1A237E",
+        "name": "English",
+    },
+    {
+        "id": 2,
+        "color": "#43A047",
+        "name": "Histoire-Géographie",
+    },
+    {
+        "id": 3,
+        "color": "#E53935",
+        "name": "Français",
+    },
+    {
+        "id": 4,
+        "color": "#039BE5",
+        "name": "Mathématiques",
+    },
+    {
+        "id": 5,
+        "color": "#FDD835",
+        "name": "Español",
+    },
+    {
+        "id": 6,
+        "color": "#26A69A",
+        "name": "Culture Religieuse",
+    },
+    {
+        "id": 7,
+        "color": "#9C27B0",
+        "name": "Physique",
+    },
+    {
+        "id": 8,
+        "color": "#795548",
+        "name": "Latin",
+    },
+    {
+        "id": 9,
+        "color": "#CFD8DC",
+        "name": "Sciences de l'Ingénieur",
+    },
+    {
+        "id": 10,
+        "color": "#F48FB1",
+        "name": "Sport",
+    }
+]

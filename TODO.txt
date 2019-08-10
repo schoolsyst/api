@@ -1,0 +1,3 @@
+Change RelatedFieldSerializers to Nested represntations, handle manually POST/PUT w/ slug or pk
+GET /api/computed-schedule/
+Validate event modifications to prevent overlaps
