@@ -22,9 +22,9 @@ class Subject(Model):
                           on_delete=CASCADE,
                           related_name='subjects')
     # Naming
-    color    = CharField(max_length=7, validators=hex_color_validator)
-    name     = CharField(max_length=100, unique=True)
-    slug     = SlugField(unique=True, max_length=100)
+    color        = CharField(max_length=7, validators=hex_color_validator)
+    name         = CharField(max_length=100, unique=True)
+    slug         = SlugField(unique=True, max_length=100)
     abbreviation = CharField(max_length=3, validators=abbreviation_validator, unique=True)
     
     def __str__(self):
