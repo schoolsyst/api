@@ -1,8 +1,8 @@
 from django.db.models import *
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-zero_to_one_validator = [MinValueValidator(0, "The progress can't be a negative value"), 
-                         MaxValueValidator(1, "The progress should be a value between 0 and 1")]
+zero_to_one_validator = [MinValueValidator(0, "This can't be a negative value"), 
+                         MaxValueValidator(1, "This should be a value between 0 and 1")]
 
 # Create your models here.
 class Notion(Model):
@@ -19,14 +19,12 @@ class Notion(Model):
     
     
 class Note(Model):
-    notion   = ForeignKey(to='learn.Notion',
-                          related_name='notes',
-                          on_delete=CASCADE)
+    notion   = ManyToManyField(Notion, related_name='notes')
     
     name     = CharField(max_length=100)
     content  = TextField()
     created  = DateTimeField(auto_now_add=True)
-    filepath = FilePathField()
+    filepath = CharField(max_length=1000)
     lastModified = DateTimeField()
     
     def __str__(self):
@@ -42,7 +40,7 @@ class Test(Model):
     notes    = TextField()
     
     def __str__(self):
-        return ', '.join([ str(notion) for notion in self.notions ])
+        return ', '.join([ str(notion) for notion in self.notions.all() ])
     
     
     
@@ -52,10 +50,10 @@ class Grade(Model):
                           related_name='grades',
                           on_delete=CASCADE)
     
-    actual   = FloatField(validators=zero_to_one_validator)
-    expected = FloatField(validators=zero_to_one_validator)
-    goal     = FloatField(validators=zero_to_one_validator)
-    weight   = FloatField()
+    actual   = FloatField(validators=zero_to_one_validator, blank=True, null=True)
+    expected = FloatField(validators=zero_to_one_validator, blank=True, null=True)
+    goal     = FloatField(validators=zero_to_one_validator, blank=True, null=True)
+    weight   = FloatField(default=1)
     maximum  = FloatField()
     
     def __str__(self):
