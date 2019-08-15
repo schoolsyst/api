@@ -1,38 +1,36 @@
 from rest_framework.serializers import *
 from common.models import Subject
+from common.serializers import *
 from .models import *
 
 class EventSerializer(ModelSerializer):
-    subject = SlugRelatedField(slug_field='slug', queryset=Subject.objects.all())
+    subject = SubjectSerializer()
     class Meta:
         model = Event
         
         fields = '__all__'
-        depth = 4
         
 
 class AdditionSerializer(ModelSerializer):
-    subject = SlugRelatedField(slug_field='slug', queryset=Subject.objects.all())
+    subject = SubjectSerializer()
     class Meta:
         model = Addition
         
         fields = '__all__'
-        depth = 4
 
 class DeletionSerializer(ModelSerializer):
-    event = PrimaryKeyRelatedField(queryset=Event.objects.all())
+    subject = SubjectSerializer()
     class Meta:
         model = Deletion
         
         fields = '__all__'
-        depth = 4
 
 class ExerciseSerializer(ModelSerializer):
+    event = EventSerializer()
     class Meta:
         model = Exercise
         
         fields = '__all__'
-        depth = 4
 
 
 

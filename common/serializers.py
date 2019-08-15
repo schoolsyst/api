@@ -7,7 +7,6 @@ class SettingSerializer(ModelSerializer):
     class Meta:
         model = Setting
         fields = '__all__'
-        depth = 4
 
     def create(self, validated_data):
         user = self.context['request'].user
@@ -21,7 +20,6 @@ class SubjectSerializer(ModelSerializer):
     class Meta:
         model = Subject
         fields = '__all__'
-        depth = 4
 
     def create(self, validated_data):
         user = self.context['request'].user
