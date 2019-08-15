@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    'rest_framework', 'django_extensions', 'corsheaders',
     'learn', 'schedule', 'common', 'users',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -124,6 +125,31 @@ STATIC_URL = '/static/'
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
-    'DEFAULT_AUTHENTIFICATION_CLASSES': ('rest_framework_simplejwt.authentification.JWTAuthentification',)
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+# CORS
+
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r"http://(?:localhost2|127.0.0.1):3000",
+    r"http://(?:localhost2|127.0.0.1):8000",
+]
+
+CORS_EXPOSE_HEADERS = [
+    'access-control-allow-origin'
+]
+
+# JWT
+from datetime import timedelta
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': timedelta(hours=1),
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+    'JWT_ALLOW_REFRESH': True
 }

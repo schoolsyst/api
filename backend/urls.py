@@ -18,10 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
+
 api = DefaultRouter()
 from users.views    import *
 from common.views   import *
@@ -48,9 +46,10 @@ api.register(r'exercises', ExercisesViewSet, 'exercises')
 
 # Add to urlpatterns
 urlpatterns = [
-    path('api/token/', TokenObtainPairView.as_view()),
-    path('api/token/refresh', TokenRefreshView.as_view()),
-    path('api/computed-schedule', ComputedSchedule.as_view()),
+    path('api/auth/', obtain_jwt_token),
+    path('api/auth/refresh/', refresh_jwt_token),
+    path('api/auth/verify/', verify_jwt_token),
+
     path('api/', include(api.urls)),
     path('admin/', admin.site.urls),
     path('', lambda req: redirect('api-root')),
