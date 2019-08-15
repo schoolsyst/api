@@ -60,13 +60,13 @@ class Addition(Model):
     
 class Exercise(Model):
     event   = ForeignKey(to='schedule.Event',
-                           related_name='exercises',
-                           on_delete=CASCADE)
+                         related_name='exercises',
+                         on_delete=CASCADE)
     
     name    = CharField(max_length=400)
     due     = DateField()
     created = DateTimeField(auto_now_add=True)
-    notes   = TextField()
+    notes   = TextField(blank=True, null=True)
     completed = BooleanField(default=False)
     
     def __str__(self):
