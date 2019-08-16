@@ -1,4 +1,4 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from .models import *
 from .serializers import *
@@ -18,4 +18,13 @@ class UserViewSet(ModelViewSet):
         else:
             return User.objects.filter(pk=self.request.user.id)
         
-    
+
+class CurrentUserViewSet(ModelViewSet):
+    """
+    API endpoint that allows the current user to be viewed or edited.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CurrentUserSerializer
+
+    def get_object(self):
+        return self.request.user
