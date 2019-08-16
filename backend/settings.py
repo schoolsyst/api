@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', 'django_extensions', 'corsheaders',
-    'learn', 'schedule', 'common', 'users',
+    'learn.apps.LearnConfig',
+    'schedule.apps.ScheduleConfig',
+    'common.apps.CommonConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'users.middlewares.AuthenticationMiddlewareJWT',
 ]
 
 ROOT_URLCONF = 'backend.urls'

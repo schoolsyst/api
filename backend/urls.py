@@ -46,6 +46,7 @@ api.register(r'exercises', ExercisesViewSet, 'exercises')
 
 # Add to urlpatterns
 urlpatterns = [
+    path('api/self/', CurrentUserViewSet.as_view({'get': 'retrieve'})),
     path('api/auth/', obtain_jwt_token),
     path('api/auth/refresh/', refresh_jwt_token),
     path('api/auth/verify/', verify_jwt_token),
