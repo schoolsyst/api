@@ -9,16 +9,31 @@ import datetime
 
 class EventsViewSet(ModelViewSet):
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return EventReadSerialier
+        return EventSerializer
     
 class AdditionsViewSet(ModelViewSet):
     queryset = Addition.objects.all()
     serializer_class = AdditionSerializer
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return AdditionReadSerialier
+        return AdditionSerializer
     
 class DeletionsViewSet(ModelViewSet):
     queryset = Deletion.objects.all()
     serializer_class = DeletionSerializer
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return DeletionReadSerialier
+        return DeletionSerializer
 
 class ExercisesViewSet(ModelViewSet):
     queryset = Exercise.objects.all()
     serializer_class = ExerciseSerializer
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return ExerciseReadSerialier
+        return ExerciseSerializer

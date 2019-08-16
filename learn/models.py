@@ -49,7 +49,7 @@ class Grade(Model):
     test     = ForeignKey(to='learn.Test', 
                           related_name='grades',
                           on_delete=CASCADE)
-    
+    added    = DateField(auto_now=True)
     actual   = FloatField(validators=zero_to_one_validator, blank=True, null=True)
     expected = FloatField(validators=zero_to_one_validator, blank=True, null=True)
     goal     = FloatField(validators=zero_to_one_validator, blank=True, null=True)

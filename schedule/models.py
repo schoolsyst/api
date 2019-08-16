@@ -12,9 +12,9 @@ WEEK_DAYS = [
 ]
 
 WEEK_TYPES = [
+    ('both', 'Both'),
     ('Q1', 'Q1'),
     ('Q2', 'Q2'),
-    ('both', 'Both'),
 ]
 
 # Create your models here.
@@ -27,7 +27,7 @@ class Event(Model):
     end      = TimeField()
     room     = CharField(max_length=50)
     day      = CharField(choices=WEEK_DAYS, max_length=max([len(e[0]) for e in WEEK_DAYS]))
-    weekType = CharField(choices=WEEK_TYPES,max_length=max([len(e[0]) for e in WEEK_TYPES]))
+    weekType = CharField(choices=WEEK_TYPES,max_length=max([len(e[0]) for e in WEEK_TYPES]), default=WEEK_TYPES[0])
     
     def __str__(self):
         return f"{self.subject} at {self.day} ({self.weekType}) -- {self.start} to {self.end}"

@@ -6,8 +6,12 @@ from .serializers import *
 class UserViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
-    serializer_class = UserSerializer
     
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return UserReadSerializer
+        return UserSerializer
+
     def get_queryset(self):
         if self.request.user.is_superuser:
             return User.objects.all()
