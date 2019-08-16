@@ -23,11 +23,11 @@ class Event(Model):
                            related_name='events',
                            on_delete=CASCADE)
 
-    start    = TimeField()
-    end      = TimeField()
-    room     = CharField(max_length=50)
-    day      = CharField(choices=WEEK_DAYS, max_length=max([len(e[0]) for e in WEEK_DAYS]))
-    weekType = CharField(choices=WEEK_TYPES,max_length=max([len(e[0]) for e in WEEK_TYPES]), default=WEEK_TYPES[0])
+    start     = TimeField()
+    end       = TimeField()
+    room      = CharField(max_length=50)
+    day       = CharField(choices=WEEK_DAYS, max_length=max([len(e[0]) for e in WEEK_DAYS]))
+    week_type = CharField(choices=WEEK_TYPES,max_length=max([len(e[0]) for e in WEEK_TYPES]), default=WEEK_TYPES[0])
     
     def __str__(self):
         return f"{self.subject} at {self.day} ({self.weekType}) -- {self.start} to {self.end}"

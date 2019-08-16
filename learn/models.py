@@ -25,7 +25,7 @@ class Note(Model):
     content  = TextField()
     created  = DateTimeField(auto_now_add=True)
     filepath = CharField(max_length=1000)
-    lastModified = DateTimeField()
+    last_modified = DateTimeField()
     
     def __str__(self):
         return self.name
