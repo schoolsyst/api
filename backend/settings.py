@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'users.middlewares.AuthenticationMiddlewareJWT',
+    'request_logging.middleware.LoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -142,10 +143,8 @@ REST_FRAMEWORK = {
 # CORS
 
 CORS_ORIGIN_REGEX_WHITELIST = [
-    r"http://(?:localhost|127.0.0.1):3000",
-    r"http://(?:localhost2|127.0.0.1):3000",
-    r"http://(?:localhost|127.0.0.1):8000",
-    r"http://(?:localhost2|127.0.0.1):8000",
+    r"http://(?:localhost|127.0.0.1):\d{4}",
+    r"http://(?:localhost2|127.0.0.1):\d{4}",
 ]
 
 CORS_EXPOSE_HEADERS = [
@@ -158,4 +157,24 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': timedelta(hours=1),
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
     'JWT_ALLOW_REFRESH': True
+}
+
+# Requests logging
+# https://pypi.org/project/django-request-logging/
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # change debug level as appropiate
+            'propagate': False,
+        },
+    },
 }
