@@ -24,7 +24,7 @@ class CurrentUserViewSet(ModelViewSet):
     API endpoint that allows the current user to be viewed or edited.
     """
     permission_classes = (IsAuthenticated,)
-    serializer_class = CurrentUserSerializer
+    serializer_class = UserCurrentSerializer
 
     def get_object(self):
         return self.request.user

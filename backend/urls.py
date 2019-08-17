@@ -45,11 +45,13 @@ api.register(r'exercises', ExercisesViewSet, 'exercises')
 
 
 # Add to urlpatterns
+from django.http import HttpResponse
 urlpatterns = [
-    path('api/self/', CurrentUserViewSet.as_view({'get': 'retrieve'})),
+    path('api/users/self/', CurrentUserViewSet.as_view({'get': 'retrieve'})),
     path('api/auth/', obtain_jwt_token),
     path('api/auth/refresh/', refresh_jwt_token),
     path('api/auth/verify/', verify_jwt_token),
+    path('api/auth/logout/', lambda req: HttpResponse('')),
 
     path('api/', include(api.urls)),
     path('admin/', admin.site.urls),

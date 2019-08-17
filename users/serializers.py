@@ -18,7 +18,7 @@ class UserReadSerializer(ModelSerializer):
         fields = ('id', 'last_login', 'date_joined', 'email', 'username', 'is_staff')
 
 
-class CurrentUserSerializer(HyperlinkedModelSerializer):
+class UserCurrentSerializer(HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(
