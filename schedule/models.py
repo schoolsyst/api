@@ -30,7 +30,7 @@ class Event(Model):
     week_type = CharField(choices=WEEK_TYPES,max_length=max([len(e[0]) for e in WEEK_TYPES]), default=WEEK_TYPES[0])
     
     def __str__(self):
-        return f"{self.subject} at {self.day} ({self.weekType}) -- {self.start} to {self.end}"
+        return f"{self.subject} at {self.day} ({self.week_type}) -- {self.start} to {self.end}"
     
 
 class Deletion(Model):
