@@ -1,0 +1,123 @@
+[
+    {
+        "id": 2,
+        "user": 1,
+        "color": "#1A237E",
+        "name": "English",
+        "slug": "english",
+        "abbreviation": "eng",
+        "room": "L216",
+        "grade_goal": 0.95,
+        "physical_weight": 0.0
+    },
+    {
+        "id": 3,
+        "user": 1,
+        "color": "#43A047",
+        "name": "Histoire–Géographie",
+        "slug": "histoire-geographie",
+        "abbreviation": "h-g",
+        "room": "L004",
+        "grade_goal": 0.75,
+        "physical_weight": 0.0
+    },
+    {
+        "id": 4,
+        "user": 1,
+        "color": "#E53935",
+        "name": "Français",
+        "slug": "francais",
+        "abbreviation": "fra",
+        "room": "L009",
+        "grade_goal": 0.6,
+        "physical_weight": 1.0
+    },
+    {
+        "id": 5,
+        "user": 1,
+        "color": "#9C27B0",
+        "name": "Physique",
+        "slug": "physique",
+        "abbreviation": "phy",
+        "room": "",
+        "grade_goal": 0.75,
+        "physical_weight": 1.3
+    },
+    {
+        "id": 6,
+        "user": 1,
+        "color": "#795548",
+        "name": "Latin",
+        "slug": "latin",
+        "abbreviation": "lat",
+        "room": "C214",
+        "grade_goal": 0.85,
+        "physical_weight": 0.0
+    },
+    {
+        "id": 7,
+        "user": 1,
+        "color": "#F57C00",
+        "name": "Русская",
+        "slug": "russe",
+        "abbreviation": "rus",
+        "room": "L226",
+        "grade_goal": 0.9,
+        "physical_weight": 0.25
+    },
+    {
+        "id": 8,
+        "user": 1,
+        "color": "#CFD8DC",
+        "name": "Sciences de l'ingénieur",
+        "slug": "sciences-de-l-ingenieur",
+        "abbreviation": "sci",
+        "room": "L013",
+        "grade_goal": 0.8,
+        "physical_weight": 0.0
+    },
+    {
+        "id": 9,
+        "user": 1,
+        "color": "#039BE5",
+        "name": "Mathématiques",
+        "slug": "mathematiques",
+        "abbreviation": "mth",
+        "room": "",
+        "grade_goal": 0.7,
+        "physical_weight": 1.84
+    },
+    {
+        "id": 10,
+        "user": 1,
+        "color": "#FDD835",
+        "name": "Español",
+        "slug": "espagnol",
+        "abbreviation": "esp",
+        "room": "",
+        "grade_goal": 0.7,
+        "physical_weight": 1.234
+    },
+    {
+        "id": 11,
+        "user": 1,
+        "color": "#F48FB1",
+        "name": "Sport",
+        "slug": "sport",
+        "abbreviation": "spo",
+        "room": "GYMN",
+        "grade_goal": 0.5,
+        "physical_weight": 0.0
+    },
+    {
+        "id": 12,
+        "user": 1,
+        "color": "#26A69A",
+        "name": "Culture religieuse",
+        "slug": "culture-religieuse",
+        "abbreviation": "clr",
+        "room": "L231",
+        "grade_goal": null,
+        "physical_weight": 0.0
+    }
+]
