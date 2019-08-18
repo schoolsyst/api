@@ -1,5 +1,5 @@
 from django.contrib.admin import register, ModelAdmin
-from learn.models import Test, Note, Grade, Notion
+from learn.models import Test, Note, Grade
 from common.utils import auto_list_display
 
 @register(Test)
@@ -13,7 +13,3 @@ class NoteAdmin(ModelAdmin):
 @register(Grade)
 class GradeAdmin(ModelAdmin):
     list_display = auto_list_display(Grade)
-
-@register(Notion)
-class NotionAdmin(ModelAdmin):
-    list_display = ['pk','subject','name','slug','progress']

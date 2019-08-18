@@ -20,8 +20,8 @@ WEEK_TYPES = [
 # Create your models here.
 class Event(Model):
     subject  = ForeignKey(to='common.Subject',
-                           related_name='events',
-                           on_delete=CASCADE)
+                          related_name='events',
+                          on_delete=CASCADE)
 
     start     = TimeField()
     end       = TimeField()

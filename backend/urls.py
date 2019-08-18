@@ -33,7 +33,6 @@ api.register(r'users',     UserViewSet,      'users')
 api.register(r'settings',  SettingsViewSet,  'settings')
 api.register(r'subjects',  SubjectsViewSet,  'subjects')
 # ----------------------- Learn -------------------------
-api.register(r'notions',   NotionsViewSet,   'notions')
 api.register(r'tests',     TestsViewSet,     'tests')
 api.register(r'notes',     NotesViewSet,     'notes')
 api.register(r'grades',    GradesViewSet,    'grades')

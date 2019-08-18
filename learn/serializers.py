@@ -3,26 +3,26 @@ from .models import *
 from common.serializers import *
 from common.models import *
 
-class NotionSerializer(ModelSerializer):
+class NoteSerializer(ModelSerializer):
     subject = SlugRelatedField(slug_field='slug', queryset=Subject.objects.all())
     class Meta:
-        model = Notion
+        model = Note
         fields = '__all__'
 
-class NotionReadSerialier(ModelSerializer):
+class NoteReadSerialier(ModelSerializer):
     subject = SubjectSerializer(read_only=True)
     class Meta:
-        model = Notion
+        model = Note
         fields = '__all__'
-
+        
 class TestSerializer(ModelSerializer):
-    notions = SlugRelatedField(slug_field='slug', many=True, queryset=Notion.objects.all())
+    notes = SlugRelatedField(slug_field='slug', many=True, queryset=Note.objects.all())
     class Meta:
         model = Test
         fields = '__all__'
 
 class TestReadSerialier(ModelSerializer):
-    notions = NotionSerializer(read_only=True, many=True)
+    notes = NoteSerializer(read_only=True, many=True)
     class Meta:
         model = Test
         fields = '__all__'
@@ -38,16 +38,3 @@ class GradeReadSerialier(ModelSerializer):
     class Meta:
         model = Grade
         fields = '__all__'
-
-class NoteSerializer(ModelSerializer):
-    notion = SlugRelatedField(slug_field='slug', queryset=Notion.objects.all())
-    class Meta:
-        model = Note
-        fields = '__all__'
-
-class NoteReadSerialier(ModelSerializer):
-    notion = NotionSerializer(read_only=True)
-    class Meta:
-        model = Note
-        fields = '__all__'
-
