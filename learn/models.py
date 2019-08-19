@@ -10,7 +10,7 @@ class Note(Model):
                           related_name='notes',
                           on_delete=CASCADE)
     name     = CharField(max_length=100)
-    content  = TextField()
+    content  = TextField(blank=True, null=True)
     created  = DateTimeField(auto_now_add=True)
     filepath = CharField(max_length=1000)
     last_modified = DateTimeField()
