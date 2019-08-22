@@ -1,4 +1,5 @@
 from django.db.models import *
+import uuid
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 zero_to_one_validator = [MinValueValidator(0, "This can't be a negative value"), 
@@ -6,15 +7,19 @@ zero_to_one_validator = [MinValueValidator(0, "This can't be a negative value"),
 
         
 class Note(Model):
-    subject  = ForeignKey(to='common.Subject',
-                          related_name='notes',
-                          on_delete=CASCADE)
-    name     = CharField(max_length=100)
-    content  = TextField(blank=True, null=True)
-    created  = DateTimeField(auto_now_add=True)
-    filepath = CharField(max_length=1000)
-    last_modified = DateTimeField()
-    learnt   = FloatField(validators=zero_to_one_validator, default=0)
+    subject        = ForeignKey(to='common.Subject',
+                                related_name='notes',
+                                on_delete=CASCADE)
+    uuid           = UUIDField("UUID", 
+                               default=uuid.uuid4, 
+                               editable=False, 
+                               unique=True)
+                               
+    name           = CharField(max_length=100)
+    content        = TextField(blank=True, null=True)
+    created        = DateTimeField()
+    learnt         = FloatField(validators=zero_to_one_validator, default=0)
+    last_modified  = DateTimeField(blank=True, null=True)
     
 
     def __str__(self):
@@ -25,11 +30,11 @@ class Test(Model):
     notes    = ManyToManyField(Note, related_name='tests')
     due      = DateTimeField()
     created  = DateTimeField(auto_now_add=True)
-    room     = CharField(max_length=10)
-    notes    = TextField()
+    room     = CharField(max_length=100)
+    details  = TextField(blank=True, null=True)
     
     def __str__(self):
-        return ', '.join([ str(notion) for notion in self.notions.all() ])
+        return ', '.join([ str(note) for note in self.notes.all() ])
     
     
     
