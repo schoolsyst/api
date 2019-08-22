@@ -1,5 +1,6 @@
 from django.utils.translation import gettext as _
 from django.db.models import *
+import uuid
 
 WEEK_DAYS = [
     ('monday',   _("Monday")),
@@ -22,6 +23,10 @@ class Event(Model):
     subject  = ForeignKey(to='common.Subject',
                           related_name='events',
                           on_delete=CASCADE)
+    uuid     = UUIDField("UUID", 
+                          default=uuid.uuid4, 
+                          editable=False,
+                          unique=True)
 
     start     = TimeField()
     end       = TimeField()
@@ -37,6 +42,10 @@ class Deletion(Model):
     event   = OneToOneField(to='schedule.Event',
                             related_name='deletion',
                             on_delete=CASCADE)
+    uuid    = UUIDField("UUID", 
+                         default=uuid.uuid4, 
+                         editable=False, 
+                         unique=True)
     
     date    = DateField()
     
@@ -48,6 +57,11 @@ class Addition(Model):
     subject = ForeignKey(to='common.Subject',
                          related_name='schedule_additions',
                          on_delete=CASCADE)
+    uuid    = UUIDField("UUID", 
+                         default=uuid.uuid4, 
+                         editable=False, 
+                         unique=True)
+                        
 
     start   = TimeField()
     end     = TimeField()
@@ -59,10 +73,14 @@ class Addition(Model):
     
     
 class Exercise(Model):
-    event   = ForeignKey(to='schedule.Event',
-                         related_name='exercises',
+    subject = ForeignKey(to="common.Subject",
+                         related_name="exercises",
                          on_delete=CASCADE)
-    
+    uuid    = UUIDField("UUID", 
+                        default=uuid.uuid4, 
+                        editable=False, 
+                        unique=True)
+
     name    = CharField(max_length=400)
     due     = DateField()
     room    = CharField(max_length=100)

@@ -9,7 +9,7 @@ class EventSerializer(ModelSerializer):
         model = Event
         fields = '__all__'
 
-class EventReadSerialier(ModelSerializer):
+class EventReadSerializer(ModelSerializer):
     subject = SubjectSerializer(read_only=True)
     class Meta:
         model = Event
@@ -21,7 +21,7 @@ class AdditionSerializer(ModelSerializer):
         model = Addition
         fields = '__all__'
 
-class AdditionReadSerialier(ModelSerializer):
+class AdditionReadSerializer(ModelSerializer):
     subject = SubjectSerializer(read_only=True)
     class Meta:
         model = Addition
@@ -33,20 +33,20 @@ class DeletionSerializer(ModelSerializer):
         model = Deletion
         fields = '__all__'
 
-class DeletionReadSerialier(ModelSerializer):
+class DeletionReadSerializer(ModelSerializer):
     event = EventSerializer(read_only=True)
     class Meta:
         model = Deletion
         fields = '__all__'
 
 class ExerciseSerializer(ModelSerializer):
-    event = PrimaryKeyRelatedField(queryset=Event.objects.all())
+    subject = SlugRelatedField(queryset=Subject.objects.all(), slug_field="slug")
     class Meta:
         model = Exercise
         fields = '__all__'
 
-class ExerciseReadSerialier(ModelSerializer):
-    event = EventSerializer(read_only=True)
+class ExerciseReadSerializer(ModelSerializer):
+    subject = SubjectSerializer(read_only=True)
     class Meta:
         model = Exercise
         fields = '__all__'

@@ -1,572 +1,272 @@
 [
-    {
-        "id": 1,
-        "subject": {
-            "id": 2,
-            "user": 1,
-            "color": "#1A237E",
-            "name": "English",
-            "slug": "english",
-            "abbreviation": "eng",
-            "room": "L216",
-            "grade_goal": 0.95,
-            "physical_weight": 0.0
-        },
-        "start": "08:00:00",
-        "end": "08:55:00",
-        "room": "L216",
-        "day": "monday",
-        "week_type": "both"
-    },
-    {
-        "id": 2,
-        "subject": {
-            "id": 3,
-            "user": 1,
-            "color": "#43A047",
-            "name": "Histoire–Géographie",
-            "slug": "histoire-geographie",
-            "abbreviation": "h-g",
-            "room": "L004",
-            "grade_goal": 0.75,
-            "physical_weight": 0.0
-        },
-        "start": "08:55:00",
-        "end": "09:50:00",
-        "room": "L004",
-        "day": "monday",
-        "week_type": "both"
-    },
-    {
-        "id": 3,
-        "subject": {
-            "id": 4,
-            "user": 1,
-            "color": "#E53935",
-            "name": "Français",
-            "slug": "francais",
-            "abbreviation": "fra",
-            "room": "L009",
-            "grade_goal": 0.6,
-            "physical_weight": 1.0
-        },
-        "start": "09:50:00",
-        "end": "12:00:00",
-        "room": "L009",
-        "day": "monday",
-        "week_type": "both"
-    },
-    {
-        "id": 4,
-        "subject": {
-            "id": 10,
-            "user": 1,
-            "color": "#FDD835",
-            "name": "Español",
-            "slug": "espagnol",
-            "abbreviation": "esp",
-            "room": "",
-            "grade_goal": 0.7,
-            "physical_weight": 1.234
-        },
-        "start": "14:00:00",
-        "end": "14:55:00",
-        "room": "L213",
-        "day": "monday",
-        "week_type": "both"
-    },
-    {
-        "id": 5,
-        "subject": {
-            "id": 12,
-            "user": 1,
-            "color": "#26A69A",
-            "name": "Culture religieuse",
-            "slug": "culture-religieuse",
-            "abbreviation": "clr",
-            "room": "L231",
-            "grade_goal": null,
-            "physical_weight": 0.0
-        },
-        "start": "14:55:00",
-        "end": "15:50:00",
-        "room": "L231",
-        "day": "monday",
-        "week_type": "both"
-    },
-    {
-        "id": 6,
-        "subject": {
-            "id": 5,
-            "user": 1,
-            "color": "#9C27B0",
-            "name": "Physique",
-            "slug": "physique",
-            "abbreviation": "phy",
-            "room": "",
-            "grade_goal": 0.75,
-            "physical_weight": 1.3
-        },
-        "start": "15:50:00",
-        "end": "16:45:00",
-        "room": "L111",
-        "day": "monday",
-        "week_type": "Q2"
-    },
-    {
-        "id": 7,
-        "subject": {
-            "id": 6,
-            "user": 1,
-            "color": "#795548",
-            "name": "Latin",
-            "slug": "latin",
-            "abbreviation": "lat",
-            "room": "C214",
-            "grade_goal": 0.85,
-            "physical_weight": 0.0
-        },
-        "start": "16:45:00",
-        "end": "18:10:00",
-        "room": "C214",
-        "day": "monday",
-        "week_type": "both"
-    },
-    {
-        "id": 8,
-        "subject": {
-            "id": 9,
-            "user": 1,
-            "color": "#039BE5",
-            "name": "Mathématiques",
-            "slug": "mathematiques",
-            "abbreviation": "mth",
-            "room": "",
-            "grade_goal": 0.7,
-            "physical_weight": 1.84
-        },
-        "start": "08:00:00",
-        "end": "08:55:00",
-        "room": "L201",
-        "day": "tuesday",
-        "week_type": "both"
-    },
-    {
-        "id": 9,
-        "subject": {
-            "id": 5,
-            "user": 1,
-            "color": "#9C27B0",
-            "name": "Physique",
-            "slug": "physique",
-            "abbreviation": "phy",
-            "room": "",
-            "grade_goal": 0.75,
-            "physical_weight": 1.3
-        },
-        "start": "08:55:00",
-        "end": "09:50:00",
-        "room": "L103",
-        "day": "tuesday",
-        "week_type": "Q1"
-    },
-    {
-        "id": 10,
-        "subject": {
-            "id": 9,
-            "user": 1,
-            "color": "#039BE5",
-            "name": "Mathématiques",
-            "slug": "mathematiques",
-            "abbreviation": "mth",
-            "room": "",
-            "grade_goal": 0.7,
-            "physical_weight": 1.84
-        },
-        "start": "08:55:00",
-        "end": "09:50:00",
-        "room": "L201",
-        "day": "tuesday",
-        "week_type": "Q2"
-    },
-    {
-        "id": 11,
-        "subject": {
-            "id": 2,
-            "user": 1,
-            "color": "#1A237E",
-            "name": "English",
-            "slug": "english",
-            "abbreviation": "eng",
-            "room": "L216",
-            "grade_goal": 0.95,
-            "physical_weight": 0.0
-        },
-        "start": "10:10:00",
-        "end": "11:05:00",
-        "room": "L215",
-        "day": "tuesday",
-        "week_type": "both"
-    },
-    {
-        "id": 12,
-        "subject": {
-            "id": 5,
-            "user": 1,
-            "color": "#9C27B0",
-            "name": "Physique",
-            "slug": "physique",
-            "abbreviation": "phy",
-            "room": "",
-            "grade_goal": 0.75,
-            "physical_weight": 1.3
-        },
-        "start": "11:05:00",
-        "end": "12:00:00",
-        "room": "L112",
-        "day": "tuesday",
-        "week_type": "both"
-    },
-    {
-        "id": 13,
-        "subject": {
-            "id": 7,
-            "user": 1,
-            "color": "#F57C00",
-            "name": "Русская",
-            "slug": "russe",
-            "abbreviation": "rus",
-            "room": "L226",
-            "grade_goal": 0.9,
-            "physical_weight": 0.25
-        },
-        "start": "13:05:00",
-        "end": "14:00:00",
-        "room": "L226",
-        "day": "tuesday",
-        "week_type": "both"
-    },
-    {
-        "id": 14,
-        "subject": {
-            "id": 8,
-            "user": 1,
-            "color": "#CFD8DC",
-            "name": "Sciences de l'ingénieur",
-            "slug": "sciences-de-l-ingenieur",
-            "abbreviation": "sci",
-            "room": "L013",
-            "grade_goal": 0.8,
-            "physical_weight": 0.0
-        },
-        "start": "14:00:00",
-        "end": "15:50:00",
-        "room": "L013-015",
-        "day": "tuesday",
-        "week_type": "Q1"
-    },
-    {
-        "id": 15,
-        "subject": {
-            "id": 4,
-            "user": 1,
-            "color": "#E53935",
-            "name": "Français",
-            "slug": "francais",
-            "abbreviation": "fra",
-            "room": "L009",
-            "grade_goal": 0.6,
-            "physical_weight": 1.0
-        },
-        "start": "14:00:00",
-        "end": "15:50:00",
-        "room": "L109",
-        "day": "tuesday",
-        "week_type": "Q2"
-    },
-    {
-        "id": 16,
-        "subject": {
-            "id": 11,
-            "user": 1,
-            "color": "#F48FB1",
-            "name": "Sport",
-            "slug": "sport",
-            "abbreviation": "spo",
-            "room": "GYMN",
-            "grade_goal": 0.5,
-            "physical_weight": 0.0
-        },
-        "start": "15:50:00",
-        "end": "17:40:00",
-        "room": "GYMN",
-        "day": "tuesday",
-        "week_type": "both"
-    },
-    {
-        "id": 17,
-        "subject": {
-            "id": 3,
-            "user": 1,
-            "color": "#43A047",
-            "name": "Histoire–Géographie",
-            "slug": "histoire-geographie",
-            "abbreviation": "h-g",
-            "room": "L004",
-            "grade_goal": 0.75,
-            "physical_weight": 0.0
-        },
-        "start": "08:00:00",
-        "end": "08:55:00",
-        "room": "L004",
-        "day": "wednesday",
-        "week_type": "both"
-    },
-    {
-        "id": 18,
-        "subject": {
-            "id": 2,
-            "user": 1,
-            "color": "#1A237E",
-            "name": "English",
-            "slug": "english",
-            "abbreviation": "eng",
-            "room": "L216",
-            "grade_goal": 0.95,
-            "physical_weight": 0.0
-        },
-        "start": "08:55:00",
-        "end": "09:50:00",
-        "room": "L216",
-        "day": "wednesday",
-        "week_type": "both"
-    },
-    {
-        "id": 19,
-        "subject": {
-            "id": 9,
-            "user": 1,
-            "color": "#039BE5",
-            "name": "Mathématiques",
-            "slug": "mathematiques",
-            "abbreviation": "mth",
-            "room": "",
-            "grade_goal": 0.7,
-            "physical_weight": 1.84
-        },
-        "start": "10:10:00",
-        "end": "12:00:00",
-        "room": "L207",
-        "day": "wednesday",
-        "week_type": "both"
-    },
-    {
-        "id": 20,
-        "subject": {
-            "id": 4,
-            "user": 1,
-            "color": "#E53935",
-            "name": "Français",
-            "slug": "francais",
-            "abbreviation": "fra",
-            "room": "L009",
-            "grade_goal": 0.6,
-            "physical_weight": 1.0
-        },
-        "start": "08:00:00",
-        "end": "08:55:00",
-        "room": "L109",
-        "day": "thursday",
-        "week_type": "both"
-    },
-    {
-        "id": 21,
-        "subject": {
-            "id": 9,
-            "user": 1,
-            "color": "#039BE5",
-            "name": "Mathématiques",
-            "slug": "mathematiques",
-            "abbreviation": "mth",
-            "room": "",
-            "grade_goal": 0.7,
-            "physical_weight": 1.84
-        },
-        "start": "08:55:00",
-        "end": "09:50:00",
-        "room": "L208",
-        "day": "thursday",
-        "week_type": "both"
-    },
-    {
-        "id": 22,
-        "subject": {
-            "id": 5,
-            "user": 1,
-            "color": "#9C27B0",
-            "name": "Physique",
-            "slug": "physique",
-            "abbreviation": "phy",
-            "room": "",
-            "grade_goal": 0.75,
-            "physical_weight": 1.3
-        },
-        "start": "10:40:00",
-        "end": "12:00:00",
-        "room": "L105",
-        "day": "thursday",
-        "week_type": "both"
-    },
-    {
-        "id": 23,
-        "subject": {
-            "id": 6,
-            "user": 1,
-            "color": "#795548",
-            "name": "Latin",
-            "slug": "latin",
-            "abbreviation": "lat",
-            "room": "C214",
-            "grade_goal": 0.85,
-            "physical_weight": 0.0
-        },
-        "start": "13:05:00",
-        "end": "14:00:00",
-        "room": "C214",
-        "day": "thursday",
-        "week_type": "both"
-    },
-    {
-        "id": 24,
-        "subject": {
-            "id": 7,
-            "user": 1,
-            "color": "#F57C00",
-            "name": "Русская",
-            "slug": "russe",
-            "abbreviation": "rus",
-            "room": "L226",
-            "grade_goal": 0.9,
-            "physical_weight": 0.25
-        },
-        "start": "14:55:00",
-        "end": "15:50:00",
-        "room": "L226",
-        "day": "thursday",
-        "week_type": "both"
-    },
-    {
-        "id": 25,
-        "subject": {
-            "id": 8,
-            "user": 1,
-            "color": "#CFD8DC",
-            "name": "Sciences de l'ingénieur",
-            "slug": "sciences-de-l-ingenieur",
-            "abbreviation": "sci",
-            "room": "L013",
-            "grade_goal": 0.8,
-            "physical_weight": 0.0
-        },
-        "start": "15:50:00",
-        "end": "18:10:00",
-        "room": "L013",
-        "day": "thursday",
-        "week_type": "both"
-    },
-    {
-        "id": 26,
-        "subject": {
-            "id": 9,
-            "user": 1,
-            "color": "#039BE5",
-            "name": "Mathématiques",
-            "slug": "mathematiques",
-            "abbreviation": "mth",
-            "room": "",
-            "grade_goal": 0.7,
-            "physical_weight": 1.84
-        },
-        "start": "08:00:00",
-        "end": "08:55:00",
-        "room": "L204",
-        "day": "friday",
-        "week_type": "both"
-    },
-    {
-        "id": 27,
-        "subject": {
-            "id": 10,
-            "user": 1,
-            "color": "#FDD835",
-            "name": "Español",
-            "slug": "espagnol",
-            "abbreviation": "esp",
-            "room": "",
-            "grade_goal": 0.7,
-            "physical_weight": 1.234
-        },
-        "start": "08:55:00",
-        "end": "09:50:00",
-        "room": "L215",
-        "day": "friday",
-        "week_type": "both"
-    },
-    {
-        "id": 28,
-        "subject": {
-            "id": 4,
-            "user": 1,
-            "color": "#E53935",
-            "name": "Français",
-            "slug": "francais",
-            "abbreviation": "fra",
-            "room": "L009",
-            "grade_goal": 0.6,
-            "physical_weight": 1.0
-        },
-        "start": "10:10:00",
-        "end": "11:05:00",
-        "room": "L224",
-        "day": "friday",
-        "week_type": "both"
-    },
-    {
-        "id": 29,
-        "subject": {
-            "id": 3,
-            "user": 1,
-            "color": "#43A047",
-            "name": "Histoire–Géographie",
-            "slug": "histoire-geographie",
-            "abbreviation": "h-g",
-            "room": "L004",
-            "grade_goal": 0.75,
-            "physical_weight": 0.0
-        },
-        "start": "11:05:00",
-        "end": "12:00:00",
-        "room": "L004",
-        "day": "friday",
-        "week_type": "both"
-    },
-    {
-        "id": 30,
-        "subject": {
-            "id": 8,
-            "user": 1,
-            "color": "#CFD8DC",
-            "name": "Sciences de l'ingénieur",
-            "slug": "sciences-de-l-ingenieur",
-            "abbreviation": "sci",
-            "room": "L013",
-            "grade_goal": 0.8,
-            "physical_weight": 0.0
-        },
-        "start": "13:05:00",
-        "end": "15:30:00",
-        "room": "L015",
-        "day": "friday",
-        "week_type": "both"
-    }
+  {
+    "id": 1,
+    "subject": "english",
+    "start": "08:00:00",
+    "end": "08:55:00",
+    "room": "L216",
+    "day": "monday",
+    "week_type": "both"
+  },
+  {
+    "id": 2,
+    "subject": "histoire-geographie",
+    "start": "08:55:00",
+    "end": "09:50:00",
+    "room": "L004",
+    "day": "monday",
+    "week_type": "both"
+  },
+  {
+    "id": 3,
+    "subject": "francais",
+    "start": "09:50:00",
+    "end": "12:00:00",
+    "room": "L009",
+    "day": "monday",
+    "week_type": "both"
+  },
+  {
+    "id": 4,
+    "subject": "espagnol",
+    "start": "14:00:00",
+    "end": "14:55:00",
+    "room": "L213",
+    "day": "monday",
+    "week_type": "both"
+  },
+  {
+    "id": 5,
+    "subject": "culture-religieuse",
+    "start": "14:55:00",
+    "end": "15:50:00",
+    "room": "L231",
+    "day": "monday",
+    "week_type": "both"
+  },
+  {
+    "id": 6,
+    "subject": "physique",
+    "start": "15:50:00",
+    "end": "16:45:00",
+    "room": "L111",
+    "day": "monday",
+    "week_type": "Q2"
+  },
+  {
+    "id": 7,
+    "subject": "latin",
+    "start": "16:45:00",
+    "end": "18:10:00",
+    "room": "C214",
+    "day": "monday",
+    "week_type": "both"
+  },
+  {
+    "id": 8,
+    "subject": "mathematiques",
+    "start": "08:00:00",
+    "end": "08:55:00",
+    "room": "L201",
+    "day": "tuesday",
+    "week_type": "both"
+  },
+  {
+    "id": 9,
+    "subject": "physique",
+    "start": "08:55:00",
+    "end": "09:50:00",
+    "room": "L103",
+    "day": "tuesday",
+    "week_type": "Q1"
+  },
+  {
+    "id": 10,
+    "subject": "mathematiques",
+    "start": "08:55:00",
+    "end": "09:50:00",
+    "room": "L201",
+    "day": "tuesday",
+    "week_type": "Q2"
+  },
+  {
+    "id": 11,
+    "subject": "english",
+    "start": "10:10:00",
+    "end": "11:05:00",
+    "room": "L215",
+    "day": "tuesday",
+    "week_type": "both"
+  },
+  {
+    "id": 12,
+    "subject": "physique",
+    "start": "11:05:00",
+    "end": "12:00:00",
+    "room": "L112",
+    "day": "tuesday",
+    "week_type": "both"
+  },
+  {
+    "id": 13,
+    "subject": "russe",
+    "start": "13:05:00",
+    "end": "14:00:00",
+    "room": "L226",
+    "day": "tuesday",
+    "week_type": "both"
+  },
+  {
+    "id": 14,
+    "subject": "sciences-de-l-ingenieur",
+    "start": "14:00:00",
+    "end": "15:50:00",
+    "room": "L013-015",
+    "day": "tuesday",
+    "week_type": "Q1"
+  },
+  {
+    "id": 15,
+    "subject": "francais",
+    "start": "14:00:00",
+    "end": "15:50:00",
+    "room": "L109",
+    "day": "tuesday",
+    "week_type": "Q2"
+  },
+  {
+    "id": 16,
+    "subject": "sport",
+    "start": "15:50:00",
+    "end": "17:40:00",
+    "room": "GYMN",
+    "day": "tuesday",
+    "week_type": "both"
+  },
+  {
+    "id": 17,
+    "subject": "histoire-geographie",
+    "start": "08:00:00",
+    "end": "08:55:00",
+    "room": "L004",
+    "day": "wednesday",
+    "week_type": "both"
+  },
+  {
+    "id": 18,
+    "subject": "english",
+    "start": "08:55:00",
+    "end": "09:50:00",
+    "room": "L216",
+    "day": "wednesday",
+    "week_type": "both"
+  },
+  {
+    "id": 19,
+    "subject": "mathematiques",
+    "start": "10:10:00",
+    "end": "12:00:00",
+    "room": "L207",
+    "day": "wednesday",
+    "week_type": "both"
+  },
+  {
+    "id": 20,
+    "subject": "francais",
+    "start": "08:00:00",
+    "end": "08:55:00",
+    "room": "L109",
+    "day": "thursday",
+    "week_type": "both"
+  },
+  {
+    "id": 21,
+    "subject": "mathematiques",
+    "start": "08:55:00",
+    "end": "09:50:00",
+    "room": "L208",
+    "day": "thursday",
+    "week_type": "both"
+  },
+  {
+    "id": 22,
+    "subject": "physique",
+    "start": "10:40:00",
+    "end": "12:00:00",
+    "room": "L105",
+    "day": "thursday",
+    "week_type": "both"
+  },
+  {
+    "id": 23,
+    "subject": "latin",
+    "start": "13:05:00",
+    "end": "14:00:00",
+    "room": "C214",
+    "day": "thursday",
+    "week_type": "both"
+  },
+  {
+    "id": 24,
+    "subject": "russe",
+    "start": "14:55:00",
+    "end": "15:50:00",
+    "room": "L226",
+    "day": "thursday",
+    "week_type": "both"
+  },
+  {
+    "id": 25,
+    "subject": "sciences-de-l-ingenieur",
+    "start": "15:50:00",
+    "end": "18:10:00",
+    "room": "L013",
+    "day": "thursday",
+    "week_type": "both"
+  },
+  {
+    "id": 26,
+    "subject": "mathematiques",
+    "start": "08:00:00",
+    "end": "08:55:00",
+    "room": "L204",
+    "day": "friday",
+    "week_type": "both"
+  },
+  {
+    "id": 27,
+    "subject": "espagnol",
+    "start": "08:55:00",
+    "end": "09:50:00",
+    "room": "L215",
+    "day": "friday",
+    "week_type": "both"
+  },
+  {
+    "id": 28,
+    "subject": "francais",
+    "start": "10:10:00",
+    "end": "11:05:00",
+    "room": "L224",
+    "day": "friday",
+    "week_type": "both"
+  },
+  {
+    "id": 29,
+    "subject": "histoire-geographie",
+    "start": "11:05:00",
+    "end": "12:00:00",
+    "room": "L004",
+    "day": "friday",
+    "week_type": "both"
+  },
+  {
+    "id": 30,
+    "subject": "sciences-de-l-ingenieur",
+    "start": "13:05:00",
+    "end": "15:30:00",
+    "room": "L015",
+    "day": "friday",
+    "week_type": "both"
+  }
 ]

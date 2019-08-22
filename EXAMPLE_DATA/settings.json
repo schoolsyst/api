@@ -1,0 +1,26 @@
+[
+  {
+    "setting": "year_start",
+    "value": "03/09/2019"
+  },
+  {
+    "setting": "trimester_2_start",
+    "value": "14/01/2020"
+  },
+  {
+    "setting": "trimester_3_start",
+    "value": "04/04/2020"
+  },
+  {
+    "setting": "year_end",
+    "value": "04/06/2020"
+  },
+  {
+    "setting": "starting_week_type",
+    "value": "Q1"
+  },
+  {
+    "setting": "offdays",
+    "value": ""
+  }
+]

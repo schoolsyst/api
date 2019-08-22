@@ -10,3 +10,7 @@ class SubjectAdmin(ModelAdmin):
 @register(Setting)
 class SettingAdmin(ModelAdmin):
     list_display = auto_list_display(Setting)
+
+@register(DefaultSetting)
+class DefaultSettingAdmin(ModelAdmin):
+    list_display = auto_list_display(DefaultSetting)
