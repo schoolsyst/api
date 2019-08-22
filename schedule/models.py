@@ -25,7 +25,7 @@ class Event(Model):
 
     start     = TimeField()
     end       = TimeField()
-    room      = CharField(max_length=50)
+    room      = CharField(max_length=100)
     day       = CharField(choices=WEEK_DAYS, max_length=max([len(e[0]) for e in WEEK_DAYS]))
     week_type = CharField(choices=WEEK_TYPES,max_length=max([len(e[0]) for e in WEEK_TYPES]), default=WEEK_TYPES[0])
     
@@ -51,7 +51,7 @@ class Addition(Model):
 
     start   = TimeField()
     end     = TimeField()
-    room    = CharField(max_length=50)
+    room    = CharField(max_length=100)
     date    = DateField()
     
     def __str__(self):
@@ -65,6 +65,7 @@ class Exercise(Model):
     
     name    = CharField(max_length=400)
     due     = DateField()
+    room    = CharField(max_length=100)
     created = DateTimeField(auto_now_add=True)
     notes   = TextField(blank=True, null=True)
     completed = BooleanField(default=False)
