@@ -38,8 +38,8 @@ api.register(r'notes',     NotesViewSet,     'notes')
 api.register(r'grades',    GradesViewSet,    'grades')
 # --------------------- Schedule ------------------------
 api.register(r'events',    EventsViewSet,    'events')
-api.register(r'additions', AdditionsViewSet, 'additions')
-api.register(r'deletions', DeletionsViewSet, 'deletions')
+api.register(r'event-additions', AdditionsViewSet, 'additions')
+api.register(r'event-deletions', DeletionsViewSet, 'deletions')
 api.register(r'exercises', ExercisesViewSet, 'exercises')
 
 
