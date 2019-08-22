@@ -28,6 +28,11 @@ class Note(Model):
     
 class Test(Model):
     notes    = ManyToManyField(Note, related_name='tests')
+    uuid     = UUIDField("UUID", 
+                         default=uuid.uuid4, 
+                         editable=False,
+                         unique=True)
+
     due      = DateTimeField()
     created  = DateTimeField(auto_now_add=True)
     room     = CharField(max_length=100)
@@ -43,6 +48,11 @@ class Grade(Model):
     test     = ForeignKey(to='learn.Test', 
                           related_name='grades',
                           on_delete=CASCADE)
+    uuid     = UUIDField("UUID", 
+                         default=uuid.uuid4, 
+                         editable=False,
+                         unique=True)
+
     added    = DateField(auto_now=True)
     actual   = FloatField(validators=zero_to_one_validator, blank=True, null=True)
     expected = FloatField(validators=zero_to_one_validator, blank=True, null=True)

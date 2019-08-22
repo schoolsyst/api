@@ -8,32 +8,47 @@ from .serializers import *
 import datetime
 
 class EventsViewSet(ModelViewSet):
-    queryset = Event.objects.all()
+    lookup_field = 'uuid'
+
     def get_serializer_class(self):
         if self.request.method in ['GET']:
-            return EventReadSerialier
+            return EventReadSerializer
         return EventSerializer
+    def get_queryset(self):
+        user  = self.request.user
+        return Event.objects.filter(subject__user__id=user.id)
     
 class AdditionsViewSet(ModelViewSet):
-    queryset = Addition.objects.all()
-    serializer_class = AdditionSerializer
+    lookup_field = 'uuid'
+
     def get_serializer_class(self):
         if self.request.method in ['GET']:
-            return AdditionReadSerialier
+            return AdditionReadSerializer
         return AdditionSerializer
-    
+    def get_queryset(self):
+        user  = self.request.user
+        return Addition.objects.filter(subject__user__id=user.id)
+
+
 class DeletionsViewSet(ModelViewSet):
-    queryset = Deletion.objects.all()
-    serializer_class = DeletionSerializer
+    lookup_field = 'uuid'
+
     def get_serializer_class(self):
         if self.request.method in ['GET']:
-            return DeletionReadSerialier
+            return DeletionReadSerializer
         return DeletionSerializer
+    def get_queryset(self):
+        user  = self.request.user
+        return Deletion.objects.filter(event__subject__user__id=user.id)
+    
 
 class ExercisesViewSet(ModelViewSet):
-    queryset = Exercise.objects.all()
-    serializer_class = ExerciseSerializer
+    lookup_field = 'uuid'
+
     def get_serializer_class(self):
         if self.request.method in ['GET']:
-            return ExerciseReadSerialier
+            return ExerciseReadSerializer
         return ExerciseSerializer
+    def get_queryset(self):
+        user  = self.request.user
+        return Exercise.objects.filter(subject__user__id=user.id)

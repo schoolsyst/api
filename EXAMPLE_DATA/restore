@@ -1,0 +1,64 @@
+#!/usr/bin/python3
+import json
+import os
+import requests
+import sys
+from inquirer import Checkbox, prompt
+
+BASE_URL = "http://localhost:9999/api/"
+TOKEN_URL = BASE_URL + 'auth/'
+DETAILED_LOGS = False
+FILES = [  # In dependency order.
+    'subjects.json', 'default-settings.json', 'settings.json', 'events.json'
+]
+
+
+def get_token(username=None, password=None):
+    user = username or input('Username: ')
+    pwrd = password or input('Password: ')
+    token = requests.post(TOKEN_URL, data={
+        'username': user,
+        'password': pwrd
+    }).json()['token']
+    print(f'Got token: {token}')
+    return token
+
+
+def load_data(filename):
+    print(f'Getting data from {filename}...')
+    with open(filename, 'r', encoding="utf8") as file:
+        return json.loads(file.read())
+
+
+def make_request(data, token):
+    print(f'Request to {BASE_URL}{name}/ with data...')
+    if DETAILED_LOGS: print(json.dumps(data, indent=2))
+
+    res = requests.post(f'{BASE_URL}{name}/',
+                        data=data,
+                        headers={'Authorization': f'Bearer {token}'}
+                       )
+    print(f'Got a {res.status_code} response with data...')
+    if res.status_code not in [201, 200]: print(res.text)
+    if res.status_code in range(500, 599): sys.exit(f"Got a {status_code} response: quitting.")
+
+def prompt_multiple_choices(choices):
+    question = Checkbox('resources', message="What to send to the database?", choices=choices)
+    selected = prompt([question])['resources']
+    return sorted(selected, key=choices.index)
+
+# capture cwd to restore at the end & cd to correct dir
+cwd = os.getcwd()
+os.chdir(os.path.dirname(__file__))
+# Destroy db or keep it ?
+# Get token. note: these credentials are local-only.
+token = get_token('ewen', 'hunter2')
+# Restore each .json file
+for file in prompt_multiple_choices(FILES):
+    if file.endswith('.json'):
+        name = file.replace('.json', '')
+        data = load_data(file)
+        for item in data:
+            make_request(item, token)
+# Restore the cwd
+os.chdir(cwd)

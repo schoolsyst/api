@@ -1,0 +1,42 @@
+[
+  {
+    "key": "year_start",
+    "kind": "date",
+    "name": "Début de l'année scolaire",
+    "namespace": "Emploi du temps"
+  },
+  {
+    "key": "trimester_2_start",
+    "kind": "date",
+    "name": "Début du 2ᵉ trimestre",
+    "namespace": "Emploi du temps"
+  },
+  {
+    "key": "trimester_3_start",
+    "kind": "date",
+    "name": "Début du 3ᵉ trimestre",
+    "namespace": "Emploi du temps"
+  },
+  {
+    "key": "year_end",
+    "kind": "date",
+    "name": "Fin de l'année scolaire",
+    "namespace": "Emploi du temps"
+  },
+  {
+    "key": "starting_week_type",
+    "kind": "choices",
+    "choices": "Q1,Q2",
+    "name": "Type de la première semaine",
+    "description": "La plupart du temps, on commence l'année en Q1.\nChangez ceci ici.",
+    "namespace": "Emploi du temps"
+  },
+  {
+    "key": "offdays",
+    "kind": "dateranges",
+    "name": "Vacances",
+    "description": "Jours sans cours",
+    "namespace": "Emploi du temps",
+    "blank": true
+  }
+]

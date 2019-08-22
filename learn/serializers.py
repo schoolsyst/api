@@ -9,11 +9,12 @@ class NoteSerializer(ModelSerializer):
         model = Note
         fields = '__all__'
 
-class NoteReadSerialier(ModelSerializer):
+class NoteReadSerializer(ModelSerializer):
     subject = SubjectSerializer(read_only=True)
     class Meta:
         model = Note
         fields = '__all__'
+        lookup_field = 'uuid'
         
 class TestSerializer(ModelSerializer):
     notes = SlugRelatedField(slug_field='slug', many=True, queryset=Note.objects.all())
@@ -21,8 +22,8 @@ class TestSerializer(ModelSerializer):
         model = Test
         fields = '__all__'
 
-class TestReadSerialier(ModelSerializer):
-    notes = NoteSerializer(read_only=True, many=True)
+class TestReadSerializer(ModelSerializer):
+    notes = NoteReadSerializer(read_only=True, many=True)
     class Meta:
         model = Test
         fields = '__all__'
@@ -33,8 +34,8 @@ class GradeSerializer(ModelSerializer):
         model = Grade
         fields = '__all__'
 
-class GradeReadSerialier(ModelSerializer):
-    tests = TestSerializer(read_only=True, many=True)
+class GradeReadSerializer(ModelSerializer):
+    tests = TestReadSerializer(read_only=True, many=True)
     class Meta:
         model = Grade
         fields = '__all__'
