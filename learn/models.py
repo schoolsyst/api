@@ -27,7 +27,7 @@ class Note(Model):
     
     
 class Test(Model):
-    notes    = ManyToManyField(Note, related_name='tests')
+    notes    = ManyToManyField(Note, related_name='tests', blank=True)
     uuid     = UUIDField("UUID", 
                          default=uuid.uuid4, 
                          editable=False,

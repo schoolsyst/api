@@ -29,13 +29,13 @@ class TestReadSerializer(ModelSerializer):
         fields = '__all__'
 
 class GradeSerializer(ModelSerializer):
-    tests = PrimaryKeyRelatedField(many=True, queryset=Test.objects.all())
+    test = SlugRelatedField(slug_field="uuid", queryset=Test.objects.all())
     class Meta:
         model = Grade
         fields = '__all__'
 
 class GradeReadSerializer(ModelSerializer):
-    tests = TestReadSerializer(read_only=True, many=True)
+    test = TestReadSerializer(read_only=True)
     class Meta:
         model = Grade
         fields = '__all__'
