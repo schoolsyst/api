@@ -8,6 +8,7 @@ hex_color_validator    = [RegexValidator(r'#(?:[A-Fa-f0-9]{3}){1,2}',
                                          "Please use a valid hexadecimal color format, eg. #268CCE, or #FFF")]
 abbreviation_validator = [RegexValidator(r'[a-z_\-]{3}',
                                          "Please use exactly 3 lower-case letters (- and _ are also accepted)")]
+
 class Setting(Model):
     setting  = OneToOneField(to='common.DefaultSetting', on_delete=CASCADE, to_field='key')
     user     = ForeignKey(to=AUTH_USER_MODEL,
@@ -18,7 +19,7 @@ class Setting(Model):
                          editable=False, 
                          unique=True)
 
-    value    = TextField()
+    value    = TextField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.user.username}'s {self.setting.name}"
@@ -47,7 +48,7 @@ class DefaultSetting(Model):
     name        = CharField(max_length=200)
     namespace   = CharField(max_length=150)
     kind        = CharField(choices=KINDS, max_length=max_kind_len, default="text")
-    blank       = BooleanField(default=False)
+    required    = BooleanField(default=False)
     description = TextField(blank=True, null=True)
     choices     = TextField(blank=True, null=True) # Comma-separated
     default     = TextField(blank=True, null=True)

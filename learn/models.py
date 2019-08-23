@@ -33,7 +33,7 @@ class Test(Model):
                          editable=False,
                          unique=True)
 
-    due      = DateTimeField()
+    due      = DateField()
     created  = DateTimeField(auto_now_add=True)
     room     = CharField(max_length=100)
     details  = TextField(blank=True, null=True)
