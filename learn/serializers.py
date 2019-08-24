@@ -17,7 +17,7 @@ class NoteReadSerializer(ModelSerializer):
         lookup_field = 'uuid'
         
 class TestSerializer(ModelSerializer):
-    notes = SlugRelatedField(slug_field='slug', many=True, queryset=Note.objects.all())
+    notes = SlugRelatedField(slug_field="uuid", many=True, queryset=Note.objects.all())
     class Meta:
         model = Test
         fields = '__all__'
