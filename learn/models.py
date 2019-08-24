@@ -19,6 +19,7 @@ class Note(Model):
     content        = TextField(blank=True, null=True)
     created        = DateTimeField()
     learnt         = FloatField(validators=zero_to_one_validator, default=0)
+    filetype       = CharField(max_length=50, default="markdown")
     last_modified  = DateTimeField(blank=True, null=True)
     
 
