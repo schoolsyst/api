@@ -26,8 +26,7 @@ class TestsViewSet(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Test.objects.prefetch_related('notes__subject__user').filter(
-            id=user.id)
+        return Test.objects.filter(subject__user__id=user.id)
 
 
 class GradesViewSet(ModelViewSet):

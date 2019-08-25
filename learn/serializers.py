@@ -17,25 +17,27 @@ class NoteReadSerializer(ModelSerializer):
         lookup_field = 'uuid'
         
 class TestSerializer(ModelSerializer):
-    notes = SlugRelatedField(slug_field="uuid", many=True, queryset=Note.objects.all())
+    notes   = SlugRelatedField(slug_field="uuid", many=True, queryset=Note.objects.all())
+    subject = SlugRelatedField(slug_field="slug", queryset=Subject.objects.all())
     class Meta:
         model = Test
         fields = '__all__'
 
+class GradeReadSerializer(ModelSerializer):
+    class Meta:
+        model = Grade
+        exclude = ('test',)
+
 class TestReadSerializer(ModelSerializer):
-    notes = NoteReadSerializer(read_only=True, many=True)
+    notes   = NoteReadSerializer(read_only=True, many=True)
+    subject = SubjectSerializer(read_only=True)
+    grades  = GradeReadSerializer(read_only=True, many=True)
     class Meta:
         model = Test
         fields = '__all__'
 
 class GradeSerializer(ModelSerializer):
     test = SlugRelatedField(slug_field="uuid", queryset=Test.objects.all())
-    class Meta:
-        model = Grade
-        fields = '__all__'
-
-class GradeReadSerializer(ModelSerializer):
-    test = TestReadSerializer(read_only=True)
     class Meta:
         model = Grade
         fields = '__all__'

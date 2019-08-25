@@ -29,6 +29,9 @@ class Note(Model):
     
 class Test(Model):
     notes    = ManyToManyField(Note, related_name='tests', blank=True)
+    subject  = ForeignKey(to='common.Subject', 
+                          related_name='tests',
+                          on_delete=CASCADE)
     uuid     = UUIDField("UUID", 
                          default=uuid.uuid4, 
                          editable=False,
