@@ -40,7 +40,8 @@ class DefaultSetting(Model):
         ('posint', 'Nombre entier positif'),
         ('int', 'Nombre entier'),
         ('float', 'Nombre décimal'),
-        ('posfloat', 'Nombre décimal positif')
+        ('posfloat', 'Nombre décimal positif'),
+        ('boolean', 'Booléen (oui/non)')
     ]
     max_kind_len = max([len(k) for k in KINDS[0]])
 
