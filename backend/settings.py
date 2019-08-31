@@ -154,7 +154,7 @@ CORS_EXPOSE_HEADERS = [
 # JWT
 from datetime import timedelta
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': timedelta(hours=1),
+    'JWT_EXPIRATION_DELTA': timedelta(hours=12), #WARN: this is not viable for production
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
     'JWT_ALLOW_REFRESH': True
 }
