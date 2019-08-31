@@ -5,7 +5,7 @@ from common.utils import auto_list_display
 
 @register(Subject)
 class SubjectAdmin(ModelAdmin):
-    list_display = auto_list_display(Subject)
+    list_display = ['uuid', 'user', 'name', 'abbreviation', 'color', 'slug', 'room', 'physical_weight']
 
 @register(Setting)
 class SettingAdmin(ModelAdmin):
@@ -13,4 +13,4 @@ class SettingAdmin(ModelAdmin):
 
 @register(DefaultSetting)
 class DefaultSettingAdmin(ModelAdmin):
-    list_display = auto_list_display(DefaultSetting)
+    list_display = ['kind', 'namespace', 'name', 'default']

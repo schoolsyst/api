@@ -4,7 +4,7 @@ from common.utils import auto_list_display
 
 @register(Test)
 class TestAdmin(ModelAdmin):
-    list_display = auto_list_display(Test)
+    list_display = ['uuid', 'subject', 'due', 'details']
 
 @register(Note)
 class NoteAdmin(ModelAdmin):
