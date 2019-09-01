@@ -7,3 +7,4 @@ PyJWT
 pytz
 sqlparse
 django_extensions
+request_logging
