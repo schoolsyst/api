@@ -1,26 +1,32 @@
 [
   {
     "setting": "year_start",
-    "value": "03/09/2019"
+    "value": "03/09/2019",
+    "user": 1
   },
   {
     "setting": "trimester_2_start",
-    "value": "14/01/2020"
+    "value": "14/01/2020",
+    "user": 1
   },
   {
     "setting": "trimester_3_start",
-    "value": "04/04/2020"
+    "value": "04/04/2020",
+    "user": 1
   },
   {
     "setting": "year_end",
-    "value": "04/06/2020"
+    "value": "04/06/2020",
+    "user": 1
   },
   {
     "setting": "starting_week_type",
-    "value": "Q1"
+    "value": "Q1",
+    "user": 1
   },
   {
     "setting": "offdays",
-    "value": ""
+    "value": "",
+    "user": 1
   }
 ]

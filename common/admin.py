@@ -13,4 +13,4 @@ class SettingAdmin(ModelAdmin):
 
 @register(DefaultSetting)
 class DefaultSettingAdmin(ModelAdmin):
-    list_display = ['kind', 'namespace', 'name', 'default']
+    list_display = ['key', 'kind', 'namespace', 'name', 'default']

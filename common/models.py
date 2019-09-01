@@ -10,7 +10,7 @@ abbreviation_validator = [RegexValidator(r'[a-z_\-]{3}',
                                          "Please use exactly 3 lower-case letters (- and _ are also accepted)")]
 
 class Setting(Model):
-    setting  = OneToOneField(to='common.DefaultSetting', on_delete=CASCADE, to_field='key')
+    setting  = ForeignKey(to='common.DefaultSetting', on_delete=CASCADE)
     user     = ForeignKey(to=AUTH_USER_MODEL,
                           on_delete=CASCADE,
                           related_name='settings')

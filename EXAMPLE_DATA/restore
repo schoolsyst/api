@@ -9,7 +9,7 @@ BASE_URL = "http://localhost:9999/api/"
 TOKEN_URL = BASE_URL + 'auth/'
 DETAILED_LOGS = False
 FILES = [  # In dependency order.
-    'subjects.json', 'default-settings.json', 'settings.json', 'events.json'
+    'subjects.json', 'default-settings.json', 'settings.json', 'events.json', 'notes.json'
 ]
 
 
