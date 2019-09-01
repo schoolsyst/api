@@ -25,7 +25,7 @@ SECRET_KEY = '^itu$*du(a44myk15!$pei3l-dkvjqr7r94-69*6njw7#rfuh5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'users.User'
 
