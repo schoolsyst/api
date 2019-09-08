@@ -43,7 +43,7 @@ class Test(Model):
     details  = TextField(blank=True, null=True)
     
     def __str__(self):
-        return ', '.join([ str(note) for note in self.notes.all() ])
+        return f'[{self.subject.abbreviation}]' + ', '.join([ str(note) for note in self.notes.all() ]) if self.notes.all() else self.details
     
     
     
