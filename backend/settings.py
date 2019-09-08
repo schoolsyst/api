@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
 # CORS
 
 CORS_ORIGIN_REGEX_WHITELIST = [
-    r"http://(?:localhost|127.0.0.1):\d{4}",
+    r"http://(?:localhost|127.0.0.1|51.89.116.101)(:\d{4})?",
     r"http://(?:localhost2|127.0.0.1):\d{4}",
 ]
 
