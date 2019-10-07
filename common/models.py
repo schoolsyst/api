@@ -72,7 +72,7 @@ class Subject(Model):
     abbreviation = CharField(max_length=3, validators=abbreviation_validator)
     room         = CharField(max_length=100, blank=True, null=True)
     grade_goal   = FloatField(validators=zero_to_one_validator, null=True, blank=True)
-    grade_weight = FloatField(default=1)
+    grade_weight = FloatField(validators=[MinValueValidator(0, "This can't be a negative value")], default=1)
     physical_weight = FloatField(validators=[MinValueValidator(0, "This can't be a negative value")], default=0)
     
     def __str__(self):
