@@ -5,8 +5,8 @@
         "slug": "english",
         "abbreviation": "eng",
         "room": "L216",
-        "grade_goal": 0.95,
-        "physical_weight": 0.0
+        "goal": 0.95,
+        "weight": 2
     },
     {
         "color": "#43A047",
@@ -14,8 +14,8 @@
         "slug": "histoire-geographie",
         "abbreviation": "h-g",
         "room": "L004",
-        "grade_goal": 0.75,
-        "physical_weight": 0.0
+        "goal": 0.75,
+        "weight": 3
     },
     {
         "color": "#E53935",
@@ -23,8 +23,8 @@
         "slug": "francais",
         "abbreviation": "fra",
         "room": "L009",
-        "grade_goal": 0.6,
-        "physical_weight": 1.0
+        "goal": 0.6,
+        "weight": 2
     },
     {
         "color": "#9C27B0",
@@ -32,8 +32,8 @@
         "slug": "physique",
         "abbreviation": "phy",
         "room": "",
-        "grade_goal": 0.75,
-        "physical_weight": 1.3
+        "goal": 0.75,
+        "weight": 6
     },
     {
         "color": "#795548",
@@ -41,8 +41,8 @@
         "slug": "latin",
         "abbreviation": "lat",
         "room": "C214",
-        "grade_goal": 0.85,
-        "physical_weight": 0.0
+        "goal": 0.85,
+        "weight": 3
     },
     {
         "color": "#F57C00",
@@ -50,8 +50,8 @@
         "slug": "russe",
         "abbreviation": "rus",
         "room": "L226",
-        "grade_goal": 0.9,
-        "physical_weight": 0.25
+        "goal": 0.9,
+        "weight": 2
     },
     {
         "color": "#CFD8DC",
@@ -59,8 +59,8 @@
         "slug": "sciences-de-l-ingenieur",
         "abbreviation": "sci",
         "room": "L013",
-        "grade_goal": 0.8,
-        "physical_weight": 0.0
+        "goal": 0.8,
+        "weight": 6
     },
     {
         "color": "#039BE5",
@@ -68,8 +68,8 @@
         "slug": "mathematiques",
         "abbreviation": "mth",
         "room": "",
-        "grade_goal": 0.7,
-        "physical_weight": 1.84
+        "goal": 0.7,
+        "weight": 7
     },
     {
         "color": "#FDD835",
@@ -77,8 +77,8 @@
         "slug": "espagnol",
         "abbreviation": "esp",
         "room": "",
-        "grade_goal": 0.7,
-        "physical_weight": 1.234
+        "goal": 0.7,
+        "weight": 2
     },
     {
         "color": "#F48FB1",
@@ -86,8 +86,8 @@
         "slug": "sport",
         "abbreviation": "spo",
         "room": "GYMN",
-        "grade_goal": 0.5,
-        "physical_weight": 0.0
+        "goal": 0.5,
+        "weight": 2
     },
     {
         "color": "#26A69A",
@@ -95,7 +95,7 @@
         "slug": "culture-religieuse",
         "abbreviation": "clr",
         "room": "L231",
-        "grade_goal": null,
-        "physical_weight": 0.0
+        "goal": null,
+        "weight": 0
     }
 ]

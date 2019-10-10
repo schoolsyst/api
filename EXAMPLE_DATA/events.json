@@ -1,272 +1,242 @@
 [
   {
-    "id": 1,
     "subject": "english",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L216",
-    "day": "monday",
-    "week_type": "both"
+    "day": "MONDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 2,
     "subject": "histoire-geographie",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L004",
-    "day": "monday",
-    "week_type": "both"
+    "day": "MONDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 3,
     "subject": "francais",
     "start": "09:50:00",
     "end": "12:00:00",
     "room": "L009",
-    "day": "monday",
-    "week_type": "both"
+    "day": "MONDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 4,
     "subject": "espagnol",
     "start": "14:00:00",
     "end": "14:55:00",
     "room": "L213",
-    "day": "monday",
-    "week_type": "both"
+    "day": "MONDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 5,
     "subject": "culture-religieuse",
     "start": "14:55:00",
     "end": "15:50:00",
     "room": "L231",
-    "day": "monday",
-    "week_type": "both"
+    "day": "MONDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 6,
     "subject": "physique",
     "start": "15:50:00",
     "end": "16:45:00",
     "room": "L111",
-    "day": "monday",
+    "day": "MONDAY",
     "week_type": "Q2"
   },
   {
-    "id": 7,
     "subject": "latin",
     "start": "16:45:00",
     "end": "18:10:00",
     "room": "C214",
-    "day": "monday",
-    "week_type": "both"
+    "day": "MONDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 8,
     "subject": "mathematiques",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L201",
-    "day": "tuesday",
-    "week_type": "both"
+    "day": "TUESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 9,
     "subject": "physique",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L103",
-    "day": "tuesday",
+    "day": "TUESDAY",
     "week_type": "Q1"
   },
   {
-    "id": 10,
     "subject": "mathematiques",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L201",
-    "day": "tuesday",
+    "day": "TUESDAY",
     "week_type": "Q2"
   },
   {
-    "id": 11,
     "subject": "english",
     "start": "10:10:00",
     "end": "11:05:00",
     "room": "L215",
-    "day": "tuesday",
-    "week_type": "both"
+    "day": "TUESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 12,
     "subject": "physique",
     "start": "11:05:00",
     "end": "12:00:00",
     "room": "L112",
-    "day": "tuesday",
-    "week_type": "both"
+    "day": "TUESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 13,
     "subject": "russe",
     "start": "13:05:00",
     "end": "14:00:00",
     "room": "L226",
-    "day": "tuesday",
-    "week_type": "both"
+    "day": "TUESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 14,
     "subject": "sciences-de-l-ingenieur",
     "start": "14:00:00",
     "end": "15:50:00",
     "room": "L013-015",
-    "day": "tuesday",
+    "day": "TUESDAY",
     "week_type": "Q1"
   },
   {
-    "id": 15,
     "subject": "francais",
     "start": "14:00:00",
     "end": "15:50:00",
     "room": "L109",
-    "day": "tuesday",
+    "day": "TUESDAY",
     "week_type": "Q2"
   },
   {
-    "id": 16,
     "subject": "sport",
     "start": "15:50:00",
     "end": "17:40:00",
     "room": "GYMN",
-    "day": "tuesday",
-    "week_type": "both"
+    "day": "TUESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 17,
     "subject": "histoire-geographie",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L004",
-    "day": "wednesday",
-    "week_type": "both"
+    "day": "WEDNESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 18,
     "subject": "english",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L216",
-    "day": "wednesday",
-    "week_type": "both"
+    "day": "WEDNESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 19,
     "subject": "mathematiques",
     "start": "10:10:00",
     "end": "12:00:00",
     "room": "L207",
-    "day": "wednesday",
-    "week_type": "both"
+    "day": "WEDNESDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 20,
     "subject": "francais",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L109",
-    "day": "thursday",
-    "week_type": "both"
+    "day": "THURSDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 21,
     "subject": "mathematiques",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L208",
-    "day": "thursday",
-    "week_type": "both"
+    "day": "THURSDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 22,
     "subject": "physique",
     "start": "10:40:00",
     "end": "12:00:00",
     "room": "L105",
-    "day": "thursday",
-    "week_type": "both"
+    "day": "THURSDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 23,
     "subject": "latin",
     "start": "13:05:00",
     "end": "14:00:00",
     "room": "C214",
-    "day": "thursday",
-    "week_type": "both"
+    "day": "THURSDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 24,
     "subject": "russe",
     "start": "14:55:00",
     "end": "15:50:00",
     "room": "L226",
-    "day": "thursday",
-    "week_type": "both"
+    "day": "THURSDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 25,
     "subject": "sciences-de-l-ingenieur",
     "start": "15:50:00",
     "end": "18:10:00",
     "room": "L013",
-    "day": "thursday",
-    "week_type": "both"
+    "day": "THURSDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 26,
     "subject": "mathematiques",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L204",
-    "day": "friday",
-    "week_type": "both"
+    "day": "FRIDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 27,
     "subject": "espagnol",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L215",
-    "day": "friday",
-    "week_type": "both"
+    "day": "FRIDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 28,
     "subject": "francais",
     "start": "10:10:00",
     "end": "11:05:00",
     "room": "L224",
-    "day": "friday",
-    "week_type": "both"
+    "day": "FRIDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 29,
     "subject": "histoire-geographie",
     "start": "11:05:00",
     "end": "12:00:00",
     "room": "L004",
-    "day": "friday",
-    "week_type": "both"
+    "day": "FRIDAY",
+    "week_type": "BOTH"
   },
   {
-    "id": 30,
     "subject": "sciences-de-l-ingenieur",
     "start": "13:05:00",
     "end": "15:30:00",
     "room": "L015",
-    "day": "friday",
-    "week_type": "both"
+    "day": "FRIDAY",
+    "week_type": "BOTH"
   }
 ]

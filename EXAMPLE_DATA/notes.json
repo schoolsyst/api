@@ -6,9 +6,9 @@
     "name": "kegfuerhgier",
     "content": "# kegfuerhgier\n\ndfhiurigierhgier",
     "created": "2019-08-25T19:00:19.421000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-25T19:00:25.510000Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-25T19:00:25.510000Z",
+    "learndata": ""
   },
   {
     "id": 8,
@@ -17,9 +17,9 @@
     "name": "Stylus organization",
     "content": "# Stylus organization\n\n## Categories\nSeparate rules inside selectors with comments denoting categories.\ncomments are of the form:\n`//--- category ---`\nCategory names are centered.\nAlways put the categories in the same order, as defined below:\n\n\n|Category      |What to include in (non-exhaustive)     |\n|--------------|------------------------|\n|   position   | Position-related properties (but not positioning of child elements)\n|  dimensions  | Sizing-related properties\n|   spacing[^1]| `margin`, `padding`\n|  appearance  | fonts, colors, transparency, borders, rounded corners, shadows, ...\n|  animations  | `animation`, `transition`, nested `@keyframes` (an animation specific to the element)\n| interactions[^2] | `pointer-events`, Nested `:hover`, `:focus`, ...\n|   children   | Properties that affect child elements, but cannot be applied to them directly (eg. `align-items` & `justify-content`)\n\n[^1]:Do NOT put spacing on `<li>`s. Style the parent instead.\n[^2]:Use categories inside the `interactions` category (eg. inside a set of rules in `&:hover`) _only_ if a lot of styles that aren't in the same categories are applied\n     \n     !!! info Example\n     ```\n     .thing\n         ...\n         //--- interactions ---\n         &:hover\n             color black //No categories\n         &:focus\n             //---  dimensions  ---\n             width 100%\n             height inherit\n             //---  appearance  ---\n             color black\n             outline none\n             background-color offset-blue\n             shadow 3\n             //---  animations  ---\n             transition all .25s ease\n     ```\n     !!!\n\n## Rules ordering \n\nFrom top to bottom, left to right.\nAdd an empty line to separate non-related elements\nPut elements on top of each other first, and add blank lines after the stacked elements' rules\n\n\n## Nesting\n\nTry not to nest elements when not necessary. Because rules are _scoped_ to the component you're styling, nesting is not so important anymore. Rather, use descriptive class names on all your elements.\nWhen you want to style *reactive* state, though, (such as `:hover` or `:focus`), nest them to their parent selector, with `&`\n\n\n!!! info Example\n```\n.top-left\n    ...\n\n.top-right\n    ...\n\n.above-thing\n    ...\n.thing\n    ...\n    //--- interactions ---\n    &:hover\n        ...\n.under-thing\n    ...\n\n.bottom-right\n    ...\n\n.bottom-left\n    ...\n```\n!!!",
     "created": "2019-08-28T22:41:53.943000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-30T12:23:57Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-30T12:23:57Z",
+    "learndata": ""
   },
   {
     "id": 11,
@@ -28,9 +28,9 @@
     "name": "lolmdr",
     "content": "# lolmdr",
     "created": "2019-08-30T12:25:55.239000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": null
+    "filetype": "MARKDOWN",
+    "last_modified": null,
+    "learndata": ""
   },
   {
     "id": 12,
@@ -39,9 +39,9 @@
     "name": "xdlol",
     "content": "# xdlol",
     "created": "2019-08-30T12:26:28.414000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-30T12:26:28.414000Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-30T12:26:28.414000Z",
+    "learndata": ""
   },
   {
     "id": 3,
@@ -50,9 +50,9 @@
     "name": "Première: Second degré",
     "content": "# Première: Second degré\n\n## Formes\n\nDéveloppée\n: $$ax^2+bx+c$$  $$(a != 0)$$\n\nFactorisée\n: $$a(x-x_1)(x-x_2)$$ ou $$a(x-x_0)^2$$\n\nCanonique\n: $$a((x+b/(2a))^2-(b^2-4ac)/(4a^2))$$\n\n\n!!! info TODO\nÀ finir\n!!!",
     "created": "2019-08-28T07:49:57.474000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-29T21:04:29Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-29T21:04:29Z",
+    "learndata": ""
   },
   {
     "id": 4,
@@ -61,9 +61,9 @@
     "name": "Première: Fonctions",
     "content": "# Première: Fonctions\r\n\r\n## Parité\r\nFonction paire\r\n: $$AA x in D_f,  f(-x)=f(x)$$\r\n\r\n\r\n```plot\r\nplot x^2\r\n```\r\n_Exemple avec la fonction $$x|->x^2$$_\r\n\r\nFonction impaire\r\n: $$AA x in D_f,  f(-x)=-f(x)$$\r\n\r\n\r\n```plot\r\nplot 1/x\r\n```\r\n_Exemple avec la fonction $$x|->1//x$$_\r\n\r\n## Variation\r\nFonction croissante sur $$I$$\r\n: $$AA x in I,  a < b <=> f(a) < f(b)$$\r\n: L'ordre est conservé\r\n\r\nFonction décroissante sur $$I$$\r\n: $$AA x in I, a < b <=> f(a) > f(b)$$\r\n: L'ordre est inversé\r\n\r\nFonction monotone sur $$I$$\r\n: La fonction est croissante ou décroissante sur $$I$$ \r\n\r\n## Fonctions de référence\r\nFonction affine\r\n: $$f:x|->mx+p   m, p in RR$$\r\n: Signe du coefficient directeur $$m$$ $$<=>$$ variations de $$f$$\r\n\r\nFonction carrée\r\n: $$f:x|->x^2$$\r\n: Décroissante sur $$RR_-$$\r\n: Croissante sur $$RR_+$$\r\n: $$C_f$$: parabole\r\n\r\nFonction inverse\r\n: $$D_f = RR^**$$\r\n: $$f:x|->1/x$$\r\n: Décroissante sur $$RR^**$$\r\n: $$C_f$$: hyperbole équilatère\r\n\r\nFonction racine carrée\r\n: $$D_f = RR^+$$\r\n: $$f:x|->sqrt x$$\r\n: Croissante sur $$D_f$$\r\n\r\nRelations entre les fonctions\r\n: $$AA x in [0$$;$$1]       x^2 <= x <= sqrt x$$\r\n: $$AA x in [1$$;$$+oo[    sqrt x <= x <= x^2$$\r\n\r\n\r\n```plot\r\nplot x\r\nplot x^2\r\nplot sqrt(x)\r\n```\r\n\r\n## Fonctions associées\r\nSoit $$k$$ réel, $$u$$ et $$v$$ fonctions définies sur un intervalle $$I$$.\r\n\r\nSomme\r\n: Variations conservées\r\n\r\nProduit par un réel positif\r\n: Variations conservées\r\n\r\nProduit par un réel négatif\r\n: Variations opposées\r\n\r\n\r\n!!! danger Valeurs interdites pour $$sqrt x$$ et $$1/x$$\r\nCes fonctions ne sont définies que sur certaines intervalles. Les variations de la racine d'une fonction, ou de l'inverse d'une fonction ne seront définies qu'à certain endroits\r\n!!!\r\n\r\nRacine carrée\r\n: Variations conservées\r\n\r\nInversion ($$1//f$$)\r\n: Variations opposées",
     "created": "2019-08-28T08:05:40.421000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-28T10:43:56Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-28T10:43:56Z",
+    "learndata": ""
   },
   {
     "id": 5,
@@ -72,9 +72,9 @@
     "name": "Première: Dérivées",
     "content": "# Première: Dérivées\n\n## Coefficient directeur\n\nSoit $$A$$ et $$B$$ deux points sur $$C_f$$, séparés par une distance $$h$$.\nLe coefficient directeur de $$(AB)$$ est:\n$$$\n(f(a+h)-f(a))/(h)\n$$$\n\n## Nombre dérivé\nPlus $$h$$ est petit, plus $$(AB)$$ se rapproche de la tangeante $$(T)$$ de $$C_f$$ en $$A$$.\nQuand $$h$$ est nul, le coefficient directeur de $$(AB)$$ est égal à celui de $$(T)$$. La fonction qui associe $$a$$ au coefficient directeur de la tangeante de $$f$$ au point $$a$$ est appelée *nombre dérivé*:\n\n$$$\nf'(a) = lim_(h->0) (f(a+h)-f(a))/(h)    \"avec\"  h = x-a\n$$$\n\n## Dérivabilité\n$$f$$ est dérivable sur $$I$$ si $$f'(x)$$ est défini pour tout $$x in I$$\n\n## Dérivées de fonctions élémentaires\n\n$$n in NN$$\n\n|Fonction  |$$D_f$$   |Dérivée   |$$D_(f')$$|\n|----------|----------|----------|----------|\n|$$x^n$$   |$$RR$$    |$$nx^(n-1)$$     |$$RR$$    |\n|$$n/(x^n)$$|$$RR^**$$|$$-n/(x^(n+1))$$ | $$RR_-^**  \"ou\"  RR_+^**$$\n|$$sqrt x$$|$$RR^+$$ |$$1/(2sqrt x)$$ | $$RR_+^**$$\n|$$sin x$$|$$RR$$|$$cos x$$|$$RR$$\n|$$cos x$$|$$RR$$|$$-sin x$$|$$RR$$\n\n## Règles de dérivation\n\n|                        |                        |\n|------------------------|------------------------|\n| $$(u+v)'$$ | $$u'+v'$$ |\n| $$(lambda u)'$$ | $$lambda u'$$ |\n| $$(uv)'$$ | $$u'v+v'u$$ |\n| $$(u/v)'$$ | $$-(u'v-v'u)/(v^2)$$ |\n| $$(sqrt u)'$$ | $$(u')/(2sqrt u)$$ |\n| $$(u^n)'$$ | $$n * u' * u^(n-1)$$ |\n\n## Équation de la tangeante\nL'équation de la tengeante $$(T_a)$$ en $$a$$ à la courbe $$C_f$$ d'une fonction $$f$$ dérivable sur $$I$$ est:\n$$$\ny = f'(a)(x-a)+f(a)\n$$$\n\n## Sens de variation\n$$f'$$ nulle\n: $$f$$ constante\n\n$$f'$$ strictement positive\n: $$f$$ strictement croissante\n\n$$f'$$ strictement négative\n: $$f$$ strictement décroissante\n\n## Extrema locaux\nSoit $$f$$ définie sur $$I$$\n\n- $$c in I$$ est un extremum local $$=> f(c) = 0$$\n- $$c in I$$, $$f'(c)=0$$ *et* $$f'$$ change de signe en $$c$$ $$=>$$ $$c$$ est un extremum local",
     "created": "2019-08-28T08:33:23.624000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-30T11:53:19.644000Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-30T11:53:19.644000Z",
+    "learndata": ""
   },
   {
     "id": 6,
@@ -83,9 +83,9 @@
     "name": "Première: Suites",
     "content": "# Première: Suites\r\n## Déclaration d'une suite\r\nExplicitement\r\n: $$u_n = 3n+5$$\r\n\r\nPar récursion\r\n: À 1 terme : $${(u_(n+1), = 3u_n+5),(u_0, = 16):}$$\r\n: À 2 termes: $${(u_(n+2), = f(u_(n+1), u_n)),(u_1, = 32),(u_0, = 16):}$$\r\n\r\nSomme de termes\r\n: $$u_n = sum_(k=0)^n T_n:  u_n = 1^2+2^2+...+n^2$$\r\n\r\n\r\n## Variations\r\nMême principe que pour les fonctions.\r\n\r\n### Étude des variations\r\n- Si $$u_(n+1)-u_n > 0$$ (arithmétiques)\r\n- Si $$(u_(n+1))/(u_n) > 1$$ (géométriques)\r\n- Signe de la dérivée de la fonction associée (fonctionnelles)\r\n\r\n## Arithmétiques\r\n\r\n### Déclaration\r\n#### Récursive\r\nAvec $$k,r in RR$$\r\n\r\n$$$\r\n{(u_(n+1), = u_n + r),\r\n(u_0, = k):}\r\n$$$\r\n#### Fonctionnelle\r\n\r\n$$$\r\nu_n = u_0 + rn\r\n$$$\r\nou, avec $$p in NN$$\r\n\r\n$$$\r\nu_n = u_p + r(n-p)\r\n$$$\r\n\r\n### Caractéristique\r\n- Une suite est arithmétique lorsque:\r\n  $$AA n in NN,  u_(n+1) = u_n + r$$\r\n- Croissance *linéaire*\r\n\r\n\r\n### Somme de termes\r\nSomme $$S_s^f$$ de $$u_s$$ jusq'à $$u_e$$:\r\n\r\n$$$\r\nS_s^e=sum_(i=s)^e u_i = (e-s+1)._(\"Nb de termes\")xx(u_s+u_e)/2._(\"Moyenne des termes extrêmes\"\r\n$$$\r\n\r\n\r\n## Géométriques\r\n\r\n### Déclaration\r\n#### Récursive\r\nAvec $$k, r in RR$$\r\n$$$\r\n{(u_(n+1), = u_0 + u_n*q),\r\n(u_0, = k):}\r\n$$$\r\n#### Fonctionnelle\r\n$$$\r\nu_n = u_0*q^n\r\n$$$\r\n\r\nou, avec $$p in NN$$\r\n\r\n$$$\r\nu_n = u_p * q^(n-p)\r\n$$$\r\n\r\n### Caractéristique\r\n- Une suite est géométrique lorsque:\r\n  $$AA n in NN,   u_(n+1) / u_n = q$$\r\n- Croissance *exponentielle*\r\n\r\n### Somme des termes\r\nSomme $$S_s^e$$ de $$u_s$$ à $$u_e$$\r\n$$$\r\nS_s^e = sum_(i = s)^(e) u_i = u_s * (1-q^(e-s+1).^(\"Nb de termes\")) / (1-q)\r\n$$$\r\n\r\n## Convergence d'une suite\r\n\r\nUne suite a pour limite $$l$$  \r\n: Tout intervalle ouvert contenant $$l$$ contient tout les termes de la suite à partir d'un certain rang\r\n: $$lim_(n -> +oo) u_n = l$$\r\n: $$u_n$$ converge vers $$l$$\r\n\r\nUne suite a pour limite $$+-oo$$\r\n: Tout intervalle $${:]A;+oo[$$ &nbsp;&nbsp;&nbsp;(ou $${:]-oo; B[:}$$ ) contient tout les termes de la suite à partir d'un certain rang\r\n: $$lim(n -> +oo) u_n = +- oo$$\r\n\r\n\r\n### Convergence d'une suite géométrique\r\nJe pose$$lim_(n -> +oo) q^n = Lambda$$ pour la simplicité de lecture\r\n$$$\r\n{\r\n( q, in {:]-1; 1[:}, <=> Lambda = 0 ),\r\n( q, = 1, <=> Lambda = 1 ),\r\n( q, > 1, <=> Lambda = +oo ),\r\n( q, <= -1, <=> Lambda \". n'existe pas\" )\r\n:}\r\n$$$",
     "created": "2019-08-28T09:11:47.364000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-28T21:38:14Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-28T21:38:14Z",
+    "learndata": ""
   },
   {
     "id": 7,
@@ -94,9 +94,9 @@
     "name": "Première: Trigonométrie",
     "content": "# Première: Trigonométrie\n\n\n!!! info TODO\nRésumer ça dans une image de cercle trigonométrique\n!!!\n\n## Valeurs remarquables\n\n|$$alpha$$    |$$pi/6$$    |$$pi/4$$ |$$pi/3$$ |$$pi/2$$ |$$0$$    |\n|---------    |---------   |---------|---------|---------|---------|\n|$$sin alpha$$|$$1/2$$     |$$sqrt 2/2$$|$$sqrt 3/2$$|$$1$$ |$$0$$|\n|$$cos alpha$$|$$sqrt 3/2$$|$$sqrt 2/2$$|$$1/2$$     |$$0$$ |$$1$$|\n|$$tan alpha$$|$$sqrt 3/3$$|$$1$$       |$$sqrt 3$$  |$$oo$$|$$0$$|\n\n## Formules élémentaires\n\n$$$\nAA x in RR,                 sin^2 x + cos^2 x\n = 1\n$$$\n\n$$$\nAA x in RR-{k pi/2, k in ZZ},    1 - tan^2 x = 1 / cos^2x\n$$$\n\n## Déphasage & symétrie\n\n|$$pi/2-x$$|$$pi/2+x$$|$$pi-x$$  |$$pi+x$$  |$$-x$$    |$$x$$    |\n|----------|----------|----------|----------|----------|---------|\n|$$cos x$$ |$$cos x$$ |$$sin x$$ |$$-sin x$$|$$-sin x$$|$$sin x$$|\n|$$sin x$$ |$$-sin x$$|$$-cos x$$|$$-cos x$$|$$cos x$$ |$$cos x$$|\n\n## Addition\n\n|       |$$a+b$$                    |$$a-b$$                    |\n|-------|---------------------------|---------------------------|\n|$$cos$$|$$cos a * cos b-sin a * sin b$$|$$cos a * cos b+sin a * sin b$$|\n|$$sin$$|$$sin a * cos b+cos a * sin b$$|$$sin a * cos b-cos a * sin b$$|\n\n## Duplication\n\n$$$\ncos 2x = {(cos^2 x - sin^2x),\n          (2cos^2 x - 1),\n          (1 - 2sin^2 x):}\n$$$\n&nbsp;\n$$$\nsin 2x = 2sin x * cos x\n$$$\n\n## Linéarisation\n\n$$$\ncos^2 x = (1+cos(2x)) / 2\n$$$\n$$$\nsin^2 x = (1-cos(2x)) / 2\n$$$\n\n\n## Équations\n\n$$$\nsin a = sin b <=> {(b ,=, a,+2kpi),\n                   (b ,=, pi-a,+2kpi):}\n$$$\n$$$\ncos a = cos b <=> {(b ,=, a,+2kpi),\n                   (b ,=, -a,+2kpi):}\n$$$",
     "created": "2019-08-28T10:54:45.344000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-28T22:41:25Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-28T22:41:25Z",
+    "learndata": ""
   },
   {
     "id": 9,
@@ -105,8 +105,8 @@
     "name": "Première: Vecteurs",
     "content": "# Première: Vecteurs\n## Définitions\nUn vecteur possède...\n\n- Une direction\n- Un sens\n- Une longueur (la norme)\n\n## Opérations\n\n### Comparaison\n\n$$$\nvec u(-3; 67) = vec v(-3; 67)\n$$$\n$$$\nvec u(67; -3) != vec v(-3; 67)\n$$$\n\n### Addition\nDéfinie selon la loi de Chasles:\n\n$$$\nvec(AC) = vec(AB) + vec(BC)\n$$$\n\n### Multiplication (et division)\nMultiplication des coordonnées:\n\n$$$\n6 * vec v(2;4) = vec v(12; 24)\n$$$\n\n## Colinéarité\n$$vec v$$ et $$vec u$$ sont colinéaires si...\n### Par multiplicateur commun\n$$$\nEE lambda in RR,  lambda vec u = vec v\n$$$\n\n### Par alignement des droites liées\n$$$\n\"A, B, C alignés\" <=> EE lambda in RR,  vec(AC) = lambda vec(AB)\n$$$\n\n### Par parallélisme\n$$$\n(AB) //// (AC) <=> EE lambda in RR,  vec(CD) = lambda vec(AB)\n$$$\n\n\n## Dans un repère\nLes vecteurs unitaires (souvent $$vec i$$ et $$vec j$$) sont des vecteurs qui ont pour coordonnés dans le plan qu'il définissent:\n\n$$$\nvec i(1;0)   vec j(0;1)\n$$$\n\nOn défini donc le plan avec $$(O$$;$$vec i$$;$$vec j{:)$$\n\n### Vecteur à partir de points\n$$$\nvec(AB)(x_B-x_A; y_B-y_A)\n$$$\n\n!!! info Explication\nComme un vecteur est un déplacement, le _déplacement_ entre deux points est la différence entre le début et la fin de ce déplacement\n!!!\n\n### Point au milieu d'un segment\nTrouver le milieu $$I$$ de $$AB$$:\n$$$\nI((x_A+x_B)/2 ; (y_A+y_B)/2)\n$$$\n\n!!! info Explication\nIci, on fait simplement la moyenne des $$x$$ et $$y$$ deux points extrêmes pour trouver les coordonnées de milieu\n!!!\n\n### Longeur d'un segment avec les coordonées des points\n$$$\nAB = sqrt( (x_B-x_A)^2 + (y_B-y_A)^2 )\n$$$\n\n!!! info Explication\nIci, on utilise simplement le théorème de Pythagore\n!!!",
     "created": "2019-08-29T09:19:48.374000Z",
-    "learnt": 0.0,
-    "filetype": "markdown",
-    "last_modified": "2019-08-29T21:04:50Z"
+    "filetype": "MARKDOWN",
+    "last_modified": "2019-08-29T21:04:50Z",
+    "learndata": ""
   }
 ]
