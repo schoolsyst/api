@@ -7,7 +7,7 @@ from learn.models import zero_to_one_validator
 
 hex_color_validator = [RegexValidator(r'#(?:[A-Fa-f0-9]{3}){1,2}',
                                       "Please use a valid hexadecimal color format, eg. #268CCE, or #FFF")]
-abbreviation_validator = [RegexValidator(r'[a-z_\-]{2,3}',
+ABBREVIATION_VALIDATOR = [RegexValidator(r'[a-z_\-]{2,3}',
                                          "Please use exactly 2 or 3 lower-case letters (- and _ are also accepted)")]
 
 
@@ -80,7 +80,7 @@ class Subject(Model):
     color = CharField(max_length=7, validators=hex_color_validator)
     name = CharField(max_length=300)
     slug = SlugField(max_length=300)
-    abbreviation = CharField(max_length=3, validators=abbreviation_validator)
+    abbreviation = CharField(max_length=3, validators=ABBREVIATION_VALIDATOR)
     # Grades
     goal = FloatField(validators=zero_to_one_validator, null=True, blank=True)
     weight = FloatField(validators=[MinValueValidator(0, "The grade's weight cannot be negative")],
