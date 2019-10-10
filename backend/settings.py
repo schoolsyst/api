@@ -27,7 +27,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'common.User'
 
 # Application definition
 
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'learn.apps.LearnConfig',
     'schedule.apps.ScheduleConfig',
     'common.apps.CommonConfig',
-    'users.apps.UsersConfig',
+    'homework.apps.HomeworkConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'users.middlewares.AuthenticationMiddlewareJWT',
+    'common.middlewares.AuthenticationMiddlewareJWT',
     'request_logging.middleware.LoggingMiddleware'
 ]
 

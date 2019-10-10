@@ -3,27 +3,29 @@ from .models import *
 from .serializers import *
 
 
-class LearndataViewSet(ModelViewSet):
+class HomeworkViewSet(ModelViewSet):
     lookup_field = 'uuid'
 
     def get_serializer_class(self):
         if self.request.method in ['GET']:
-            return LearndataReadSerializer
-        return LearndataSerializer
+            return HomeworkReadSerializer
+        return Homeworkerializer
 
     def get_queryset(self):
         user = self.request.user
-        return Learndata.objects.filter(subject__user__id=user.id)
+        return Homework.objects.filter(subject__user__id=user.id)
 
 
-class NotesViewSet(ModelViewSet):
+class GradesViewSet(ModelViewSet):
     lookup_field = 'uuid'
 
     def get_serializer_class(self):
         if self.request.method in ['GET']:
-            return NoteReadSerializer
-        return NoteSerializer
+            return GradeReadSerializer
+        return GradeSerializer
 
     def get_queryset(self):
         user = self.request.user
-        return Note.objects.filter(subject__user__id=user.id)
+        # Thanks django for this
+        return Grade.objects.prefetch_related(
+            'test__notes__subject__user').filter(id=user.id)

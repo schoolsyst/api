@@ -14,6 +14,36 @@ package common {
         + String room
     }
 
+    enum valueType {
+        DATE
+        TIME
+        DATETIME
+        TIMERANGE
+        DATERANGE
+        SELECT
+        TEXT
+        INTEGER
+        FLOAT
+        BOOLEAN
+    }
+
+    class DefaultSetting {
+        ..Naming..
+        String name
+        String key
+        String category
+        String description
+        ..Value definition..
+        valueType type
+        Boolean multiple
+        String default
+        Boolean optional
+    }
+
+    class Setting {
+        String value
+    }
+
     class User {
         + String username
         - Password password
@@ -25,6 +55,12 @@ package common {
     }
 }
 package Learn {
+    enum Filetype {
+        MARKDOWN
+        ASCIIDOC
+        STUDENTML
+    }
+
     class Note {
         + UUID uuid
         + String name
@@ -32,6 +68,8 @@ package Learn {
         + Text content
         + Path filepath
         + Date last_modified
+        + Date created
+        + Filetype filetype
     }
 
     class Learndata {
@@ -95,12 +133,16 @@ package Homework {
 }
 
 User --> Subject
+User --> Setting
+DefaultSetting --> Setting
 
 Subject --> Note
 Subject --> Homework
 Subject --> Event
+Subject --> Learndata
+Subject --> Grade
 
-Homework <--> "0..1" Grade
-Note <--> "0..1" Learndata
+Note <--> "0..*" Learndata
+Homework <--> "0..*" Grade
 Event <--> "0..*" Mutation
 @enduml

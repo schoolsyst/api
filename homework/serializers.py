@@ -4,63 +4,60 @@ from common.serializers import *
 from common.models import *
 
 
-class LearndataSerializer(ModelSerializer):
+class Homeworkerializer(ModelSerializer):
     """
-    Serializer for Learndata objects
+    Serializer for Homework objects
     with slug fields replacing nested relations,
     needed when POST, PUT or PATCH'ing data.
     """
-
     subject = SlugRelatedField(
         slug_field='slug', queryset=Subject.objects.all())
 
     class Meta:
-        model = Learndata
+        model = Homework
         fields = '__all__'
 
 
-class LearndataReadSerializer(ModelSerializer):
+class HomeworkReadSerializer(ModelSerializer):
     """
-    ReadSerializer for Learndata objects
+    ReadSerializer for Homework objects
     with nested relation representations
     useful when GET'ing data.
     """
-
     subject = SubjectSerializer(read_only=True)
 
     class Meta:
-        model = Learndata
+        model = Homework
         fields = '__all__'
+        lookup_field = 'uuid'
 
 
-class NoteSerializer(ModelSerializer):
+class GradeSerializer(ModelSerializer):
     """
-    Serializer for Note objects
+    Serializer for Grade objects
     with slug fields replacing nested relations,
     needed when POST, PUT or PATCH'ing data.
     """
-
+    homework = SlugRelatedField(
+        slug_field="uuid", queryset=Grade.objects.all())
     subject = SlugRelatedField(
-        slug_field='slug', queryset=Subject.objects.all())
-    learndata = SlugRelatedField(
-        slug_field='uuid', queryset=Learndata.objects.all())
+        slug_field="slug", queryset=Subject.objects.all())
 
     class Meta:
-        model = Note
+        model = Grade
         fields = '__all__'
 
 
-class NoteReadSerializer(ModelSerializer):
+class GradeReadSerializer(ModelSerializer):
     """
-    ReadSerializer for Note objects
+    ReadSerializer for Grade objects
     with nested relation representations
     useful when GET'ing data.
     """
-
+    homework = HomeworkReadSerializer(read_only=True)
     subject = SubjectSerializer(read_only=True)
-    learndata = LearndataReadSerializer(read_only=True)
 
     class Meta:
-        model = Note
+        model = Grade
         fields = '__all__'
         lookup_field = 'uuid'
