@@ -3,9 +3,9 @@ import json
 import os
 import requests
 import sys
-from inquirer import Checkbox, prompt
+from inquirer import Checkbox, prompt, Confirm
 
-BASE_URL = "http://localhost:9999/api/"
+BASE_URL = "http://localhost:8000/api/"
 TOKEN_URL = BASE_URL + 'auth/'
 DETAILED_LOGS = False
 FILES = [  # In dependency order.
@@ -24,6 +24,14 @@ def get_token(username=None, password=None):
     return token
 
 
+def delete_all(table, token):
+    print(f'DELETING ALL CURRENT DATA FOR {table}...')
+    resp = requests.get(f'{BASE_URL}{name}/', headers={'Authorization': f'Bearer {token}'})
+    uuids = [item['uuid'] for item in json.loads(resp.content)]
+    for uuid in uuids:
+        print(f'    Deleting {name} item with UUID "{uuid}"...')
+        res = requests.delete(f'{BASE_URL}{name}/{uuid}', headers={'Authorization': f'Bearer {token}'})
+        print(f'        Got {res.status_code} response.')
 def load_data(filename):
     print(f'Getting data from {filename}...')
     with open(filename, 'r', encoding="utf8") as file:
@@ -38,26 +46,30 @@ def make_request(data, token):
                         data=data,
                         headers={'Authorization': f'Bearer {token}'}
                        )
-    print(f'Got a {res.status_code} response with data...')
-    if res.status_code not in [201, 200]: print(res.text)
-    if res.status_code in range(500, 599): sys.exit(f"Got a {status_code} response: quitting.")
+    print(f'    Got a {res.status_code} response with data...')
+    if res.status_code not in [201, 200]: print('   '+res.text)
+    if res.status_code in range(500, 599): sys.exit(f"  Got a {res.status_code} response: quitting.")
 
 def prompt_multiple_choices(choices):
     question = Checkbox('resources', message="What to send to the database?", choices=choices)
     selected = prompt([question])['resources']
     return sorted(selected, key=choices.index)
 
+
+
 # capture cwd to restore at the end & cd to correct dir
 cwd = os.getcwd()
 os.chdir(os.path.dirname(__file__))
-# Destroy db or keep it ?
 # Get token. note: these credentials are local-only.
 token = get_token('ewen', 'hunter2')
+# Destroy db or keep it ?
+reset = prompt([Confirm('reset', message='Replace current data', default=False)])['reset']
 # Restore each .json file
 for file in prompt_multiple_choices(FILES):
     if file.endswith('.json'):
         name = file.replace('.json', '')
         data = load_data(file)
+        if reset: delete_all(name, token)
         for item in data:
             make_request(item, token)
 # Restore the cwd
