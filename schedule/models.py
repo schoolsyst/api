@@ -2,13 +2,18 @@ from django.utils.translation import gettext as _
 from django.db.models import *
 import uuid
 
-WEEK_DAYS = [('monday', _("Monday")), ('tuesday', _("Tuesday")),
-             ('wednesday', _("Wednesday")), ('thursday', _("Thursday")),
-             ('friday', _("Friday")), ('saturday', _("Saturday")),
-             ('sunday', _("Sunday"))]
+WEEK_DAYS = [
+    ('MONDAY', _("Monday")),
+    ('TUESDAY', _("Tuesday")),
+    ('WEDNESDAY', _("Wednesday")),
+    ('THURSDAY', _("Thursday")),
+    ('FRIDAY', _("Friday")),
+    ('SATURDAY', _("Saturday")),
+    ('SUNDAY', _("Sunday"))
+]
 
 WEEK_TYPES = [
-    ('both', 'Both'),
+    ('BOTH', 'Both'),
     ('Q1', 'Q1'),
     ('Q2', 'Q2'),
 ]

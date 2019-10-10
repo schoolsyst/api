@@ -11,7 +11,9 @@ class Homeworkerializer(ModelSerializer):
     needed when POST, PUT or PATCH'ing data.
     """
     subject = SlugRelatedField(
-        slug_field='slug', queryset=Subject.objects.all())
+        slug_field='slug',
+        queryset=Subject.objects.all(),
+        )
 
     class Meta:
         model = Homework
@@ -39,7 +41,7 @@ class GradeSerializer(ModelSerializer):
     needed when POST, PUT or PATCH'ing data.
     """
     homework = SlugRelatedField(
-        slug_field="uuid", queryset=Grade.objects.all())
+        slug_field="uuid", queryset=Grade.objects.all(), allow_null=True)
     subject = SlugRelatedField(
         slug_field="slug", queryset=Subject.objects.all())
 
