@@ -21,17 +21,17 @@ class EventReadSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class EventSerializer(ModelSerializer):
+class MutationSerializer(ModelSerializer):
     event = SlugRelatedField(slug_field='uuid', queryset=Event.objects.all())
 
     class Meta:
-        model = Event
+        model = Mutation
         fields = '__all__'
 
 
-class EventReadSerializer(ModelSerializer):
+class MutationReadSerializer(ModelSerializer):
     event = EventReadSerializer(read_only=True)
 
     class Meta:
-        model = Event
+        model = Mutation
         fields = '__all__'

@@ -38,11 +38,10 @@ api.register(r'notes', NotesViewSet, 'notes')
 api.register(r'learndata', LearndataViewSet, 'learndata')
 # --------------------- Schedule ------------------------
 api.register(r'events', EventsViewSet, 'events')
-api.register(r'event-additions', AdditionsViewSet, 'additions')
-api.register(r'event-deletions', DeletionsViewSet, 'deletions')
+api.register(r'events-mutations', MutationsViewSet, 'mutations')
 # --------------------- Homework ------------------------
 api.register(r'grades', GradesViewSet, 'grades')
-api.register(r'tests', HomeworkViewSet, 'homework')
+api.register(r'homework', HomeworkViewSet, 'homework')
 
 # Add to urlpatterns
 urlpatterns = [
