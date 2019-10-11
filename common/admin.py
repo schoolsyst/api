@@ -6,6 +6,7 @@ from common.utils import auto_list_display
 @register(Subject)
 class SubjectAdmin(ModelAdmin):
     list_display = ('uuid', 'user', 'name', 'abbreviation', 'color', 'slug', 'room', 'weight', 'goal')
+    list_editable = ('name', 'abbreviation', 'color', 'slug', 'goal')
 
 @register(Setting)
 class SettingAdmin(ModelAdmin):
