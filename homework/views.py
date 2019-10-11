@@ -26,6 +26,4 @@ class GradesViewSet(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        # Thanks django for this
-        return Grade.objects.prefetch_related(
-            'test__notes__subject__user').filter(id=user.id)
+        return Grade.objects.filter(subject__user__id=user.id)
