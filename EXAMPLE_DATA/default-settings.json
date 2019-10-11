@@ -1,102 +1,105 @@
 [
   {
     "key": "year_start",
-    "kind": "date",
+    "type": "DATE",
     "name": "Début de l'année scolaire",
-    "namespace": "Emploi du temps",
-    "required": true,
+    "category": "Emploi du temps",
     "description": null,
+    "optional": false,
     "choices": null,
     "default": null
   },
   {
     "key": "trimester_2_start",
-    "kind": "date",
+    "type": "DATE",
     "name": "Début du 2ᵉ trimestre",
-    "namespace": "Emploi du temps",
-    "required": true,
+    "category": "Emploi du temps",
+    "optional": false,
     "description": null,
     "choices": null,
     "default": null
   },
   {
     "key": "trimester_3_start",
-    "kind": "date",
+    "type": "DATE",
     "name": "Début du 3ᵉ trimestre",
-    "namespace": "Emploi du temps",
-    "required": true,
+    "category": "Emploi du temps",
+    "optional": false,
     "description": null,
     "choices": null,
     "default": null
   },
   {
     "key": "year_end",
-    "kind": "date",
+    "type": "DATE",
     "name": "Fin de l'année scolaire",
-    "namespace": "Emploi du temps",
-    "required": true,
+    "category": "Emploi du temps",
+    "optional": false,
     "description": null,
     "choices": null,
     "default": null
   },
   {
     "key": "starting_week_type",
-    "kind": "choices",
+    "type": "SELECT",
     "name": "Type de la première semaine",
-    "namespace": "Emploi du temps",
-    "required": true,
+    "category": "Emploi du temps",
+    "optional": false,
     "description": "La plupart du temps, on commence l'année en Q1.\nChangez ceci ici.",
     "choices": "Q1,Q2",
     "default": "Q1"
   },
   {
     "key": "offdays",
-    "kind": "dateranges",
+    "type": "DATERANGE",
     "name": "Vacances",
-    "namespace": "Emploi du temps",
-    "required": false,
+    "category": "Emploi du temps",
+    "optional": true,
     "description": "Jours sans cours",
     "choices": null,
-    "default": null
+    "default": null,
+    "multiple": true
   },
   {
     "key": "mnml_mode",
-    "kind": "boolean",
+    "type": "BOOLEAN",
     "name": "MNML",
-    "namespace": "__secret__",
-    "required": true,
+    "category": "__secret__",
+    "optional": false,
     "description": "Mode MNML",
-    "choices": "",
-    "default": "false"
-  },
-  {
-    "key": "show_completed_exercises",
-    "kind": "boolean",
-    "name": "Montrer les exercices finis",
-    "namespace": "__hidden__",
-    "required": true,
-    "description": "",
     "choices": "",
     "default": "true"
   },
   {
-    "key": "grade_max",
-    "kind": "posfloat",
-    "name": "Unité",
-    "namespace": "Notes",
-    "required": false,
+    "key": "show_completed_exercises",
+    "type": "BOOLEAN",
+    "name": "Montrer les exercices finis",
+    "category": "__hidden__",
+    "optional": false,
     "description": "",
     "choices": "",
-    "default": "20"
+    "default": "false"
+  },
+  {
+    "key": "grade_max",
+    "type": "FLOAT",
+    "name": "Unité",
+    "category": "Notes",
+    "optional": true,
+    "description": "",
+    "choices": "",
+    "default": "20",
+    "positive": true
   },
   {
     "key": "grade_weight",
-    "kind": "posfloat",
+    "type": "FLOAT",
     "name": "Coefficient par défaut",
-    "namespace": "Notes",
-    "required": false,
+    "category": "Notes",
+    "optional": true,
     "description": "",
     "choices": "",
-    "default": "1"
+    "default": "1",
+    "positive": true
   }
 ]
