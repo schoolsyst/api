@@ -50,6 +50,10 @@ class DefaultSetting(Model):
     ]
     max_kind_len = max([len(k[0]) for k in TYPES])
 
+    uuid = UUIDField("UUID",
+                    default=uuid.uuid4,
+                    editable=False,
+                    unique=True)
     # Naming
     key = CharField(max_length=300, unique=True)
     name = CharField(max_length=200)
@@ -62,6 +66,8 @@ class DefaultSetting(Model):
     optional = BooleanField(default=True)
     choices = TextField(blank=True, null=True)  # Comma-separated
     default = TextField(blank=True, null=True)
+    positive = BooleanField(default=False)
+    multiple = BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}"
