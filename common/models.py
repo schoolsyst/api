@@ -2,6 +2,7 @@ from backend.settings import AUTH_USER_MODEL
 import uuid
 from django.db.models import *
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import RegexValidator, MinValueValidator
 from learn.models import zero_to_one_validator
 
@@ -10,13 +11,16 @@ hex_color_validator = [RegexValidator(r'#(?:[A-Fa-f0-9]{3}){1,2}',
 ABBREVIATION_VALIDATOR = [RegexValidator(r'[a-z_\-]{2,3}',
                                          "Please use exactly 2 or 3 lower-case letters (- and _ are also accepted)")]
 
+class UsernameValidator(UnicodeUsernameValidator):
+    regex = r'[\w.@+\- ]+$'
 
+# TODO: case-insensitive checks
 class User(AbstractUser):
+    username_validator = UsernameValidator()
+
     ip_address = GenericIPAddressField(verbose_name="IP Address",
                                        blank=True,
                                        null=True)
-    logged_in = DateTimeField(verbose_name="Last login date", auto_now=True)
-
 
 class Setting(Model):
     # Relations & IDs
@@ -51,9 +55,9 @@ class DefaultSetting(Model):
     max_kind_len = max([len(k[0]) for k in TYPES])
 
     uuid = UUIDField("UUID",
-                    default=uuid.uuid4,
-                    editable=False,
-                    unique=True)
+                     default=uuid.uuid4,
+                     editable=False,
+                     unique=True)
     # Naming
     key = CharField(max_length=300, unique=True)
     name = CharField(max_length=200)
@@ -95,4 +99,4 @@ class Subject(Model):
     room = CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.user.username}'s {self.name}"
+        return '{1} ({0})'.format(self.user.username, self.name)

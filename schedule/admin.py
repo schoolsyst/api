@@ -2,10 +2,12 @@ from django.contrib.admin import register, ModelAdmin
 from .models import *
 from common.utils import auto_list_display
 
-@register(Mutation)
-class MutationAdmin(ModelAdmin):
-    list_display = auto_list_display(Mutation)
-
 @register(Event)
 class EventAdmin(ModelAdmin):
-    list_display = auto_list_display(Event)
+    list_display = ('uuid', 'subject', 'week_type', 'day', 'start', 'end', 'room')
+    list_editable = ('subject', 'week_type', 'day', 'start', 'end', 'room')
+
+@register(Mutation)
+class MutationAdmin(ModelAdmin):
+    list_display = ('uuid', 'event', 'deleted', 'rescheduled', 'start', 'end', 'room')
+    list_editable = ('deleted', 'rescheduled', 'start', 'end', 'room')

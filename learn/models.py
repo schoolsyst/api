@@ -9,7 +9,7 @@ zero_to_one_validator = [
 
 
 class Note(Model):
-    FILETYPES = [
+    FORMATS = [
         ('MARKDOWN', 'Markdown'),
         ('ASCIIDOC', 'AsciiDoc'),
         ('STUDENTML', 'StudentML'),
@@ -27,9 +27,9 @@ class Note(Model):
     name = CharField(max_length=300)
     content = TextField(blank=True, null=True)
     created = DateTimeField()
-    filetype = CharField(max_length=50,
-                         default=FILETYPES[0],
-                         choices=FILETYPES)
+    format = CharField(max_length=50,
+                         default=FORMATS[0],
+                         choices=FORMATS)
     last_modified = DateTimeField(blank=True, null=True)
 
     def __str__(self):
@@ -50,7 +50,7 @@ class Learndata(Model):
     # Essentials
     data = TextField('YAML Content', blank=True, null=True)
     name = CharField(max_length=300)
-    learnt = FloatField('Learning progress',
+    progress = FloatField('Learning progress',
                         validators=zero_to_one_validator,
                         default=0)
     # Metadata: stats
@@ -62,4 +62,5 @@ class Learndata(Model):
                                default=0)
     # Metadata: dates & durations
     last_opened = DateTimeField(auto_now=True)
+    created     = DateTimeField(auto_now=True)
     time_spent = DurationField('Time spent on learning')

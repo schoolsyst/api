@@ -17,7 +17,13 @@ class Homework(Model):
 
     name = CharField(max_length=300)
     notes = TextField(blank=True, null=True)
-    due = DateTimeField()
+    # Dates
+    due = DateTimeField(blank=True, null=True)
+    created = DateTimeField(blank=True, null=True)
+    completed = DateTimeField(blank=True, null=True)
+    room = CharField(max_length=300, blank=True, null=True)
+    progress = FloatField(validators=zero_to_one_validator, default=0)
+    is_test = BooleanField()
 
 
 class Grade(Model):
@@ -56,3 +62,6 @@ class Grade(Model):
     weight = FloatField('Grade weight',
                         validators=[MinValueValidator(0)],
                         default=1)
+    
+    # Added
+    added = DateTimeField()

@@ -66,7 +66,7 @@ class UserReadSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'last_login', 'date_joined', 'email',
-                  'username', 'is_staff', 'logged_in')
+                  'username', 'is_staff')
 
 
 class UserCurrentSerializer(HyperlinkedModelSerializer):

@@ -9,12 +9,15 @@ class SubjectAdmin(ModelAdmin):
 
 @register(Setting)
 class SettingAdmin(ModelAdmin):
-    list_display = auto_list_display(Setting)
+    list_display = ('uuid', 'user', 'setting', 'value')
+    list_editable = ('setting',)
 
 @register(DefaultSetting)
 class DefaultSettingAdmin(ModelAdmin):
     list_display = ('key', 'type', 'category', 'name', 'default')
+    list_editable = ('category', 'name')
 
 @register(User)
 class UserAdmin(ModelAdmin):
     list_display = ('username', 'is_superuser', 'email', 'ip_address', 'date_joined')
+    list_editable = ('is_superuser', 'email',)
