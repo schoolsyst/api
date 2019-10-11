@@ -2,6 +2,7 @@ from rest_framework.serializers import *
 from .models import *
 from common.serializers import *
 from common.models import *
+from common.utils import hyperlinked_field_method
 
 
 class Homeworkerializer(ModelSerializer):
@@ -13,7 +14,7 @@ class Homeworkerializer(ModelSerializer):
     subject = SlugRelatedField(
         slug_field='slug',
         queryset=Subject.objects.all(),
-        )
+    )
 
     class Meta:
         model = Homework
@@ -27,6 +28,8 @@ class HomeworkReadSerializer(ModelSerializer):
     useful when GET'ing data.
     """
     subject = SubjectSerializer(read_only=True)
+    subject_url = SerializerMethodField()
+    get_subject_url = hyperlinked_field_method('subject')
 
     class Meta:
         model = Homework
@@ -58,6 +61,11 @@ class GradeReadSerializer(ModelSerializer):
     """
     homework = HomeworkReadSerializer(read_only=True)
     subject = SubjectSerializer(read_only=True)
+    
+    homework_url = SerializerMethodField()
+    subject_url = SerializerMethodField()
+    get_homework_url = hyperlinked_field_method('homework', name='homework')
+    get_subject_url  = hyperlinked_field_method('subject')
 
     class Meta:
         model = Grade

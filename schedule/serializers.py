@@ -15,6 +15,8 @@ class EventSerializer(ModelSerializer):
 
 class EventReadSerializer(ModelSerializer):
     subject = SubjectSerializer(read_only=True)
+    subject_url = SerializerMethodField()
+    get_subject_url = hyperlinked_field_method('subject')
 
     class Meta:
         model = Event
@@ -31,6 +33,8 @@ class MutationSerializer(ModelSerializer):
 
 class MutationReadSerializer(ModelSerializer):
     event = EventReadSerializer(read_only=True)
+    event_url = SerializerMethodField()
+    get_event_url = hyperlinked_field_method('event')
 
     class Meta:
         model = Mutation

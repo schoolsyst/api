@@ -16,3 +16,12 @@ def daterange(date1, date2):
     from datetime import timedelta
     for n in range(int((date2 - date1).days) + 1):
         yield date1 + timedelta(n)
+        
+def hyperlinked_field_method(prop, prop2='uuid', name=None):
+    if name is None: name = prop+'s'
+    def hyperlinked_field(self, obj):
+        subobj = getattr(obj, prop)
+        if subobj is None: return None
+        return f"http://localhost:8000/api/{name}/{getattr(subobj, prop2)}"
+    
+    return hyperlinked_field

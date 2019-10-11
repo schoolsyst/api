@@ -1,6 +1,7 @@
 from rest_framework.serializers import *
 from rest_framework.permissions import *
 from .models import *
+from common.utils import hyperlinked_field_method
 
 
 class DefaultSettingSerializer(ModelSerializer):
@@ -27,6 +28,8 @@ class SettingSerializer(ModelSerializer):
 class SettingReadSerializer(ModelSerializer):
     user = PrimaryKeyRelatedField(read_only=True, default=CurrentUserDefault())
     setting = DefaultSettingSerializer(read_only=True)
+    setting_url = SerializerMethodField()
+    get_setting_url = hyperlinked_field_method('setting', 'key', name='default-settings')
 
     class Meta:
         model = Setting
@@ -35,6 +38,8 @@ class SettingReadSerializer(ModelSerializer):
 
 class SubjectSerializer(ModelSerializer):
     user = PrimaryKeyRelatedField(read_only=True, default=CurrentUserDefault())
+    user_url = SerializerMethodField()
+    get_user_url = hyperlinked_field_method('user', 'id')
 
     class Meta:
         model = Subject
