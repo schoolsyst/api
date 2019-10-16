@@ -6,15 +6,18 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import RegexValidator, MinValueValidator
 from learn.models import zero_to_one_validator
 
-hex_color_validator = [RegexValidator(r'#(?:[A-Fa-f0-9]{3}){1,2}',
+HEX_COLOR_VALIDATOR = [RegexValidator(r'#(?:[A-Fa-f0-9]{3}){1,2}',
                                       "Please use a valid hexadecimal color format, eg. #268CCE, or #FFF")]
-ABBREVIATION_VALIDATOR = [RegexValidator(r'[a-z_\-]{2,3}',
-                                         "Please use exactly 2 or 3 lower-case letters (- and _ are also accepted)")]
+ABBREVIATION_VALIDATOR = [RegexValidator(r'[^\s]{,3}',
+                                         "Please use at most 3 non-space characters")]
+
 
 class UsernameValidator(UnicodeUsernameValidator):
     regex = r'[\w.@+\- ]+$'
 
 # TODO: case-insensitive checks
+
+
 class User(AbstractUser):
     username_validator = UsernameValidator()
 
@@ -22,9 +25,10 @@ class User(AbstractUser):
                                        blank=True,
                                        null=True)
 
+
 class Setting(Model):
     # Relations & IDs
-    setting = ForeignKey(to='common.DefaultSetting', on_delete=CASCADE)
+    setting = ForeignKey(to='common.SettingDefinition', on_delete=CASCADE)
     user = ForeignKey(to=AUTH_USER_MODEL,
                       on_delete=CASCADE,
                       related_name='settings')
@@ -39,7 +43,7 @@ class Setting(Model):
         return f"{self.user.username}'s {self.setting.name}"
 
 
-class DefaultSetting(Model):
+class SettingDefinition(Model):
     TYPES = [
         ('TEXT',      'Texte'),
         ('DATETIME',  'Date & heure'),
@@ -87,7 +91,7 @@ class Subject(Model):
                      editable=False,
                      unique=True)
     # Naming
-    color = CharField(max_length=7, validators=hex_color_validator)
+    color = CharField(max_length=7, validators=HEX_COLOR_VALIDATOR)
     name = CharField(max_length=300)
     slug = SlugField(max_length=300)
     abbreviation = CharField(max_length=3, validators=ABBREVIATION_VALIDATOR)

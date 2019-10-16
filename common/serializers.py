@@ -4,15 +4,15 @@ from .models import *
 from common.utils import hyperlinked_field_method
 
 
-class DefaultSettingSerializer(ModelSerializer):
+class SettingDefinitionSerializer(ModelSerializer):
     class Meta:
-        model = DefaultSetting
+        model = SettingDefinition
         fields = '__all__'
 
 
 class SettingSerializer(ModelSerializer):
     setting = SlugRelatedField(
-        slug_field='key', queryset=DefaultSetting.objects.all())
+        slug_field='key', queryset=SettingDefinition.objects.all())
 
     class Meta:
         model = Setting
@@ -27,9 +27,10 @@ class SettingSerializer(ModelSerializer):
 
 class SettingReadSerializer(ModelSerializer):
     user = PrimaryKeyRelatedField(read_only=True, default=CurrentUserDefault())
-    setting = DefaultSettingSerializer(read_only=True)
+    setting = SettingDefinitionSerializer(read_only=True)
     setting_url = SerializerMethodField()
-    get_setting_url = hyperlinked_field_method('setting', 'key', name='default-settings')
+    get_setting_url = hyperlinked_field_method(
+        'setting', 'key', name='settings-definitions')
 
     class Meta:
         model = Setting

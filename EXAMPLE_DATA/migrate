@@ -18,6 +18,7 @@ import dict_deep
 from inquirer import prompt, Password, Text, Confirm
 colorama.init()
 
+
 def red(s): return colored(s, 'red')
 
 
@@ -32,6 +33,7 @@ def green(s): return colored(s, 'green')
 
 def bold(s): return colored(s, attrs=['bold'])
 
+
 def greybold(s): return colored(s, 'grey', attrs=['bold'])
 
 
@@ -45,9 +47,17 @@ def uniq(seq):
     seen_add = seen.add
     return [x for x in seq if not (x in seen or seen_add(x))]
 
-def deep_set(*args, **kwargs): return dict_deep.deep_set(*args, **kwargs, sep='__')
-def deep_get(*args, **kwargs): return dict_deep.deep_get(*args, **kwargs, sep='__')
-def deep_del(*args, **kwargs): return dict_deep.deep_del(*args, **kwargs, sep='__')
+
+def deep_set(*args, **kwargs):
+    return dict_deep.deep_set(*args, **kwargs, sep='__')
+
+
+def deep_get(*args, **kwargs):
+    return dict_deep.deep_get(*args, **kwargs, sep='__')
+
+
+def deep_del(*args, **kwargs):
+    return dict_deep.deep_del(*args, **kwargs, sep='__')
 
 
 DATADUMP = "EXAMPLE_DATA/datadump.json"
@@ -57,6 +67,30 @@ TOKEN_URL = BASE_URL + 'auth/'
 TERM_SZ = shutil.get_terminal_size((80, 20))
 WEEKDAYS = ['monday', 'tuesday', 'wednesday',
             'thursday', 'friday', 'saturday', 'sunday']
+EXPAND_N_ITEMS = 3
+ACTIONS_ADD_VBAR = True
+ACTIONS_WITH_VERBS = {
+    'rename': 'Renamed',
+    'assign': 'Set',
+    'delete': 'Deleted',
+    'add': 'Added',
+    'mutate': 'Mutated',
+    'rename_model': 'Renamed model',
+    'assign_if_false': 'Set',
+}
+ACTIONS_WITH_ICONS = {
+    'rename': '~',
+    'assign': '=',
+    'delete': '-',
+    'add': '+',
+    'mutate': '>',
+    'rename_model': '@',
+    'assign_if_false': '=',
+}
+
+ACTIONS = ACTIONS_WITH_VERBS
+if ACTIONS_ADD_VBAR:
+    ACTIONS = {k: '│ '+v for k, v in ACTIONS.items()}
 
 
 def get_token(username=None, password=None):
@@ -80,7 +114,8 @@ class Datadump:
             self.dump = json.loads(file.read())
         print(f'{bold(cyan("Detected the following models"))}{" (ignoring admin.logentry)" if remove_logentries else ""}')
         self.models = uniq([i['model'] for i in self.dump])
-        if remove_logentries: self.models = [i for i in self.models if i != 'admin.logentry']
+        if remove_logentries:
+            self.models = [i for i in self.models if i != 'admin.logentry']
         for model_name in self.models:
             print(f'    {cyan("-")} {model_name}')
         self.gathered = self.gather_tables()
@@ -104,11 +139,12 @@ class Datadump:
 
     def parse_modification(self, modification):
         match_rename = re.match(r'^([^~]+)~>(.+)$', modification)
-        match_assign = re.match(r'^([^=~]+)=(.+)$', modification)
+        match_assign = re.match(r'^([^=~?]+)=(.+)$', modification)
         match_delete = re.match(r'^-(.+)$', modification)
         match_add = re.match(r'^\+([^:]+):(.+)$', modification)
         match_mutate = re.match(r'^>([\w_]+) (.+)$', modification)
         match_rename_model = re.match(r'^==>(.+)$', modification)
+        match_assign_if_false = re.match(r'^([^?]+)\?=(.+)$', modification)
 
         if match_rename:
             return (
@@ -140,6 +176,11 @@ class Datadump:
                 'rename_model',
                 match_rename_model.groups()
             )
+        if match_assign_if_false:
+            return (
+                'assign_if_false',
+                match_assign_if_false.groups()
+            )
 
     def mutate(self, mutator_name, field_value):
         mutators = {
@@ -151,6 +192,9 @@ class Datadump:
             "TO_INT": lambda x:             int(x),
             "TO_ISO_WEEKDAY": lambda x:     WEEKDAYS.index(x)+1,
             "SET_NOW": lambda x:            datetime.now().isoformat()
+            "TAKE_FIRST_LINE": lambda x:        str(x).split('\n')[0],
+            "REMOVE_FIRST_LINE": lambda x:      '\n'.join(str(x).split('\n')[1:]),
+            "TAKE_FIRST_ITEM": lambda x:        x[0]
         }
         try:
             mutator = mutators[mutator_name.upper()]
@@ -158,7 +202,10 @@ class Datadump:
             raise KeyError(
                 f'The mutator "{mutator_name.upper()}" does not exist.')
 
-        return mutator(field_value)
+        try:
+            return mutator(field_value)
+        except Exception:
+            return field_value
 
     def foreign_accessor(self, expr, local_obj, silent=True):
         """
@@ -168,13 +215,16 @@ class Datadump:
         F: foreign model's variables
         L: local model's variables
         """
-        if type(expr) is not str: return expr
+        if type(expr) is not str:
+            return expr
         parsed = re.match(r'@([^\(]+)\(([^:]+):([^>]+)>([^\)]+)\)', expr)
-        if not parsed: return expr
+        if not parsed:
+            return expr
         Fmodel, Fpath, Lpath, Fkey = parsed.groups()
         match_against = deep_get(local_obj, Lpath)
         if not silent:
-            cprint(f"        (Accessing foreign property {Fmodel}:{Fkey} with {Fpath} == {match_against})", 'grey', attrs=['bold'])
+            cprint(
+                f"        (Accessing foreign property {Fmodel}:{Fkey} with {Fpath} == {match_against})", 'grey', attrs=['bold'])
 
         Fitems = self.gathered.get(Fmodel, [])
 
@@ -185,8 +235,7 @@ class Datadump:
                 continue
             if theFitem == match_against:
                 return deep_get(Fitem, Fkey)
-        raise KeyError(f"No matches found while searching for a '{Fmodel}' object having a '{Fpath}' equal to '{theLitem}'")
-
+        return None
 
     def set_modifications(self):
         self.modifications = {
@@ -198,6 +247,7 @@ class Datadump:
                 '+multiple:False',
                 '>INVERT required',
                 'required~>optional',
+                '==>common.settingdefinition'
             ],
             'users.user': [
                 '==>common.user'
@@ -218,9 +268,14 @@ class Datadump:
                 '>UPPERCASE week_type'
             ],
             'learn.test': [
+                '+name:@learn.test(id:id>notes)',
+                '>TAKE_FIRST_ITEM name',
+                'name=@learn.note(id:name>name)',
+                'name?=@learn.test(id:id>details)',
+                '>TAKE_FIRST_LINE name',
                 '-notes',
                 'details~>notes',
-                '+finished:None',
+                '>REMOVE_FIRST_LINE notes',
                 '+is_test:True',
                 '>DATE_TO_DATETIME due',
                 '+progress:0',
@@ -247,7 +302,6 @@ class Datadump:
             ]
         }
 
-
     def update(self):
         new_tables = {}
         errored = False
@@ -259,7 +313,7 @@ class Datadump:
                 print(greybold(f'    (no changes)'))
             is_first_item = True
             other_items_count = 0
-            for item in items:
+            for i, item in enumerate(items):
                 if is_first_item:
                     print(
                         f'    Item {bold(item.get("key") or item.get("name") or item.get("username") or item.get("uuid") or item.get("id"))}…')
@@ -271,7 +325,8 @@ class Datadump:
                     mods_count += 1
                     parsed = self.parse_modification(modification)
                     if not parsed:
-                        print(f'{colored("ERROR", "white", "on_red", attrs=["bold"])} {red("Syntax error in directive")} {colored(modification, "white")}{red(", aborting.")}')
+                        print(
+                            f'{colored("ERROR", "white", "on_red", attrs=["bold"])} {red("Syntax error in directive")} {colored(modification, "white")}{red(", aborting.")}')
                         errored = True
                         exit()
                     action, args = parsed
@@ -281,7 +336,7 @@ class Datadump:
                         deep_del(new_item, fieldname)
                         if is_first_item:
                             print(
-                                f'        {bold(red("Deleted"))} {bold(fieldname)}')
+                                f'        {bold(red(ACTIONS[action]))} {bold(fieldname)}')
                     if action == 'add':
                         fieldname, value = args
                         from ast import literal_eval
@@ -289,11 +344,29 @@ class Datadump:
                             value = literal_eval(value)
                         except SyntaxError:
                             pass
-                        value = self.foreign_accessor(value, new_item, silent=not is_first_item)
+                        value = self.foreign_accessor(
+                            value, new_item, silent=not is_first_item)
                         deep_set(new_item, fieldname, value)
                         if is_first_item:
                             print(
-                                f'        {bold(green("Added"))} {bold(fieldname)} with value {cyan(value)}')
+                                f'        {bold(green(ACTIONS[action]))} {bold(fieldname)} with value {cyan(value)}')
+                    if action == 'assign_if_false':
+                        fieldname, value = args
+                        from ast import literal_eval
+                        try:
+                            value = literal_eval(value)
+                        except SyntaxError:
+                            pass
+                        value = self.foreign_accessor(
+                            value, new_item, silent=not is_first_item)
+                        if not new_item[fieldname]:
+                            deep_set(new_item, fieldname, value)
+                        else:
+                            continue
+                        if is_first_item:
+                            print(
+                                f'        {bold(yellow(ACTIONS[action]))} {bold(fieldname)} to {cyan(value)} because it was false')
+
                     if action == 'rename':
                         old_fieldname, new_fieldname = args
                         val = deep_get(new_item, old_fieldname)
@@ -301,13 +374,20 @@ class Datadump:
                         deep_set(new_item, new_fieldname, val)
                         if is_first_item:
                             print(
-                                f'        {bold(colored("Renamed", "blue"))} {cyan(old_fieldname)} to {cyan(new_fieldname)}')
+                                f'        {bold(colored(ACTIONS[action], "blue"))} {cyan(old_fieldname)} to {cyan(new_fieldname)}')
                     if action == 'assign':
                         fieldname, value = args
+                        from ast import literal_eval
+                        try:
+                            value = literal_eval(value)
+                        except SyntaxError:
+                            pass
+                        value = self.foreign_accessor(
+                            value, new_item, silent=not is_first_item)
                         deep_set(new_item, fieldname, value)
                         if is_first_item:
                             print(
-                                f'        {bold(yellow("Set"))} {bold(fieldname)} to {cyan(value)}')
+                                f'        {bold(yellow(ACTIONS[action]))} {bold(fieldname)} to {cyan(value)}')
                     if action == 'mutate':
                         mutator, fieldname = args
                         old_value = deep_get(new_item, fieldname)
@@ -315,18 +395,25 @@ class Datadump:
                         deep_set(new_item, fieldname, new_value)
                         if is_first_item:
                             print(
-                                f'        {bold(yellow("Mutated("+str(mutator).lower()+")"))} {bold(fieldname)} from {cyan(old_value)} to {cyan(new_value)}')
+                                f'        {bold(yellow(str(ACTIONS[action])+"("+str(mutator).lower()+")"))} {bold(fieldname)} from {cyan(old_value)} to {cyan(new_value)}')
                     if action == 'rename_model':
                         new_table_name = args[0]
                         if is_first_item:
                             print(
-                                f'        {bold(colored("Renamed model", "magenta"))} to {cyan(new_table_name)}')
-                is_first_item = False
+                                f'        {bold(colored(ACTIONS[action], "magenta"))} to {cyan(new_table_name)}')
+                is_first_item = i+1 < EXPAND_N_ITEMS
                 new_items.append(new_item)
-            if not mods_count: print(greybold(f'        (no modifications)'))
-            print(f'{greybold("    (")}{colored(other_items_count, "white", attrs=["bold"])}{greybold(" other items)")}')
-            new_tables[new_table_name] = new_items
+            if not mods_count:
+                print(greybold(f'        (no modifications)'))
+            print(
+                f'{greybold("    (")}{colored(other_items_count, "white", attrs=["bold"])}{greybold(" other items)")}')
+            try:
+                new_tables[new_table_name] += new_items
+            except KeyError:
+                new_tables[new_table_name] = new_items
 
+        with open('temp.json', 'w') as file:
+            file.write(json.dumps(new_tables))
         return self.to_django_datadump(new_tables)
 
     def to_django_datadump(self, tables):
@@ -343,7 +430,7 @@ class Datadump:
                 dump.append(dump_i)
         dump.sort(key=self.django_datadump_sorter)
         return dump
-    
+
     def django_datadump_sorter(self, item):
         """
         It seems that django sorts items based on:
@@ -382,8 +469,11 @@ def main():
     # # answers = prompt(questions)
     # # username, password = answers['username'], answers['password']
     # username, password = 'ewen', 'hunter2'
-    remove_logentries = prompt([Confirm('remove_logentries', message='Remove log entries')])['remove_logentries']
+    remove_logentries = prompt(
+        [Confirm('remove_logentries', message='Remove log entries')])['remove_logentries']
 
+    cprint(
+        f'Showing operations for the first {str(EXPAND_N_ITEMS)+" items" if EXPAND_N_ITEMS > 1 else "item"} of each table', 'grey', attrs=['bold'])
 
     datadump = Datadump(DATADUMP, remove_logentries=remove_logentries)
     new_datadump = datadump.update()

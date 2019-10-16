@@ -7,10 +7,10 @@ from .models import *
 from .serializers import *
 
 
-class DefaultSettingViewSet(ModelViewSet):
+class SettingDefinitionViewSet(ModelViewSet):
     lookup_field = 'key'
-    queryset = DefaultSetting.objects.all()
-    serializer_class = DefaultSettingSerializer
+    queryset = SettingDefinition.objects.all()
+    serializer_class = SettingDefinitionSerializer
 
 
 class SettingsViewSet(ModelViewSet):
@@ -22,7 +22,7 @@ class SettingsViewSet(ModelViewSet):
         return SettingSerializer
 
     def get_queryset(self):
-        return Setting.objects.filter(user__pk=self.request.user.id)
+        return Setting.objects.filter(user__id=self.request.user.id)
 
 
 class SubjectsViewSet(ModelViewSet):
@@ -32,10 +32,11 @@ class SubjectsViewSet(ModelViewSet):
     def get_queryset(self):
         return Subject.objects.filter(user__pk=self.request.user.id)
 
+
 class UserViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
-    
+
     def get_serializer_class(self):
         if self.request.method in ['GET']:
             return UserReadSerializer
@@ -46,7 +47,7 @@ class UserViewSet(ModelViewSet):
             return User.objects.all()
         else:
             return User.objects.filter(pk=self.request.user.id)
-        
+
 
 class CurrentUserViewSet(ModelViewSet):
     """

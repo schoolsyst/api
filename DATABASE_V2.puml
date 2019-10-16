@@ -27,7 +27,7 @@ package common {
         BOOLEAN
     }
 
-    class DefaultSetting {
+    class SettingDefinition {
         ..Naming..
         String name
         String key
@@ -50,7 +50,7 @@ package common {
         + Email email
         + Boolean is_superuser
         + Date joined
-        + Date logged_in
+        + Date last_login
         + IPAddress ip_address
     }
 }
@@ -66,7 +66,7 @@ package Learn {
         + String name
         ---
         + Text content
-        + Path filepath
+        + Path filetype
         + Date last_modified
         + Date created
         + Filetype filetype
@@ -75,7 +75,7 @@ package Learn {
     class Learndata {
         + UUID uuid
         + Text data
-        + Float learnt
+        + Float progress
     }
 }
 
@@ -134,7 +134,7 @@ package Homework {
 
 User --> Subject
 User --> Setting
-DefaultSetting --> Setting
+SettingDefinition --> Setting
 
 Subject --> Note
 Subject --> Homework

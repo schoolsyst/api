@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 import json
 import os
-import requests
 import sys
+import requests
 from inquirer import Checkbox, prompt, Confirm
 
 BASE_URL = "http://localhost:8000/api/"
