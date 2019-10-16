@@ -8,6 +8,7 @@ import json
 import re
 import os
 import sys
+from datetime import datetime
 import shutil
 import getpass
 import requests
@@ -149,6 +150,7 @@ class Datadump:
             "BOOL_TO_INT": lambda x:        1 if bool(x) else 0,
             "TO_INT": lambda x:             int(x),
             "TO_ISO_WEEKDAY": lambda x:     WEEKDAYS.index(x)+1,
+            "SET_NOW": lambda x:            datetime.now().isoformat()
         }
         try:
             mutator = mutators[mutator_name.upper()]
@@ -222,6 +224,9 @@ class Datadump:
                 '+is_test:True',
                 '>DATE_TO_DATETIME due',
                 '+progress:0',
+                '+opened:@learn.test(id:id>last_modified)',
+                'created~>added',
+                'last_modified~>modified',
                 '==>homework.homework'
             ],
             'learn.grade': [

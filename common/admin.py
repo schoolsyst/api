@@ -15,8 +15,8 @@ class SettingAdmin(ModelAdmin):
 
 @register(DefaultSetting)
 class DefaultSettingAdmin(ModelAdmin):
-    list_display = ('key', 'type', 'category', 'name', 'default')
-    list_editable = ('category', 'name')
+    list_display = ('key', 'type', 'multiple', 'positive', 'category', 'name', 'default')
+    list_editable = ('type', 'multiple', 'positive', 'category', 'name')
 
 @register(User)
 class UserAdmin(ModelAdmin):

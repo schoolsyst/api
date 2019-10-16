@@ -28,9 +28,12 @@ class Note(Model):
     content = TextField(blank=True, null=True)
     created = DateTimeField()
     format = CharField(max_length=50,
-                         default=FORMATS[0],
-                         choices=FORMATS)
-    last_modified = DateTimeField(blank=True, null=True)
+                       default=FORMATS[0],
+                       choices=FORMATS)
+    # Dates
+    modified = DateTimeField(blank=True, null=True)
+    opened = DateTimeField(auto_now=True)
+    added = DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -51,8 +54,8 @@ class Learndata(Model):
     data = TextField('YAML Content', blank=True, null=True)
     name = CharField(max_length=300)
     progress = FloatField('Learning progress',
-                        validators=zero_to_one_validator,
-                        default=0)
+                          validators=zero_to_one_validator,
+                          default=0)
     # Metadata: stats
     test_tries = IntegerField('Tries in testing mode',
                               validators=[MinValueValidator(0)],
@@ -61,6 +64,7 @@ class Learndata(Model):
                                validators=[MinValueValidator(0)],
                                default=0)
     # Metadata: dates & durations
-    last_opened = DateTimeField(auto_now=True)
-    created     = DateTimeField(auto_now=True)
+    opened = DateTimeField(auto_now=True)
+    added = DateTimeField(auto_now=True)
+    modified = DateTimeField(auto_now=True)
     time_spent = DurationField('Time spent on learning')

@@ -31,7 +31,7 @@ api = DefaultRouter()
 # ---------------------- Common -------------------------
 api.register(r'users', UserViewSet, 'users')
 api.register(r'settings', SettingsViewSet, 'settings')
-api.register(r'default-settings', DefaultSettingViewSet, 'default_settings')
+api.register(r'settings-definitions', DefaultSettingViewSet, 'default_settings')
 api.register(r'subjects', SubjectsViewSet, 'subjects')
 # ----------------------- Learn -------------------------
 api.register(r'notes', NotesViewSet, 'notes')
