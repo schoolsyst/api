@@ -36,6 +36,7 @@ class NoteReadSerializer(ModelSerializer):
         fields = '__all__'
         lookup_field = 'uuid'
 
+
 class LearndataSerializer(ModelSerializer):
     """
     Serializer for Learndata objects
@@ -44,13 +45,14 @@ class LearndataSerializer(ModelSerializer):
     """
 
     subject = SlugRelatedField(
-        slug_field='slug', 
+        slug_field='slug',
         queryset=Subject.objects.all()
     )
-    note = SlugRelatedField(
+    notes = SlugRelatedField(
         slug_field='uuid',
         queryset=Note.objects.all(),
-        allow_null=True
+        allow_null=True,
+        many=True
     )
 
     class Meta:
@@ -66,12 +68,10 @@ class LearndataReadSerializer(ModelSerializer):
     """
 
     subject = SubjectSerializer(read_only=True)
-    note = NoteReadSerializer(read_only=True)
-    
+    notes = NoteReadSerializer(read_only=True, many=True)
+
     subject_url = SerializerMethodField()
-    note_url = SerializerMethodField()
     get_subject_url = hyperlinked_field_method('subject')
-    get_note_url = hyperlinked_field_method('note')
 
     class Meta:
         model = Learndata
