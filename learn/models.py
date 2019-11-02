@@ -44,7 +44,6 @@ class Learndata(Model):
     subject = ForeignKey(to='common.Subject',
                          related_name='learndatas',
                          on_delete=CASCADE)
-    notes = ManyToManyField(Note)
     uuid = UUIDField("UUID", default=uuid.uuid4, editable=False, unique=True)
     # Essentials
     data = TextField('YAML Content', blank=True, null=True)

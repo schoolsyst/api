@@ -122,13 +122,19 @@ package Homework {
         + String name()
     }
 
+    enum HomeworkType {
+        TEST
+        COURSEWORK
+        TOBRING
+        EXERCISE
+    }
+
     class Homework {
         + UUID uuid
         + String name
-        + Text notes
         + Date due
         + Float progress()
-        + Boolean is_test()
+        + HomeworkType type
     }
 }
 
@@ -136,13 +142,17 @@ User --> Subject
 User --> Setting
 SettingDefinition --> Setting
 
-Subject --> Note
-Subject --> Homework
-Subject --> Event
-Subject --> Learndata
-Subject --> Grade
+Subject ..> Note
+Subject ..> Homework
+Subject ..> Event
+Subject ..> Learndata
+Subject ..> Grade
 
 Note <--> "0..*" Learndata
 Homework <--> "0..*" Grade
-Event <--> "0..*" Mutation
+Homework <--> "0..*" Note
+Event --> "0..*" Mutation
+
+Event -[hidden]> Note
+Note -[hidden]> Homework
 @enduml

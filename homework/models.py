@@ -6,6 +6,13 @@ from learn.models import zero_to_one_validator
 
 # Create your models here.
 class Homework(Model):
+    HW_TYPES = [
+        ('TEST', 'Contrôle'),
+        ('DM', 'Devoir maison'),
+        ('EXERCISE', 'Exercice'),
+        ('TOBRING', 'À apporter'),
+    ]
+    
     # Relations & IDs
     subject = ForeignKey(to='common.Subject',
                          related_name='homework',
@@ -17,13 +24,17 @@ class Homework(Model):
 
     name = CharField(max_length=300)
     notes = TextField(blank=True, null=True)
+    type = CharField('Type', max_length=max(len(s) for s in HW_TYPES), choices=HW_TYPES)
+    room = CharField(max_length=300, blank=True, null=True)
+    progress = FloatField(validators=zero_to_one_validator, default=0)
     # Dates
     due = DateTimeField(blank=True, null=True)
     created = DateTimeField(blank=True, null=True)
     completed = DateTimeField(blank=True, null=True)
-    room = CharField(max_length=300, blank=True, null=True)
-    progress = FloatField(validators=zero_to_one_validator, default=0)
-    is_test = BooleanField()
+
+    def __str__(self):
+        return f"{self.subject.name}: {self.name}"
+    
 
 
 class Grade(Model):
@@ -65,3 +76,7 @@ class Grade(Model):
     
     # Added
     added = DateTimeField()
+
+    
+    def __str__(self):
+        return f"{self.subject.name}: {self.name}"

@@ -13,7 +13,7 @@ ABBREVIATION_VALIDATOR = [RegexValidator(r'[^\s]{,3}',
 
 
 class UsernameValidator(UnicodeUsernameValidator):
-    regex = r'[\w.@+\- ]+$'
+    regex = r'^.+$'
 
 # TODO: case-insensitive checks
 

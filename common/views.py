@@ -7,7 +7,7 @@ from .models import *
 from .serializers import *
 
 
-class SettingDefinitionViewSet(ModelViewSet):
+class SettingsDefinitionsViewSet(ModelViewSet):
     lookup_field = 'key'
     queryset = SettingDefinition.objects.all()
     serializer_class = SettingDefinitionSerializer
