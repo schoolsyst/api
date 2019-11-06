@@ -68,14 +68,15 @@ class Grade(Model):
                       null=True)
     # Values' context
     unit = FloatField('Grade unit',
-                      validators=[MinValueValidator(0)],
+                      validators=[MinValueValidator(1)],
                       default=20)
     weight = FloatField('Grade weight',
                         validators=[MinValueValidator(0)],
                         default=1)
     
     # Added
-    added = DateTimeField()
+    added = DateTimeField(auto_now=True)
+    
 
     
     def __str__(self):
