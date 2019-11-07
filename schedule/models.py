@@ -50,6 +50,9 @@ class Mutation(Model):
                        on_delete=SET_NULL,
                        blank=True,
                        null=True)
+    subject = ForeignKey(to='common.Subject', 
+                         related_name='mutations',
+                         on_delete=CASCADE)
     uuid = UUIDField("UUID",
                      default=uuid.uuid4,
                      editable=False,
@@ -57,15 +60,16 @@ class Mutation(Model):
 
     deleted = DateField(blank=True, null=True)
     # If not `is_rescheduled()`, all the following fields (at least `rescheduled`) should be NULL:
-    rescheduled = DateField(blank=True, null=True)
-    start = TimeField(blank=True, null=True)
-    end = TimeField(blank=True, null=True)
+    rescheduled_start = DateTimeField(blank=True, null=True)
+    rescheduled_end = DateTimeField(blank=True, null=True)
     room = CharField(max_length=300,
                      blank=True,
                      null=True)
+    
 
     def is_rescheduled(self):
-        return not self.rescheduled is None
+        return self.rescheduled_start is not None \
+           and self.rescheduled_end   is not None
 
     def __str__(self):
         first_part = f"{self.event.subject.name} {self.deleted}@{self.event.start}-{self.event.end}"

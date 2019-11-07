@@ -29,7 +29,7 @@ class Homework(Model):
     progress = FloatField(validators=zero_to_one_validator, default=0)
     # Dates
     due = DateTimeField(blank=True, null=True)
-    created = DateTimeField(blank=True, null=True)
+    added = DateTimeField(blank=True, null=True)
     completed = DateTimeField(blank=True, null=True)
 
     def __str__(self):
@@ -74,9 +74,9 @@ class Grade(Model):
                         validators=[MinValueValidator(0)],
                         default=1)
     
-    # Added
+    # Dates
     added = DateTimeField(auto_now=True)
-    
+    date_obtained = DateTimeField()
 
     
     def __str__(self):

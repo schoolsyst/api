@@ -68,7 +68,7 @@ TERM_SZ = shutil.get_terminal_size((80, 20))
 WEEKDAYS = ['monday', 'tuesday', 'wednesday',
             'thursday', 'friday', 'saturday', 'sunday']
 EXPAND_N_ITEMS = 3
-ACTIONS_ADD_VBAR = True
+ACTIONS_ADD_VBAR = False
 ACTIONS_WITH_VERBS = {
     'rename': 'Renamed',
     'assign': 'Set',
@@ -88,7 +88,7 @@ ACTIONS_WITH_ICONS = {
     'assign_if_false': '=',
 }
 
-ACTIONS = ACTIONS_WITH_VERBS
+ACTIONS = ACTIONS_WITH_ICONS
 if ACTIONS_ADD_VBAR:
     ACTIONS = {k: '│ '+v for k, v in ACTIONS.items()}
 
@@ -191,7 +191,7 @@ class Datadump:
             "BOOL_TO_INT": lambda x:        1 if bool(x) else 0,
             "TO_INT": lambda x:             int(x),
             "TO_ISO_WEEKDAY": lambda x:     WEEKDAYS.index(x)+1,
-            "SET_NOW": lambda x:            datetime.now().isoformat()
+            "SET_NOW": lambda x:            datetime.now().isoformat(),
             "TAKE_FIRST_LINE": lambda x:        str(x).split('\n')[0],
             "REMOVE_FIRST_LINE": lambda x:      '\n'.join(str(x).split('\n')[1:]),
             "TAKE_FIRST_ITEM": lambda x:        x[0]
@@ -281,7 +281,7 @@ class Datadump:
                 '+progress:0',
                 '+opened:@learn.test(id:id>last_modified)',
                 'created~>added',
-                'last_modified~>modified',
+                # 'last_modified~>modified',
                 '==>homework.homework'
             ],
             'learn.grade': [

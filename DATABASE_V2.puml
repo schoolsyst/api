@@ -68,7 +68,7 @@ package Learn {
         + Text content
         + Path filetype
         + Date last_modified
-        + Date created
+        + Date added
         + Filetype filetype
     }
 
@@ -86,6 +86,12 @@ package Schedule {
         Q2
         BOTH
     }
+
+    class DateTimeRange<< (T,cyan) >> {
+        + DateTime start
+        + DateTime end
+    }
+
     class Event {
         + UUID uuid
         + Time start
@@ -98,12 +104,9 @@ package Schedule {
     
     class Mutation {
         + Date deleted
-        + Boolean rescheduled()
         ..rescheduled() || null..
-        + Date rescheduled
+        + DateTimeRange rescheduled
         + String room
-        + Time rescheduled_start
-        + Time rescheduled_end
     }
 }
 

@@ -9,5 +9,5 @@ class EventAdmin(ModelAdmin):
 
 @register(Mutation)
 class MutationAdmin(ModelAdmin):
-    list_display = ('uuid', 'event', 'deleted', 'rescheduled', 'start', 'end', 'room')
-    list_editable = ('deleted', 'rescheduled', 'start', 'end', 'room')
+    list_display = ('uuid', 'event', 'deleted', 'rescheduled_start', 'rescheduled_end', 'room')
+    list_editable = ('deleted', 'rescheduled_start', 'rescheduled_end', 'room')

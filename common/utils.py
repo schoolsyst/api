@@ -11,7 +11,7 @@ def auto_list_display(Model, add=None, exclude=None):
 
 # @ https://www.w3resource.com/python-exercises/date-time-exercise/python-date-time-exercise-50.php
 def daterange(date1, date2):
-    """ Produces a range of datetime objects between date1 & date2
+    """ Returns a range of datetime objects between date1 & date2
     """
     from datetime import timedelta
     for n in range(int((date2 - date1).days) + 1):
