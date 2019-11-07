@@ -10,5 +10,5 @@ class GradeAdmin(ModelAdmin):
 
 @register(Homework)
 class HomeworkAdmin(ModelAdmin):
-    list_display = ('uuid', 'subject', 'name', 'due', 'notes', 'progress', 'type', 'created')
+    list_display = ('uuid', 'subject', 'name', 'due', 'notes', 'progress', 'type', 'added')
     list_editable = ('name', 'progress', 'type')
