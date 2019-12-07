@@ -30,7 +30,6 @@ class Homework(Model):
     # Dates
     due = DateTimeField(blank=True, null=True)
     added = DateTimeField(blank=True, null=True)
-    completed = DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.subject.name}: {self.name}"
