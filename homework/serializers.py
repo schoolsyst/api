@@ -12,7 +12,7 @@ class Homeworkerializer(ModelSerializer):
     needed when POST, PUT or PATCH'ing data.
     """
     subject = SlugRelatedField(
-        slug_field='slug',
+        slug_field='uuid',
         queryset=Subject.objects.all(),
     )
 

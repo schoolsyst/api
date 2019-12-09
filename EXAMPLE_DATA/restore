@@ -5,7 +5,7 @@ import sys
 import requests
 from inquirer import Checkbox, prompt, Confirm
 
-BASE_URL = "http://localhost:8000/api/"
+BASE_URL = "http://localhost:9999/api/"
 TOKEN_URL = BASE_URL + 'auth/'
 DETAILED_LOGS = False
 FILES = [  # In dependency order.
@@ -16,10 +16,14 @@ FILES = [  # In dependency order.
 def get_token(username=None, password=None):
     user = username or input('Username: ')
     pwrd = password or input('Password: ')
-    token = requests.post(TOKEN_URL, data={
+    try:
+        token = requests.post(TOKEN_URL, data={
         'username': user,
         'password': pwrd
     }).json()['token']
+    except KeyError:
+        print('Invalid admin credentials. Prompting for credentials...')
+        return get_token(None, None)
     print(f'Got token: {token}')
     return token
 

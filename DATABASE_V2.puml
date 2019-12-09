@@ -4,7 +4,6 @@ package common {
         + UUID uuid
         ..Names..
         + Slug slug
-        + String abbreviation
         + String name
         + CSSColor color
         ..Grades..
@@ -29,19 +28,19 @@ package common {
 
     class SettingDefinition {
         ..Naming..
-        String name
-        String key
-        String category
-        String description
+        + String name
+        + String key
+        + String category
+        + String description
         ..Value definition..
-        valueType type
-        Boolean multiple
-        String default
-        Boolean optional
+        + valueType type
+        + Boolean multiple
+        + String default
+        + Boolean optional
     }
 
     class Setting {
-        String value
+        + String value
     }
 
     class User {
@@ -59,12 +58,13 @@ package Learn {
         MARKDOWN
         ASCIIDOC
         STUDENTML
+        HTML
     }
 
     class Note {
         + UUID uuid
         + String name
-        ---
+        ---------------
         + Text content
         + Path filetype
         + Date last_modified
@@ -76,6 +76,12 @@ package Learn {
         + UUID uuid
         + Text data
         + Float progress
+        + Integer test_tries
+        + Integer train_tries
+        + Duration time_spent
+        + Date opened
+        + Date added
+        + Date modified
     }
 }
 
@@ -85,6 +91,13 @@ package Schedule {
         Q1
         Q2
         BOTH
+    }
+
+    enum MutationType {
+        EDT
+        ADD
+        DEL
+        RES
     }
 
     class DateTimeRange<< (T,cyan) >> {
@@ -98,22 +111,19 @@ package Schedule {
         + Time end
         + Integer day
         + Weektype week_type
-        + Boolean deleted()
-        + Event rescheduled()
     }
     
     class Mutation {
-        + Date deleted
-        ..rescheduled() || null..
+        + DateTimeRange deleted
         + DateTimeRange rescheduled
         + String room
+        + MutationType type()
     }
 }
 
 package Homework {
     class Grade {
         + UUID uuid
-        + Date added
         + String name
         ..Values..
         + Float actual
@@ -121,8 +131,9 @@ package Homework {
         + Float goal
         + Float maximum
         + Float weight
-        ..Methods..
-        + String name()
+        ..Dates..
+        + Date added
+        + Date obtained
     }
 
     enum HomeworkType {
@@ -135,9 +146,13 @@ package Homework {
     class Homework {
         + UUID uuid
         + String name
-        + Date due
-        + Float progress()
+        + Float progress
         + HomeworkType type
+        + String room
+        ..Dates..
+        + Date due
+        + Date added
+        + Date completed
     }
 }
 

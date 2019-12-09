@@ -4,7 +4,7 @@
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L216",
-    "day": "MONDAY",
+    "day": "1",
     "week_type": "BOTH"
   },
   {
@@ -12,7 +12,7 @@
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L004",
-    "day": "MONDAY",
+    "day": "1",
     "week_type": "BOTH"
   },
   {
@@ -20,7 +20,7 @@
     "start": "09:50:00",
     "end": "12:00:00",
     "room": "L009",
-    "day": "MONDAY",
+    "day": "1",
     "week_type": "BOTH"
   },
   {
@@ -28,7 +28,7 @@
     "start": "14:00:00",
     "end": "14:55:00",
     "room": "L213",
-    "day": "MONDAY",
+    "day": "1",
     "week_type": "BOTH"
   },
   {
@@ -36,7 +36,7 @@
     "start": "14:55:00",
     "end": "15:50:00",
     "room": "L231",
-    "day": "MONDAY",
+    "day": "1",
     "week_type": "BOTH"
   },
   {
@@ -44,7 +44,7 @@
     "start": "15:50:00",
     "end": "16:45:00",
     "room": "L111",
-    "day": "MONDAY",
+    "day": "1",
     "week_type": "Q2"
   },
   {
@@ -52,7 +52,7 @@
     "start": "16:45:00",
     "end": "18:10:00",
     "room": "C214",
-    "day": "MONDAY",
+    "day": "1",
     "week_type": "BOTH"
   },
   {
@@ -60,7 +60,7 @@
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L201",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "BOTH"
   },
   {
@@ -68,7 +68,7 @@
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L103",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "Q1"
   },
   {
@@ -76,7 +76,7 @@
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L201",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "Q2"
   },
   {
@@ -84,7 +84,7 @@
     "start": "10:10:00",
     "end": "11:05:00",
     "room": "L215",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "BOTH"
   },
   {
@@ -92,7 +92,7 @@
     "start": "11:05:00",
     "end": "12:00:00",
     "room": "L112",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "BOTH"
   },
   {
@@ -100,7 +100,7 @@
     "start": "13:05:00",
     "end": "14:00:00",
     "room": "L226",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "BOTH"
   },
   {
@@ -108,7 +108,7 @@
     "start": "14:00:00",
     "end": "15:50:00",
     "room": "L013-015",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "Q1"
   },
   {
@@ -116,7 +116,7 @@
     "start": "14:00:00",
     "end": "15:50:00",
     "room": "L109",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "Q2"
   },
   {
@@ -124,7 +124,7 @@
     "start": "15:50:00",
     "end": "17:40:00",
     "room": "GYMN",
-    "day": "TUESDAY",
+    "day": "2",
     "week_type": "BOTH"
   },
   {
@@ -132,7 +132,7 @@
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L004",
-    "day": "WEDNESDAY",
+    "day": "3",
     "week_type": "BOTH"
   },
   {
@@ -140,7 +140,7 @@
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L216",
-    "day": "WEDNESDAY",
+    "day": "3",
     "week_type": "BOTH"
   },
   {
@@ -148,7 +148,7 @@
     "start": "10:10:00",
     "end": "12:00:00",
     "room": "L207",
-    "day": "WEDNESDAY",
+    "day": "3",
     "week_type": "BOTH"
   },
   {
@@ -156,7 +156,7 @@
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L109",
-    "day": "THURSDAY",
+    "day": "4",
     "week_type": "BOTH"
   },
   {
@@ -164,7 +164,7 @@
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L208",
-    "day": "THURSDAY",
+    "day": "4",
     "week_type": "BOTH"
   },
   {
@@ -172,7 +172,7 @@
     "start": "10:40:00",
     "end": "12:00:00",
     "room": "L105",
-    "day": "THURSDAY",
+    "day": "4",
     "week_type": "BOTH"
   },
   {
@@ -180,7 +180,7 @@
     "start": "13:05:00",
     "end": "14:00:00",
     "room": "C214",
-    "day": "THURSDAY",
+    "day": "4",
     "week_type": "BOTH"
   },
   {
@@ -188,7 +188,7 @@
     "start": "14:55:00",
     "end": "15:50:00",
     "room": "L226",
-    "day": "THURSDAY",
+    "day": "4",
     "week_type": "BOTH"
   },
   {
@@ -196,7 +196,7 @@
     "start": "15:50:00",
     "end": "18:10:00",
     "room": "L013",
-    "day": "THURSDAY",
+    "day": "4",
     "week_type": "BOTH"
   },
   {
@@ -204,7 +204,7 @@
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L204",
-    "day": "FRIDAY",
+    "day": "5",
     "week_type": "BOTH"
   },
   {
@@ -212,7 +212,7 @@
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L215",
-    "day": "FRIDAY",
+    "day": "5",
     "week_type": "BOTH"
   },
   {
@@ -220,7 +220,7 @@
     "start": "10:10:00",
     "end": "11:05:00",
     "room": "L224",
-    "day": "FRIDAY",
+    "day": "5",
     "week_type": "BOTH"
   },
   {
@@ -228,7 +228,7 @@
     "start": "11:05:00",
     "end": "12:00:00",
     "room": "L004",
-    "day": "FRIDAY",
+    "day": "5",
     "week_type": "BOTH"
   },
   {
@@ -236,7 +236,7 @@
     "start": "13:05:00",
     "end": "15:30:00",
     "room": "L015",
-    "day": "FRIDAY",
+    "day": "5",
     "week_type": "BOTH"
   }
 ]

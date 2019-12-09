@@ -1,3 +1,4 @@
+from drf_rw_serializers import generics
 from rest_framework.viewsets import ModelViewSet
 from .models import *
 from .serializers import *

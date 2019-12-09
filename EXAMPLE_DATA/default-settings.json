@@ -101,5 +101,15 @@
     "choices": "",
     "default": "1",
     "positive": true
+  },
+  {
+    "key": "theme",
+    "type": "SELECT",
+    "name": "Thème",
+    "category": "Apparence",
+    "optional": true,
+    "description": "",
+    "choices": "AUTO,DARK,LIGHT",
+    "default": "AUTO"
   }
 ]

@@ -13,7 +13,7 @@ class NoteSerializer(ModelSerializer):
     """
 
     subject = SlugRelatedField(
-        slug_field='slug', queryset=Subject.objects.all())
+        slug_field='uuid', queryset=Subject.objects.all())
 
     class Meta:
         model = Note
@@ -45,7 +45,7 @@ class LearndataSerializer(ModelSerializer):
     """
 
     subject = SlugRelatedField(
-        slug_field='slug',
+        slug_field='uuid',
         queryset=Subject.objects.all()
     )
     notes = SlugRelatedField(

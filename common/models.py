@@ -1,6 +1,8 @@
 from backend.settings import AUTH_USER_MODEL
 import uuid
 from django.db.models import *
+from django_extensions.db.fields import AutoSlugField
+from slugify import slugify
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import RegexValidator, MinValueValidator
@@ -25,24 +27,6 @@ class User(AbstractUser):
                                        blank=True,
                                        null=True)
 
-
-class Setting(Model):
-    # Relations & IDs
-    setting = ForeignKey(to='common.SettingDefinition', on_delete=CASCADE)
-    user = ForeignKey(to=AUTH_USER_MODEL,
-                      on_delete=CASCADE,
-                      related_name='settings')
-    uuid = UUIDField("UUID",
-                     default=uuid.uuid4,
-                     editable=False,
-                     unique=True)
-
-    value = TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.user.username}'s {self.setting.name}"
-
-
 class SettingDefinition(Model):
     TYPES = [
         ('TEXT',      'Texte'),
@@ -63,22 +47,40 @@ class SettingDefinition(Model):
                      editable=False,
                      unique=True)
     # Naming
-    key = CharField(max_length=300, unique=True)
     name = CharField(max_length=200)
-    category = CharField(max_length=150)
+    key = CharField(max_length=300, unique=True)
+    category = CharField(max_length=150, blank=True, null=True)
     description = TextField(blank=True, null=True)
     # Value definition
     type = CharField(choices=TYPES,
                      max_length=max_kind_len,
                      default=TYPES[0])
+    multiple = BooleanField(default=False)
+    default = TextField(blank=True, null=True)
     optional = BooleanField(default=True)
     choices = TextField(blank=True, null=True)  # Comma-separated
-    default = TextField(blank=True, null=True)
     positive = BooleanField(default=False)
-    multiple = BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}"
+
+class Setting(Model):
+    # Relations & IDs
+    setting = ForeignKey(to='common.SettingDefinition', on_delete=CASCADE)
+    user = ForeignKey(to=AUTH_USER_MODEL,
+                      on_delete=CASCADE,
+                      related_name='settings')
+    uuid = UUIDField("UUID",
+                     default=uuid.uuid4,
+                     editable=False,
+                     unique=True)
+
+    value = TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s {self.setting.name}"
+
+
 
 
 class Subject(Model):
@@ -91,16 +93,15 @@ class Subject(Model):
                      editable=False,
                      unique=True)
     # Naming
-    color = CharField(max_length=7, validators=HEX_COLOR_VALIDATOR)
     name = CharField(max_length=300)
-    slug = SlugField(max_length=300)
-    abbreviation = CharField(max_length=3, validators=ABBREVIATION_VALIDATOR)
+    slug = AutoSlugField(populate_from=["name"], slugify_function=slugify)
+    color = CharField(max_length=7, validators=HEX_COLOR_VALIDATOR)
     # Grades
-    goal = FloatField(validators=zero_to_one_validator, null=True, blank=True)
     weight = FloatField(validators=[MinValueValidator(0, "The grade's weight cannot be negative")],
                         default=1)
+    goal = FloatField(validators=zero_to_one_validator, null=True, blank=True)
     # Defaults
     room = CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
-        return '{1} ({0})'.format(self.user.username, self.name)
+        return '{0}: {1}'.format(self.user.username, self.slug)
