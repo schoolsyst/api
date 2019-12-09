@@ -9,3 +9,4 @@ sqlparse
 django_extensions
 django-request-logging
 python-slugify[unidecode]
+drf_rw_serializers
