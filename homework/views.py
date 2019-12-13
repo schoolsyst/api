@@ -9,7 +9,7 @@ class HomeworkViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method in ['GET']:
             return HomeworkReadSerializer
-        return Homeworkerializer
+        return HomeworkSerializer
 
     def get_queryset(self):
         user = self.request.user

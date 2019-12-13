@@ -5,7 +5,7 @@ from common.models import *
 from common.utils import hyperlinked_field_method
 
 
-class Homeworkerializer(ModelSerializer):
+class HomeworkSerializer(ModelSerializer):
     """
     Serializer for Homework objects
     with slug fields replacing nested relations,
