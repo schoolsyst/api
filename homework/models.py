@@ -2,6 +2,7 @@ from django.db.models import *
 import uuid
 from django.core.validators import MinValueValidator, MaxValueValidator
 from learn.models import zero_to_one_validator, Note
+import bleach
 
 class Grade(Model):
     # Relations & IDs
@@ -62,7 +63,6 @@ class Homework(Model):
                      default=uuid.uuid4,
                      editable=False,
                      unique=True)
-    notes = ManyToManyField(Note)
     grades = ManyToManyField(Grade)
 
     name = CharField(max_length=300)
@@ -73,6 +73,14 @@ class Homework(Model):
     due = DateTimeField(blank=True, null=True)
     added = DateTimeField(blank=True, null=True)
     completed = DateTimeField(blank=True, null=True)
+    # Fields containing user-controllable raw HTML (to be cleaned)
+    details = TextField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # Sanitize user-controllable HTML text
+        self.details = bleach.clean(self.details)
+
+        return super(Homework, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.subject.name}: {self.name}"

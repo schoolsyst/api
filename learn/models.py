@@ -1,6 +1,7 @@
 from django.db.models import *
 import uuid
 from django.core.validators import MinValueValidator, MaxValueValidator
+import bleach
 
 zero_to_one_validator = [
     MinValueValidator(0, "This can't be a negative value"),
@@ -28,7 +29,6 @@ class Note(Model):
     #learndatas (M2M relationship stored in Learndata)
 
     name = CharField(max_length=300, blank=True, null=True)
-    content = TextField(blank=True, null=True)
     format = CharField(max_length=50,
                        default=FORMATS[0],
                        choices=FORMATS)
@@ -36,6 +36,15 @@ class Note(Model):
     modified = DateTimeField(blank=True, null=True)
     opened = DateTimeField(auto_now=True)
     added = DateTimeField(auto_now=True)
+
+    # Fields containing user-controllable, raw HTML
+    content = TextField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # Sanitize user-controllable HTML text
+        self.content = bleach.clean(self.content, tags=bleach.sanitizer.ALLOWED_TAGS + ['p', 'dl', 'dd', 'dt'])
+
+        return super(Note, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name or 'Untitled'
