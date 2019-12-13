@@ -62,7 +62,7 @@ class SettingDefinition(Model):
     positive = BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"[{self.category}] {self.key}"
 
 class Setting(Model):
     # Relations & IDs

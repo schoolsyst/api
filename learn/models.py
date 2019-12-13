@@ -47,7 +47,7 @@ class Note(Model):
         return super(Note, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name or 'Untitled'
+        return f"{self.subject}: {self.name or '<Untitled>'}"
 
 
 class Learndata(Model):
