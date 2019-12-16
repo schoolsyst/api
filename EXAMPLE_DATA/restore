@@ -2,6 +2,7 @@
 import json
 import os
 import sys
+import re
 import requests
 from inquirer import Checkbox, prompt, Confirm
 
@@ -11,7 +12,7 @@ DETAILED_LOGS = False
 FILES = [  # In dependency order.
     'subjects.json', 'default-settings.json', 'settings.json', 'events.json', 'notes.json'
 ]
-
+DISTANT_VALUE_REGEX = re.compile(r'@(?P<endpoint>[^.]+)\.(?P<get_prop>[^:]+):(?P<search_in_prop>[^=]+)=(?P<search_for>.+)')
 
 def get_token(username=None, password=None):
     user = username or input('Username: ')
@@ -41,10 +42,60 @@ def load_data(filename):
     with open(filename, 'r', encoding="utf8") as file:
         return json.loads(file.read())
 
+def get_server_data(endpoint, token):
+    url = BASE_URL + endpoint
+    return requests.get(url, headers={'Authorization': f'Bearer {token}'}).json()
+
+def get_distant_value(endpoint, get_prop, search_in_prop, search_for, token):
+    # Example: 
+    # @subjects.uuid:slug=histoire-geographie
+    #   |        |     |           |
+    #   |        |     |           | search_for
+    #   |        |     | search_in_prop
+    #   |        | get_prop
+    #   | endpoint
+    #
+    # will make a request to (BASE_URL + 'subjects') and 
+    # return the 'uuid' for a subject whose 'slug' equals 'histoire-geographie'
+    #
+    # Returns a tuple: (status, error_message if not status else found_value)
+    objects = get_server_data(endpoint, token)
+    found = None
+    # Search through each object
+    for obj in objects:
+        try:
+            # Get the field and test against the value
+            if obj[search_in_prop] == search_for:
+                # Set `found` to this object and break outta the loop
+                found = obj
+                break
+        except KeyError:
+            continue
+    # If `found` is None, no object matched the condition
+    if found is None:
+        return (False, f'No object in {endpoint} with {search_in_prop} == {search_for}')
+    # Get the value from the found object
+    try:
+        return (True, found[get_prop])
+    except KeyError:
+        return (False, f'Object found has no {get_prop}')
+    
 
 def make_request(data, token):
     print(f'Request to {BASE_URL}{name}/ with data...')
     if DETAILED_LOGS: print(json.dumps(data, indent=2))
+
+    for (k, v) in data.items():
+        if type(v) is str and DISTANT_VALUE_REGEX.match(v):
+            distant_value_params = DISTANT_VALUE_REGEX.search(v).groupdict()
+            status, error_or_data = get_distant_value(**distant_value_params, token=token)
+            if status:
+                print(f'    Got distant value {v}')
+                data[k] = error_or_data
+            else:
+                print(f'    Error while getting distant value "{v}": {error_or_data}')
+                print(f'    Aborting POST request.')
+                return
 
     res = requests.post(f'{BASE_URL}{name}/',
                         data=data,
@@ -65,7 +116,7 @@ def prompt_multiple_choices(choices):
 cwd = os.getcwd()
 os.chdir(os.path.dirname(__file__))
 # Get token. note: these credentials are local-only.
-token = get_token('ewen', 'hunter2')
+token = get_token('ewen-le-bihan', '^bXq2##7*ev8*4i%3$LGKzvd$HdN$')
 # Destroy db or keep it ?
 reset = prompt([Confirm('reset', message='Replace current data', default=False)])['reset']
 # Restore each .json file

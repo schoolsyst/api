@@ -1,6 +1,6 @@
 [
   {
-    "subject": "english",
+    "subject": "@subjects.uuid:slug=english",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L216",
@@ -8,7 +8,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "histoire-geographie",
+    "subject": "@subjects.uuid:slug=histoire-geographie",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L004",
@@ -16,7 +16,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "francais",
+    "subject": "@subjects.uuid:slug=philosophie",
     "start": "09:50:00",
     "end": "12:00:00",
     "room": "L009",
@@ -24,7 +24,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "espagnol",
+    "subject": "@subjects.uuid:slug=espanol",
     "start": "14:00:00",
     "end": "14:55:00",
     "room": "L213",
@@ -32,7 +32,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "culture-religieuse",
+    "subject": "@subjects.uuid:slug=culture-religieuse",
     "start": "14:55:00",
     "end": "15:50:00",
     "room": "L231",
@@ -40,7 +40,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "physique",
+    "subject": "@subjects.uuid:slug=physique",
     "start": "15:50:00",
     "end": "16:45:00",
     "room": "L111",
@@ -48,7 +48,7 @@
     "week_type": "Q2"
   },
   {
-    "subject": "latin",
+    "subject": "@subjects.uuid:slug=latin",
     "start": "16:45:00",
     "end": "18:10:00",
     "room": "C214",
@@ -56,7 +56,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "mathematiques",
+    "subject": "@subjects.uuid:slug=mathematiques",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L201",
@@ -64,7 +64,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "physique",
+    "subject": "@subjects.uuid:slug=physique",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L103",
@@ -72,7 +72,7 @@
     "week_type": "Q1"
   },
   {
-    "subject": "mathematiques",
+    "subject": "@subjects.uuid:slug=mathematiques",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L201",
@@ -80,7 +80,7 @@
     "week_type": "Q2"
   },
   {
-    "subject": "english",
+    "subject": "@subjects.uuid:slug=english",
     "start": "10:10:00",
     "end": "11:05:00",
     "room": "L215",
@@ -88,7 +88,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "physique",
+    "subject": "@subjects.uuid:slug=physique",
     "start": "11:05:00",
     "end": "12:00:00",
     "room": "L112",
@@ -96,7 +96,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "russe",
+    "subject": "@subjects.uuid:slug=russkaia",
     "start": "13:05:00",
     "end": "14:00:00",
     "room": "L226",
@@ -104,7 +104,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "sciences-de-l-ingenieur",
+    "subject": "@subjects.uuid:slug=sciences-de-l-ingenieur",
     "start": "14:00:00",
     "end": "15:50:00",
     "room": "L013-015",
@@ -112,7 +112,7 @@
     "week_type": "Q1"
   },
   {
-    "subject": "francais",
+    "subject": "@subjects.uuid:slug=philosophie",
     "start": "14:00:00",
     "end": "15:50:00",
     "room": "L109",
@@ -120,7 +120,7 @@
     "week_type": "Q2"
   },
   {
-    "subject": "sport",
+    "subject": "@subjects.uuid:slug=sport",
     "start": "15:50:00",
     "end": "17:40:00",
     "room": "GYMN",
@@ -128,7 +128,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "histoire-geographie",
+    "subject": "@subjects.uuid:slug=histoire-geographie",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L004",
@@ -136,7 +136,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "english",
+    "subject": "@subjects.uuid:slug=english",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L216",
@@ -144,7 +144,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "mathematiques",
+    "subject": "@subjects.uuid:slug=mathematiques",
     "start": "10:10:00",
     "end": "12:00:00",
     "room": "L207",
@@ -152,7 +152,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "francais",
+    "subject": "@subjects.uuid:slug=philosophie",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L109",
@@ -160,7 +160,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "mathematiques",
+    "subject": "@subjects.uuid:slug=mathematiques",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L208",
@@ -168,7 +168,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "physique",
+    "subject": "@subjects.uuid:slug=physique",
     "start": "10:40:00",
     "end": "12:00:00",
     "room": "L105",
@@ -176,7 +176,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "latin",
+    "subject": "@subjects.uuid:slug=latin",
     "start": "13:05:00",
     "end": "14:00:00",
     "room": "C214",
@@ -184,7 +184,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "russe",
+    "subject": "@subjects.uuid:slug=russkaia",
     "start": "14:55:00",
     "end": "15:50:00",
     "room": "L226",
@@ -192,7 +192,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "sciences-de-l-ingenieur",
+    "subject": "@subjects.uuid:slug=sciences-de-l-ingenieur",
     "start": "15:50:00",
     "end": "18:10:00",
     "room": "L013",
@@ -200,7 +200,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "mathematiques",
+    "subject": "@subjects.uuid:slug=mathematiques",
     "start": "08:00:00",
     "end": "08:55:00",
     "room": "L204",
@@ -208,7 +208,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "espagnol",
+    "subject": "@subjects.uuid:slug=espanol",
     "start": "08:55:00",
     "end": "09:50:00",
     "room": "L215",
@@ -216,7 +216,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "francais",
+    "subject": "@subjects.uuid:slug=philosophie",
     "start": "10:10:00",
     "end": "11:05:00",
     "room": "L224",
@@ -224,7 +224,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "histoire-geographie",
+    "subject": "@subjects.uuid:slug=histoire-geographie",
     "start": "11:05:00",
     "end": "12:00:00",
     "room": "L004",
@@ -232,7 +232,7 @@
     "week_type": "BOTH"
   },
   {
-    "subject": "sciences-de-l-ingenieur",
+    "subject": "@subjects.uuid:slug=sciences-de-l-ingenieur",
     "start": "13:05:00",
     "end": "15:30:00",
     "room": "L015",
