@@ -40,7 +40,7 @@ class Grade(Model):
     
     # Dates
     added = DateTimeField(auto_now=True)
-    obtained = DateTimeField(blank=True, null=True)
+    obtained_date = DateTimeField(blank=True, null=True)
 
     
     def __str__(self):
