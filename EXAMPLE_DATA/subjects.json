@@ -2,8 +2,6 @@
     {
         "color": "#1A237E",
         "name": "English",
-        "slug": "english",
-        "abbreviation": "eng",
         "room": "L216",
         "goal": 0.95,
         "weight": 2
@@ -11,17 +9,13 @@
     {
         "color": "#43A047",
         "name": "Histoire–Géographie",
-        "slug": "histoire-geographie",
-        "abbreviation": "h-g",
         "room": "L004",
         "goal": 0.75,
         "weight": 3
     },
     {
         "color": "#E53935",
-        "name": "Français",
-        "slug": "francais",
-        "abbreviation": "fra",
+        "name": "Philosophie",
         "room": "L009",
         "goal": 0.6,
         "weight": 2
@@ -29,8 +23,6 @@
     {
         "color": "#9C27B0",
         "name": "Physique",
-        "slug": "physique",
-        "abbreviation": "phy",
         "room": "",
         "goal": 0.75,
         "weight": 6
@@ -38,8 +30,6 @@
     {
         "color": "#795548",
         "name": "Latin",
-        "slug": "latin",
-        "abbreviation": "lat",
         "room": "C214",
         "goal": 0.85,
         "weight": 3
@@ -47,8 +37,6 @@
     {
         "color": "#F57C00",
         "name": "Русская",
-        "slug": "russe",
-        "abbreviation": "rus",
         "room": "L226",
         "goal": 0.9,
         "weight": 2
@@ -56,8 +44,6 @@
     {
         "color": "#CFD8DC",
         "name": "Sciences de l'ingénieur",
-        "slug": "sciences-de-l-ingenieur",
-        "abbreviation": "sci",
         "room": "L013",
         "goal": 0.8,
         "weight": 6
@@ -65,8 +51,6 @@
     {
         "color": "#039BE5",
         "name": "Mathématiques",
-        "slug": "mathematiques",
-        "abbreviation": "mth",
         "room": "",
         "goal": 0.7,
         "weight": 7
@@ -74,8 +58,6 @@
     {
         "color": "#FDD835",
         "name": "Español",
-        "slug": "espagnol",
-        "abbreviation": "esp",
         "room": "",
         "goal": 0.7,
         "weight": 2
@@ -83,8 +65,6 @@
     {
         "color": "#F48FB1",
         "name": "Sport",
-        "slug": "sport",
-        "abbreviation": "spo",
         "room": "GYMN",
         "goal": 0.5,
         "weight": 2
@@ -92,8 +72,6 @@
     {
         "color": "#26A69A",
         "name": "Culture religieuse",
-        "slug": "culture-religieuse",
-        "abbreviation": "clr",
         "room": "L231",
         "goal": null,
         "weight": 0
