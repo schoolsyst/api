@@ -43,10 +43,8 @@ class GradeSerializer(ModelSerializer):
     with slug fields replacing nested relations,
     needed when POST, PUT or PATCH'ing data.
     """
-    homework = SlugRelatedField(
-        slug_field="uuid", queryset=Grade.objects.all(), allow_null=True)
     subject = SlugRelatedField(
-        slug_field="slug", queryset=Subject.objects.all())
+        slug_field="uuid", queryset=Subject.objects.all())
 
     class Meta:
         model = Grade
@@ -59,12 +57,8 @@ class GradeReadSerializer(ModelSerializer):
     with nested relation representations
     useful when GET'ing data.
     """
-    homework = HomeworkReadSerializer(read_only=True)
     subject = SubjectSerializer(read_only=True)
-    
-    homework_url = SerializerMethodField()
     subject_url = SerializerMethodField()
-    get_homework_url = hyperlinked_field_method('homework', name='homework')
     get_subject_url  = hyperlinked_field_method('subject')
 
     class Meta:
