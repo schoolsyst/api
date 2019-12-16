@@ -25,3 +25,8 @@ def hyperlinked_field_method(prop, prop2='uuid', name=None):
         return f"http://localhost:8000/api/{name}/{getattr(subobj, prop2)}"
     
     return hyperlinked_field
+
+    
+def all_h_tags(dict_val=None, upto=6):
+    tags = ['h' + str(i) for i in range(upto-1)]
+    return tags if dict_val is None else {t: dict_val for t in tags}
