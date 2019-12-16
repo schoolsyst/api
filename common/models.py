@@ -111,5 +111,10 @@ class Subject(Model):
     # Defaults
     room = CharField(max_length=300, blank=True, null=True)
 
+    # Calculate slug (sadly, AutoSlugField does not update with name)
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Subject, self).save(*args, **kwargs)
+
     def __str__(self):
         return '{0}: {1}'.format(self.user.username, self.slug)
