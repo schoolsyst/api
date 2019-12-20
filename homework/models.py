@@ -78,7 +78,7 @@ class Homework(Model):
 
     def save(self, *args, **kwargs):
         # Sanitize user-controllable HTML text
-        self.details = bleach.clean(self.details)
+        if self.details: self.details = bleach.clean(self.details)
 
         return super(Homework, self).save(*args, **kwargs)
 
