@@ -63,7 +63,7 @@ class Homework(Model):
                      default=uuid.uuid4,
                      editable=False,
                      unique=True)
-    grades = ManyToManyField(Grade)
+    grades = ManyToManyField(Grade, blank=True)
 
     name = CharField(max_length=300)
     type = CharField('Type', max_length=max(len(s) for s in HW_TYPES), choices=HW_TYPES)
