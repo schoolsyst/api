@@ -45,7 +45,7 @@ class Event(Model):
                 subject=self.subject.name, 
                 start=self.start, 
                 end=self.end, 
-                day_word=WEEK_DAYS[self.day][1],
+                day_word=WEEK_DAYS[self.day-1][1],
                 week_type=self.week_type if self.week_type != 'BOTH' else ''
             )
 
@@ -62,7 +62,7 @@ class Mutation(Model):
 
        |  A && D   | A && !D	| !A && D	| !A && !D
     --------------------------------------------------
-    S  | EDT	   | ADD	    | DEL	    | Ø
+    S  | EDT	   | Ø   	    | Ø 	    | Ø
     !S | RES	   | ADD	    | DEL	    | Ø
 
     EDT: The mutation represents a simple editing of the course,
@@ -73,7 +73,7 @@ class Mutation(Model):
     RES: The mutation represents a rescheduling. 
          The room and other info may also be changed
          for the rescheduled event.
-         Example: the 2019-08-12 Mathematics course from 13:05 to 14:00,
+         Example: the 2019-08-12 Mathematics course from 13:05 to 14:00
                   is moved to 2019-08-14 from 08:00 to 08:55
     
     ADD: The mutation represents an exceptional course 
