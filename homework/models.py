@@ -66,7 +66,7 @@ class Homework(Model):
     grades = ManyToManyField(Grade, blank=True)
 
     name = CharField(max_length=300)
-    type = CharField('Type', max_length=max(len(s) for s in HW_TYPES), choices=HW_TYPES)
+    type = CharField('Type', max_length=max(len(s[0]) for s in HW_TYPES), choices=HW_TYPES)
     room = CharField(max_length=300, blank=True, null=True)
     progress = FloatField(validators=zero_to_one_validator, default=0)
     # Dates
