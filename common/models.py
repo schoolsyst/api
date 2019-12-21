@@ -78,12 +78,8 @@ class Setting(Model):
     value = TextField(blank=True, null=True)
 
     # Avoid duplicate settings for a user
-    def save(self, *args, **kwargs):
-        # If we try to create a new setting with a key 
-        # the user already has set, update the values instead.
-        if not self.id:
-            self.id = Setting.objects.get(setting__key=self.setting.key, user__id=self.user.id).id
-        super(Setting, self).save(*args, **kwargs)
+    class Meta:
+        unique_together = ('user', 'setting')
 
     def __str__(self):
         return f"{self.user.username}'s {self.setting.name}"
