@@ -1,7 +1,7 @@
 from django.db.models import *
 import uuid
 from django.core.validators import MinValueValidator, MaxValueValidator
-from learn.models import zero_to_one_validator, Note
+from learn.models import zero_to_one_validator, Note, ALLOWED_HTML_TAGS, ALLOWED_HTML_ATTRS, ALLOWED_HTML_STYLES
 import bleach
 
 class Grade(Model):
@@ -78,7 +78,16 @@ class Homework(Model):
 
     def save(self, *args, **kwargs):
         # Sanitize user-controllable HTML text
-        if self.details: self.details = bleach.clean(self.details)
+        if self.details: 
+            self.details = bleach.clean(
+                self.details,
+                tags=ALLOWED_HTML_TAGS,
+                attributes=ALLOWED_HTML_ATTRS,
+                styles={
+                    'span': ALLOWED_HTML_STYLES,
+                    'class': ALLOWED_HTML_STYLES
+                }
+            )
 
         return super(Homework, self).save(*args, **kwargs)
 
