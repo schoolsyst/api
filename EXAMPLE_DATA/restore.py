@@ -14,18 +14,19 @@ FILES = [  # In dependency order.
 ]
 DISTANT_VALUE_REGEX = re.compile(r'@(?P<endpoint>[^.]+)\.(?P<get_prop>[^:]+):(?P<search_in_prop>[^=]+)=(?P<search_for>.+)')
 
-def get_token(username=None, password=None):
+def get_token(username=None, password=None, endpoint=TOKEN_URL):
     user = username or input('Username: ')
+    if user and not password: print(f'Username: {user}')
     pwrd = password or input('Password: ')
     try:
-        token = requests.post(TOKEN_URL, data={
-        'username': user,
-        'password': pwrd
-    }).json()['token']
+        token = requests.post(endpoint, data={
+            'username': user,
+            'password': pwrd
+        }).json()['token']
     except KeyError:
         print('Invalid admin credentials. Prompting for credentials...')
         return get_token(None, None)
-    print(f'Got token: {token}')
+    print(f'Got token: {token:.30}{"…" if len(token) > 30 else ""}')
     return token
 
 
@@ -42,8 +43,8 @@ def load_data(filename):
     with open(filename, 'r', encoding="utf8") as file:
         return json.loads(file.read())
 
-def get_server_data(endpoint, token):
-    url = BASE_URL + endpoint
+def get_server_data(endpoint, token, base_url=BASE_URL):
+    url = base_url + endpoint
     return requests.get(url, headers={'Authorization': f'Bearer {token}'}).json()
 
 def get_distant_value(endpoint, get_prop, search_in_prop, search_for, token):
@@ -112,20 +113,21 @@ def prompt_multiple_choices(choices):
 
 
 
-# capture cwd to restore at the end & cd to correct dir
-cwd = os.getcwd()
-os.chdir(os.path.dirname(__file__))
-# Get token. note: these credentials are local-only.
-token = get_token('ewen-le-bihan', '^bXq2##7*ev8*4i%3$LGKzvd$HdN$')
-# Destroy db or keep it ?
-reset = prompt([Confirm('reset', message='Replace current data', default=False)])['reset']
-# Restore each .json file
-for file in prompt_multiple_choices(FILES):
-    if file.endswith('.json'):
-        name = file.replace('.json', '')
-        data = load_data(file)
-        if reset: delete_all(name, token)
-        for item in data:
-            make_request(item, token)
-# Restore the cwd
-os.chdir(cwd)
+if __name__ == "__main__":
+    # capture cwd to restore at the end & cd to correct dir
+    cwd = os.getcwd()
+    os.chdir(os.path.dirname(__file__))
+    # Get token. note: these credentials are local-only.
+    token = get_token('ewen-le-bihan', '^bXq2##7*ev8*4i%3$LGKzvd$HdN$')
+    # Destroy db or keep it ?
+    reset = prompt([Confirm('reset', message='Replace current data', default=False)])['reset']
+    # Restore each .json file
+    for file in prompt_multiple_choices(FILES):
+        if file.endswith('.json'):
+            name = file.replace('.json', '')
+            data = load_data(file)
+            if reset: delete_all(name, token)
+            for item in data:
+                make_request(item, token)
+    # Restore the cwd
+    os.chdir(cwd)
