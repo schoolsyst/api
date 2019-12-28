@@ -57,7 +57,7 @@
     "optional": true,
     "description": "Jours sans cours",
     "choices": null,
-    "default": null,
+    "default": "",
     "multiple": true
   },
   {

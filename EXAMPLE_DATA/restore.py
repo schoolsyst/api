@@ -10,7 +10,7 @@ BASE_URL = "http://localhost:9999/api/"
 TOKEN_URL = BASE_URL + 'auth/'
 DETAILED_LOGS = False
 FILES = [  # In dependency order.
-    'subjects.json', 'default-settings.json', 'settings.json', 'events.json', 'notes.json'
+    'subjects.json', 'settings-definitions.json', 'settings.json', 'events.json', 'notes.json'
 ]
 DISTANT_VALUE_REGEX = re.compile(r'@(?P<endpoint>[^.]+)\.(?P<get_prop>[^:]+):(?P<search_in_prop>[^=]+)=(?P<search_for>.+)')
 
