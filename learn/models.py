@@ -7,7 +7,7 @@ import re
 
 zero_to_one_validator = [
     MinValueValidator(0, "This can't be a negative value"),
-    MaxValueValidator(1, "This should be a value between 0 and 1")
+    MaxValueValidator(1, "This can't be greater than 1")
 ]
 
 
