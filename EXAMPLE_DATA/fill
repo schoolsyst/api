@@ -170,4 +170,4 @@ if __name__ == "__main__":
 
   subjects = fill_up_resource('subject', (10, 15))
   notes = fill_up_resource('note', (30, 100))
-  homework = fill_up_resource('homework', (30, 100), resource_plural='homework')
+  homework = fill_up_resource('homework', (10, 30), resource_plural='homework')
