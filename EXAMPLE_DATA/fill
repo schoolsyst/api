@@ -161,7 +161,7 @@ def fill_up_resource(resource, count, resource_plural = None):
   resources = resource_plural or resource + 's'
   items = backend.get(resources)[0]
   for item in items:
-    backend.delete(f'{resource}s/{item["uuid"]}')
+    backend.delete(f'{resources}/{item["uuid"]}')
   for _ in range(random.randint(count[0], count[1])):
     backend.post(resources, globals()['random_' + resource]())
   return backend.get(resources)[0]
