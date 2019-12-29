@@ -2,18 +2,12 @@ from django.contrib.admin import register, ModelAdmin
 from .models import *
 from common.utils import auto_list_display
 
-@register(Addition)
-class AdditionAdmin(ModelAdmin):
-    list_display = auto_list_display(Addition)
-
-@register(Deletion)
-class DeletionAdmin(ModelAdmin):
-    list_display = auto_list_display(Deletion)
-
 @register(Event)
 class EventAdmin(ModelAdmin):
-    list_display = auto_list_display(Event)
+    list_display = ('uuid', 'subject', 'week_type', 'day', 'start', 'end', 'room')
+    list_editable = ('subject', 'week_type', 'day', 'start', 'end', 'room')
 
-@register(Exercise)
-class ExerciseAdmin(ModelAdmin):
-    list_display = auto_list_display(Exercise)
+@register(Mutation)
+class MutationAdmin(ModelAdmin):
+    list_display = ('uuid', 'event', 'deleted_start', 'deleted_end', 'added_start', 'added_end', 'room')
+    list_editable = ('deleted_start', 'deleted_end', 'added_start', 'added_end', 'room')

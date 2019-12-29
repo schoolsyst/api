@@ -1,15 +1,17 @@
 from django.contrib.admin import register, ModelAdmin
-from learn.models import Test, Note, Grade
+from learn.models import Note, Learndata
 from common.utils import auto_list_display
 
-@register(Test)
-class TestAdmin(ModelAdmin):
-    list_display = ['uuid', 'subject', 'due', 'details']
 
 @register(Note)
 class NoteAdmin(ModelAdmin):
-    list_display = auto_list_display(Note)
+    list_display = ('uuid', 'subject', 'name',
+                    'modified', 'added', 'format')
+    list_editable = ('name', 'format')
 
-@register(Grade)
-class GradeAdmin(ModelAdmin):
-    list_display = auto_list_display(Grade)
+
+@register(Learndata)
+class LearndataAdmin(ModelAdmin):
+    list_display = ('uuid', 'subject', 'name', 'opened', 'added',
+                    'progress', 'test_tries', 'train_tries', 'time_spent')
+    list_editable = ('name', 'progress')

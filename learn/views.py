@@ -1,6 +1,20 @@
+from drf_rw_serializers import generics
 from rest_framework.viewsets import ModelViewSet
 from .models import *
 from .serializers import *
+
+
+class LearndataViewSet(ModelViewSet):
+    lookup_field = 'uuid'
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return LearndataReadSerializer
+        return LearndataSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Learndata.objects.filter(subject__user__id=user.id)
 
 
 class NotesViewSet(ModelViewSet):
@@ -14,31 +28,3 @@ class NotesViewSet(ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Note.objects.filter(subject__user__id=user.id)
-
-
-class TestsViewSet(ModelViewSet):
-    lookup_field = 'uuid'
-
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return TestReadSerializer
-        return TestSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        return Test.objects.filter(subject__user__id=user.id)
-
-
-class GradesViewSet(ModelViewSet):
-    lookup_field = 'uuid'
-
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return GradeReadSerializer
-        return GradeSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-        # Thanks django for this
-        return Grade.objects.prefetch_related(
-            'test__notes__subject__user').filter(id=user.id)

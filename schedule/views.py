@@ -18,37 +18,13 @@ class EventsViewSet(ModelViewSet):
         user  = self.request.user
         return Event.objects.filter(subject__user__id=user.id)
     
-class AdditionsViewSet(ModelViewSet):
+class MutationsViewSet(ModelViewSet):
     lookup_field = 'uuid'
 
     def get_serializer_class(self):
         if self.request.method in ['GET']:
-            return AdditionReadSerializer
-        return AdditionSerializer
+            return MutationReadSerializer
+        return MutationSerializer
     def get_queryset(self):
         user  = self.request.user
-        return Addition.objects.filter(subject__user__id=user.id)
-
-
-class DeletionsViewSet(ModelViewSet):
-    lookup_field = 'uuid'
-
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return DeletionReadSerializer
-        return DeletionSerializer
-    def get_queryset(self):
-        user  = self.request.user
-        return Deletion.objects.filter(event__subject__user__id=user.id)
-    
-
-class ExercisesViewSet(ModelViewSet):
-    lookup_field = 'uuid'
-
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return ExerciseReadSerializer
-        return ExerciseSerializer
-    def get_queryset(self):
-        user  = self.request.user
-        return Exercise.objects.filter(subject__user__id=user.id)
+        return Mutation.objects.filter(event__subject__user__id=user.id)

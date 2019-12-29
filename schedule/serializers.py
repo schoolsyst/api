@@ -3,50 +3,49 @@ from common.models import Subject
 from common.serializers import *
 from .models import *
 
+
 class EventSerializer(ModelSerializer):
-    subject = SlugRelatedField(slug_field='slug', queryset=Subject.objects.all())
+    subject = SlugRelatedField(
+        slug_field='uuid', queryset=Subject.objects.all())
+
     class Meta:
         model = Event
         fields = '__all__'
+
 
 class EventReadSerializer(ModelSerializer):
     subject = SubjectSerializer(read_only=True)
+    subject_url = SerializerMethodField()
+    get_subject_url = hyperlinked_field_method('subject')
+
     class Meta:
         model = Event
         fields = '__all__'
-        
-class AdditionSerializer(ModelSerializer):
-    subject = SlugRelatedField(slug_field='slug', queryset=Subject.objects.all())
+
+
+class MutationSerializer(ModelSerializer):
+    event = SlugRelatedField(slug_field='uuid', queryset=Event.objects.all())
+    subject = SlugRelatedField(slug_field='uuid', queryset=Subject.objects.all())
+
     class Meta:
-        model = Addition
+        model = Mutation
         fields = '__all__'
 
-class AdditionReadSerializer(ModelSerializer):
+
+class MutationReadSerializer(ModelSerializer):
+    event = EventReadSerializer(read_only=True)
+    event_url = SerializerMethodField()
+    get_event_url = hyperlinked_field_method('event')
+
     subject = SubjectSerializer(read_only=True)
-    class Meta:
-        model = Addition
-        fields = '__all__'
+    subject_url = SerializerMethodField()
+    get_subject_url = hyperlinked_field_method('subject')
+    
+    type = SerializerMethodField()
 
-class DeletionSerializer(ModelSerializer):
-    event = PrimaryKeyRelatedField(queryset=Event.objects.all())
-    class Meta:
-        model = Deletion
-        fields = '__all__'
+    def get_type(self, obj):
+        return obj._type()
 
-class DeletionReadSerializer(ModelSerializer):
-    event = EventSerializer(read_only=True)
     class Meta:
-        model = Deletion
-        fields = '__all__'
-
-class ExerciseSerializer(ModelSerializer):
-    subject = SlugRelatedField(queryset=Subject.objects.all(), slug_field="slug")
-    class Meta:
-        model = Exercise
-        fields = '__all__'
-
-class ExerciseReadSerializer(ModelSerializer):
-    subject = SubjectSerializer(read_only=True)
-    class Meta:
-        model = Exercise
+        model = Mutation
         fields = '__all__'

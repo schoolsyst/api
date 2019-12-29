@@ -1,0 +1,173 @@
+#!/usr/bin/python3
+"""
+Small automation script to fill up a schoolsyst db with random data.
+"""
+from restore import get_distant_value, get_token, get_server_data
+import requests
+import lorem
+import random, os
+
+def get_requests_functions(token, base_url):
+  headers = {'Authorization': f'Bearer {token}'}
+  get_url = lambda url: base_url + url + '/'
+  def get(url):
+    print(f"GET {get_url(url)}")
+    return requests.get(      url=get_url(url), headers=headers).json(),
+  def delete(url):
+    print(f"DELETE {get_url(url)}")
+    requests.delete(url=get_url(url), headers=headers),
+  def post(url, data):
+    print(f"POST {get_url(url)}")
+    return requests.post(data=data,   url=get_url(url), headers=headers).json(),
+  def patch(url, data):
+    print(f"PATCH {get_url(url)}")
+    return requests.patch(data=data, url=get_url(url), headers=headers).json(),
+  return {
+    'get': get,
+    'delete': delete,
+    'post': post,
+    'patch': patch,
+  }
+
+class APIServer:
+  def __init__(self, username = None, password = None, backend_api = None, frontend_api = None, auth_endpoint = None):    
+    # Get creds
+    if password is not None: 
+      print(f'Getting password from file {password}...')
+      password = open(password, 'r').read()
+    # Get token
+    token = get_token(username, password, backend_api + auth_endpoint)
+    # Build request functions now that we got the token
+    req_funcs = get_requests_functions(token, base_url=backend_api)
+    print(req_funcs)
+    self.get = req_funcs['get']
+    self.post = req_funcs['post']
+    self.patch = req_funcs['patch']
+    self.delete = req_funcs['delete']
+  
+
+backend = APIServer('ewen-le-bihan', './nogit_local_password.txt', 'http://localhost:9999/api/', 'http://localhost:3000/', 'auth/')
+
+# ---- HELPERS
+class do:
+  def __init__(self, action):
+    self.action = action
+  def between(self, start):
+    self.start = start
+    return self
+  def _and(self, end):
+    self.end = end
+    return self
+  def times(self):
+    for _ in range(random.randint(self.start, self.end)):
+      self.action()
+
+def upperfirst(string: str) -> str:
+  return string[0].upper() + string[1:]
+
+# Thanks https://stackoverflow.com/a/553320/9943464
+import time
+import datetime
+
+def random_date():
+  def str_time_prop(start, end, fmt):
+    """Get a time at a proportion of a range of two formatted times.
+
+    start and end should be strings specifying times formated in the
+    given format (strftime-style), giving an interval [start, end].
+    prop specifies how a proportion of the interval to be taken after
+    start.  The returned time will be in the specified format.
+    """
+
+    if start == 'now': 
+      start = datetime.datetime.now()
+      if random.random() > 0.75:
+        start -= datetime.timedelta(days=random.randint(0, 2))
+      start = start.strftime(fmt)
+      
+    stime = time.mktime(time.strptime(start, fmt))
+    etime = time.mktime(time.strptime(end, fmt))
+
+    ptime = stime + random.random() * (etime - stime)
+
+    return time.strftime(fmt, time.localtime(ptime))
+  return str_time_prop('now', '2020-03-05', '%Y-%m-%d') + 'T12:00'
+
+def random_html(sections_count):
+  def randomsection():
+      ret = ''
+      ret += '<h1>'
+      ret += randomsentence()
+      ret += '</h1>'
+      sentences = random.randrange(5, 20)
+      for _ in range(sentences):
+          ret += randomsentence()
+      return ret
+
+  def randomsentence():
+      return lorem.get_sentence()
+
+  ret = ''
+  for _ in range(random.randint(sections_count[0], sections_count[1])):
+    ret += randomsection()
+
+  return ret
+
+# ---- FILLING UP SUBJECTS
+def random_subject():
+  return {
+    'color': "#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)]),
+    'name': lorem.get_word(count=random.randint(1, 4)).title()
+  }
+
+#  ---- FILLING UP NOTES
+from uuid import uuid4 as uuid
+def random_note():
+  global subjects
+  return {
+    'content': random_html((5, 30)),
+    'format': 'HTML',
+    'name': lorem.get_sentence(),
+    'subject': random.choice(subjects)['uuid'],
+  }
+
+# ---- FILLING UP HOMEWORK
+def random_homework():
+  global subjects
+  HW_TYPES = [
+    'TEST',
+    'COURSEWORK',
+    'EXERCISE',
+    'TOBRING',
+  ]
+  _type = random.choice(HW_TYPES)
+  if _type in ['EXERCISE', 'COURSEWORK']:
+    progress = random.choice([0, 0, 0, 1]), # 1/4 change to get a completed HW
+  else:
+    progress = random.random()
+  details = random_html((1, 2)) if random.random() > 0.95 else None
+  print(f'HOMEWORK GEN: DETAILS={details is not None}')
+  return {
+    'subject': random.choice(subjects)['uuid'],
+    'name': upperfirst(lorem.get_word(count=random.randint(5, 15))),
+    'type': _type,
+    'progress': progress,
+    'due': random_date(),
+    'completed': random_date() if progress == 1 else None,
+    'details': details
+  }
+
+def fill_up_resource(resource, count, resource_plural = None):
+  resources = resource_plural or resource + 's'
+  items = backend.get(resources)[0]
+  for item in items:
+    backend.delete(f'{resources}/{item["uuid"]}')
+  for _ in range(random.randint(count[0], count[1])):
+    backend.post(resources, globals()['random_' + resource]())
+  return backend.get(resources)[0]
+
+if __name__ == "__main__":
+
+  subjects = fill_up_resource('subject', (10, 15))
+  notes = fill_up_resource('note', (30, 100))
+  homework = fill_up_resource('homework', (10, 30), resource_plural='homework')

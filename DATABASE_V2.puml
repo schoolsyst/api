@@ -4,7 +4,6 @@ package common {
         + UUID uuid
         ..Names..
         + Slug slug
-        + String abbreviation
         + String name
         + CSSColor color
         ..Grades..
@@ -14,30 +13,75 @@ package common {
         + String room
     }
 
+    enum valueType {
+        DATE
+        TIME
+        DATETIME
+        TIMERANGE
+        DATERANGE
+        SELECT
+        TEXT
+        INTEGER
+        FLOAT
+        BOOLEAN
+    }
+
+    class SettingDefinition {
+        ..Naming..
+        + String name
+        + String key
+        + String category
+        + String description
+        ..Value definition..
+        + valueType type
+        + Boolean multiple
+        + String default
+        + Boolean optional
+    }
+
+    class Setting {
+        + String value
+    }
+
     class User {
         + String username
         - Password password
         + Email email
         + Boolean is_superuser
         + Date joined
-        + Date logged_in
+        + Date last_login
         + IPAddress ip_address
     }
 }
 package Learn {
+    enum Filetype {
+        MARKDOWN
+        ASCIIDOC
+        STUDENTML
+        HTML
+    }
+
     class Note {
         + UUID uuid
         + String name
-        ---
+        ---------------
         + Text content
-        + Path filepath
+        + Path filetype
         + Date last_modified
+        + Date added
+        + Filetype filetype
     }
 
     class Learndata {
         + UUID uuid
         + Text data
-        + Float learnt
+        + Float progress
+        + Integer test_tries
+        + Integer train_tries
+        + Duration time_spent
+        + Date opened
+        + Date added
+        + Date modified
     }
 }
 
@@ -48,31 +92,38 @@ package Schedule {
         Q2
         BOTH
     }
+
+    enum MutationType {
+        EDT
+        ADD
+        DEL
+        RES
+    }
+
+    class DateTimeRange<< (T,cyan) >> {
+        + DateTime start
+        + DateTime end
+    }
+
     class Event {
         + UUID uuid
         + Time start
         + Time end
         + Integer day
         + Weektype week_type
-        + Boolean deleted()
-        + Event rescheduled()
     }
     
     class Mutation {
-        + Date deleted
-        + Boolean rescheduled()
-        ..rescheduled() || null..
-        + Date rescheduled
+        + DateTimeRange deleted
+        + DateTimeRange rescheduled
         + String room
-        + Time rescheduled_start
-        + Time rescheduled_end
+        + MutationType type()
     }
 }
 
 package Homework {
     class Grade {
         + UUID uuid
-        + Date added
         + String name
         ..Values..
         + Float actual
@@ -80,27 +131,46 @@ package Homework {
         + Float goal
         + Float maximum
         + Float weight
-        ..Methods..
-        + String name()
+        ..Dates..
+        + Date added
+        + Date obtained
+    }
+
+    enum HomeworkType {
+        TEST
+        COURSEWORK
+        TOBRING
+        EXERCISE
     }
 
     class Homework {
         + UUID uuid
         + String name
-        + Text notes
+        + Float progress
+        + HomeworkType type
+        + String room
+        ..Dates..
         + Date due
-        + Float progress()
-        + Boolean is_test()
+        + Date added
+        + Date completed
     }
 }
 
 User --> Subject
+User --> Setting
+SettingDefinition --> Setting
 
-Subject --> Note
-Subject --> Homework
-Subject --> Event
+Subject ..> Note
+Subject ..> Homework
+Subject ..> Event
+Subject ..> Learndata
+Subject ..> Grade
 
-Homework <--> "0..1" Grade
-Note <--> "0..1" Learndata
-Event <--> "0..*" Mutation
+Note <--> "0..*" Learndata
+Homework <--> "0..*" Grade
+Homework <--> "0..*" Note
+Event --> "0..*" Mutation
+
+Event -[hidden]> Note
+Note -[hidden]> Homework
 @enduml

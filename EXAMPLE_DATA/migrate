@@ -1,0 +1,486 @@
+#!/usr/bin/python3
+"""
+Small automation script I will use/used to migrate
+all of schoolsyst's data to the new db schemas.
+"""
+
+import json
+import re
+import os
+import sys
+from datetime import datetime
+import shutil
+import getpass
+import requests
+from termcolor import colored, cprint
+import colorama
+import dict_deep
+from inquirer import prompt, Password, Text, Confirm
+colorama.init()
+
+
+def red(s): return colored(s, 'red')
+
+
+def cyan(s): return colored(s, 'cyan')
+
+
+def yellow(s): return colored(s, 'yellow')
+
+
+def green(s): return colored(s, 'green')
+
+
+def bold(s): return colored(s, attrs=['bold'])
+
+
+def greybold(s): return colored(s, 'grey', attrs=['bold'])
+
+
+def uniq(seq):
+    """
+    Removes duplicates from a list,
+    fastest method according to https://stackoverflow.com/a/480227
+    (Markus Jarderot, 2009)
+    """
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
+
+
+def deep_set(*args, **kwargs):
+    return dict_deep.deep_set(*args, **kwargs, sep='__')
+
+
+def deep_get(*args, **kwargs):
+    return dict_deep.deep_get(*args, **kwargs, sep='__')
+
+
+def deep_del(*args, **kwargs):
+    return dict_deep.deep_del(*args, **kwargs, sep='__')
+
+
+DATADUMP = "EXAMPLE_DATA/datadump.json"
+OUT_FILE = "EXAMPLE_DATA/new_datadump.json"
+BASE_URL = "http://localhost:8000/api/"
+TOKEN_URL = BASE_URL + 'auth/'
+TERM_SZ = shutil.get_terminal_size((80, 20))
+WEEKDAYS = ['monday', 'tuesday', 'wednesday',
+            'thursday', 'friday', 'saturday', 'sunday']
+EXPAND_N_ITEMS = 3
+ACTIONS_ADD_VBAR = False
+ACTIONS_WITH_VERBS = {
+    'rename': 'Renamed',
+    'assign': 'Set',
+    'delete': 'Deleted',
+    'add': 'Added',
+    'mutate': 'Mutated',
+    'rename_model': 'Renamed model',
+    'assign_if_false': 'Set',
+}
+ACTIONS_WITH_ICONS = {
+    'rename': '~',
+    'assign': '=',
+    'delete': '-',
+    'add': '+',
+    'mutate': '>',
+    'rename_model': '@',
+    'assign_if_false': '=',
+}
+
+ACTIONS = ACTIONS_WITH_ICONS
+if ACTIONS_ADD_VBAR:
+    ACTIONS = {k: '│ '+v for k, v in ACTIONS.items()}
+
+
+def get_token(username=None, password=None):
+    """
+    Get token, provided with a username and a password
+    """
+    user = username or input('Username: ')
+    pwrd = password or input('Password: ')
+    token = requests.post(TOKEN_URL, data={
+        'username': user,
+        'password': pwrd
+    }).json()['token']
+    print(f'{bold(cyan("Got token"))} {token[1:TERM_SZ.columns-5]}…')
+    return token
+
+
+class Datadump:
+    def __init__(self, datadump, remove_logentries=False):
+        self.set_modifications()
+        with open(datadump, 'r') as file:
+            self.dump = json.loads(file.read())
+        print(f'{bold(cyan("Detected the following models"))}{" (ignoring admin.logentry)" if remove_logentries else ""}')
+        self.models = uniq([i['model'] for i in self.dump])
+        if remove_logentries:
+            self.models = [i for i in self.models if i != 'admin.logentry']
+        for model_name in self.models:
+            print(f'    {cyan("-")} {model_name}')
+        self.gathered = self.gather_tables()
+
+    def gather_table(self, table_name):
+        table_items = []
+        print(f'{cyan(bold("Gathering table"))} {table_name}…')
+        for item in self.dump:
+            if item.get('model', None) == table_name:
+                table_items.append({
+                    **item['fields'],
+                    **{'id': item['pk']}
+                })
+        return table_items
+
+    def gather_tables(self):
+        tables = {}
+        for table_name in self.models:
+            tables[table_name] = self.gather_table(table_name)
+        return tables
+
+    def parse_modification(self, modification):
+        match_rename = re.match(r'^([^~]+)~>(.+)$', modification)
+        match_assign = re.match(r'^([^=~?]+)=(.+)$', modification)
+        match_delete = re.match(r'^-(.+)$', modification)
+        match_add = re.match(r'^\+([^:]+):(.+)$', modification)
+        match_mutate = re.match(r'^>([\w_]+) (.+)$', modification)
+        match_rename_model = re.match(r'^==>(.+)$', modification)
+        match_assign_if_false = re.match(r'^([^?]+)\?=(.+)$', modification)
+
+        if match_rename:
+            return (
+                'rename',
+                match_rename.groups()
+            )
+        if match_assign:
+            return (
+                'assign',
+                match_assign.groups()
+            )
+        if match_delete:
+            return (
+                'delete',
+                match_delete.groups()[0]
+            )
+        if match_add:
+            return (
+                'add',
+                match_add.groups()
+            )
+        if match_mutate:
+            return (
+                'mutate',
+                match_mutate.groups()
+            )
+        if match_rename_model:
+            return (
+                'rename_model',
+                match_rename_model.groups()
+            )
+        if match_assign_if_false:
+            return (
+                'assign_if_false',
+                match_assign_if_false.groups()
+            )
+
+    def mutate(self, mutator_name, field_value):
+        mutators = {
+            "INVERT": lambda x: not bool(x),
+            "UPPERCASE": lambda x:          str(x).upper(),
+            "LOWERCASE": lambda x:          str(x).lower(),
+            "DATE_TO_DATETIME": lambda x:   str(x) + 'T12:00:00Z',
+            "BOOL_TO_INT": lambda x:        1 if bool(x) else 0,
+            "TO_INT": lambda x:             int(x),
+            "TO_ISO_WEEKDAY": lambda x:     WEEKDAYS.index(x)+1,
+            "SET_NOW": lambda x:            datetime.now().isoformat(),
+            "TAKE_FIRST_LINE": lambda x:        str(x).split('\n')[0],
+            "REMOVE_FIRST_LINE": lambda x:      '\n'.join(str(x).split('\n')[1:]),
+            "TAKE_FIRST_ITEM": lambda x:        x[0]
+        }
+        try:
+            mutator = mutators[mutator_name.upper()]
+        except KeyError:
+            raise KeyError(
+                f'The mutator "{mutator_name.upper()}" does not exist.')
+
+        try:
+            return mutator(field_value)
+        except Exception:
+            return field_value
+
+    def foreign_accessor(self, expr, local_obj, silent=True):
+        """
+        Access a property of an another model's object that has a property equal to a local property:
+        @common.subject(id:test__id>name) will return the common.subject object's `name` that has `test__id` equal to its `id`.
+
+        F: foreign model's variables
+        L: local model's variables
+        """
+        if type(expr) is not str:
+            return expr
+        parsed = re.match(r'@([^\(]+)\(([^:]+):([^>]+)>([^\)]+)\)', expr)
+        if not parsed:
+            return expr
+        Fmodel, Fpath, Lpath, Fkey = parsed.groups()
+        match_against = deep_get(local_obj, Lpath)
+        if not silent:
+            cprint(
+                f"        (Accessing foreign property {Fmodel}:{Fkey} with {Fpath} == {match_against})", 'grey', attrs=['bold'])
+
+        Fitems = self.gathered.get(Fmodel, [])
+
+        for Fitem in Fitems:
+            try:
+                theFitem = deep_get(Fitem, Fpath)
+            except KeyError:
+                continue
+            if theFitem == match_against:
+                return deep_get(Fitem, Fkey)
+        return None
+
+    def set_modifications(self):
+        self.modifications = {
+            'contenttypes.contenttype': [],
+            'sessions.session': [],
+            'common.defaultsetting': [
+                'namespace~>category',
+                'kind~>type',
+                '+multiple:False',
+                '>INVERT required',
+                'required~>optional',
+                '==>common.settingdefinition'
+            ],
+            'users.user': [
+                '==>common.user'
+            ],
+            'common.subject': [
+                'grade_goal~>goal',
+                'grade_weight~>weight',
+                '-physical_weight'
+            ],
+            'learn.note': [
+                '-learnt',
+                '>UPPERCASE filetype',
+                'filetype~>format'
+            ],
+            'schedule.event': [
+                '>TO_ISO_WEEKDAY day',
+                '>TO_INT day',
+                '>UPPERCASE week_type'
+            ],
+            'learn.test': [
+                '+name:@learn.test(id:id>notes)',
+                '>TAKE_FIRST_ITEM name',
+                'name=@learn.note(id:name>name)',
+                'name?=@learn.test(id:id>details)',
+                '>TAKE_FIRST_LINE name',
+                '-notes',
+                'details~>notes',
+                '>REMOVE_FIRST_LINE notes',
+                '+is_test:True',
+                '>DATE_TO_DATETIME due',
+                '+progress:0',
+                '+opened:@learn.test(id:id>last_modified)',
+                'created~>added',
+                # 'last_modified~>modified',
+                '==>homework.homework'
+            ],
+            'learn.grade': [
+                '+homework:None',
+                'actual~>obtained',
+                'maximum~>unit',
+                '+subject:@learn.test(id:test>subject)',
+                '-test',
+                '>DATE_TO_DATETIME added',
+                '==>homework.grade'
+            ],
+            'schedule.exercise': [
+                '>DATE_TO_DATETIME due',
+                'completed~>progress',
+                '>BOOL_TO_INT progress',
+                '+is_test:False',
+                '==>homework.homework'
+            ]
+        }
+
+    def update(self):
+        new_tables = {}
+        errored = False
+        for table_name, items in self.gathered.items():
+            print(f'\nIn table {bold(table_name)}…')
+            new_items = []
+            new_table_name = table_name
+            if not len(items):
+                print(greybold(f'    (no changes)'))
+            is_first_item = True
+            other_items_count = 0
+            for i, item in enumerate(items):
+                if is_first_item:
+                    print(
+                        f'    Item {bold(item.get("key") or item.get("name") or item.get("username") or item.get("uuid") or item.get("id"))}…')
+                else:
+                    other_items_count += 1
+                new_item = item
+                mods_count = 0
+                for modification in self.modifications.get(table_name, []):
+                    mods_count += 1
+                    parsed = self.parse_modification(modification)
+                    if not parsed:
+                        print(
+                            f'{colored("ERROR", "white", "on_red", attrs=["bold"])} {red("Syntax error in directive")} {colored(modification, "white")}{red(", aborting.")}')
+                        errored = True
+                        exit()
+                    action, args = parsed
+
+                    if action == 'delete':
+                        fieldname = args
+                        deep_del(new_item, fieldname)
+                        if is_first_item:
+                            print(
+                                f'        {bold(red(ACTIONS[action]))} {bold(fieldname)}')
+                    if action == 'add':
+                        fieldname, value = args
+                        from ast import literal_eval
+                        try:
+                            value = literal_eval(value)
+                        except SyntaxError:
+                            pass
+                        value = self.foreign_accessor(
+                            value, new_item, silent=not is_first_item)
+                        deep_set(new_item, fieldname, value)
+                        if is_first_item:
+                            print(
+                                f'        {bold(green(ACTIONS[action]))} {bold(fieldname)} with value {cyan(value)}')
+                    if action == 'assign_if_false':
+                        fieldname, value = args
+                        from ast import literal_eval
+                        try:
+                            value = literal_eval(value)
+                        except SyntaxError:
+                            pass
+                        value = self.foreign_accessor(
+                            value, new_item, silent=not is_first_item)
+                        if not new_item[fieldname]:
+                            deep_set(new_item, fieldname, value)
+                        else:
+                            continue
+                        if is_first_item:
+                            print(
+                                f'        {bold(yellow(ACTIONS[action]))} {bold(fieldname)} to {cyan(value)} because it was false')
+
+                    if action == 'rename':
+                        old_fieldname, new_fieldname = args
+                        val = deep_get(new_item, old_fieldname)
+                        deep_del(new_item, old_fieldname)
+                        deep_set(new_item, new_fieldname, val)
+                        if is_first_item:
+                            print(
+                                f'        {bold(colored(ACTIONS[action], "blue"))} {cyan(old_fieldname)} to {cyan(new_fieldname)}')
+                    if action == 'assign':
+                        fieldname, value = args
+                        from ast import literal_eval
+                        try:
+                            value = literal_eval(value)
+                        except SyntaxError:
+                            pass
+                        value = self.foreign_accessor(
+                            value, new_item, silent=not is_first_item)
+                        deep_set(new_item, fieldname, value)
+                        if is_first_item:
+                            print(
+                                f'        {bold(yellow(ACTIONS[action]))} {bold(fieldname)} to {cyan(value)}')
+                    if action == 'mutate':
+                        mutator, fieldname = args
+                        old_value = deep_get(new_item, fieldname)
+                        new_value = self.mutate(mutator, old_value)
+                        deep_set(new_item, fieldname, new_value)
+                        if is_first_item:
+                            print(
+                                f'        {bold(yellow(str(ACTIONS[action])+"("+str(mutator).lower()+")"))} {bold(fieldname)} from {cyan(old_value)} to {cyan(new_value)}')
+                    if action == 'rename_model':
+                        new_table_name = args[0]
+                        if is_first_item:
+                            print(
+                                f'        {bold(colored(ACTIONS[action], "magenta"))} to {cyan(new_table_name)}')
+                is_first_item = i+1 < EXPAND_N_ITEMS
+                new_items.append(new_item)
+            if not mods_count:
+                print(greybold(f'        (no modifications)'))
+            print(
+                f'{greybold("    (")}{colored(other_items_count, "white", attrs=["bold"])}{greybold(" other items)")}')
+            try:
+                new_tables[new_table_name] += new_items
+            except KeyError:
+                new_tables[new_table_name] = new_items
+
+        with open('temp.json', 'w') as file:
+            file.write(json.dumps(new_tables))
+        return self.to_django_datadump(new_tables)
+
+    def to_django_datadump(self, tables):
+        dump = []
+        print(f'{bold(cyan("Converting"))} back to Django datadump format')
+        for table, items in tables.items():
+            for item in items:
+                dump_i = {
+                    'model': table,
+                    'pk': item['id'],
+                    'fields': {k: v for k, v in item.items() if k != 'id'}
+                }
+                # dump_i['sorting_score'] = self.django_datadump_sorter(dump_i)
+                dump.append(dump_i)
+        dump.sort(key=self.django_datadump_sorter)
+        return dump
+
+    def django_datadump_sorter(self, item):
+        """
+        It seems that django sorts items based on:
+        - their model name (grouped, but no alphabetical sort it seems.
+          we use the same order as the original dump)
+        - their pk
+
+        The returned string "XZ.Y" contains 2 numbers that will make it sort
+        the same way as the original datadump:
+        - X is the 'sorting score' of the model name (based on the original dump's order, 
+          '#' for new models, just to put them above others)
+        - Z is the model's name (to group and sort when X="#")
+        - Y is simply the pk
+        """
+
+        try:
+            X = self.models.index(item['model'])
+        except ValueError:  # The model is new and not found in the original datadump
+            X = '9999'
+
+        Z = item['model']
+        Y = item['pk']
+
+        return str(X)+Z, Y
+
+
+def main():
+    # questions = [
+    #     Text(
+    #         'username', message='Username', default=getpass.getuser()
+    #     ),
+    #     Password(
+    #         'password', message='Password'
+    #     )
+    # ]
+    # # answers = prompt(questions)
+    # # username, password = answers['username'], answers['password']
+    # username, password = 'ewen', 'hunter2'
+    remove_logentries = prompt(
+        [Confirm('remove_logentries', message='Remove log entries')])['remove_logentries']
+
+    cprint(
+        f'Showing operations for the first {str(EXPAND_N_ITEMS)+" items" if EXPAND_N_ITEMS > 1 else "item"} of each table', 'grey', attrs=['bold'])
+
+    datadump = Datadump(DATADUMP, remove_logentries=remove_logentries)
+    new_datadump = datadump.update()
+    print(f'{bold(cyan("Writing new dump"))} to {yellow(OUT_FILE)}')
+    with open(OUT_FILE, 'w') as file:
+        file.write(json.dumps(new_datadump, indent=2))
+
+
+if __name__ == "__main__":
+    main()

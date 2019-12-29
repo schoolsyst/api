@@ -1,0 +1,115 @@
+[
+  {
+    "key": "year_start",
+    "type": "DATE",
+    "name": "Début de l'année scolaire",
+    "category": "Emploi du temps",
+    "description": null,
+    "optional": false,
+    "choices": null,
+    "default": null
+  },
+  {
+    "key": "trimester_2_start",
+    "type": "DATE",
+    "name": "Début du 2ᵉ trimestre",
+    "category": "Emploi du temps",
+    "optional": false,
+    "description": null,
+    "choices": null,
+    "default": null
+  },
+  {
+    "key": "trimester_3_start",
+    "type": "DATE",
+    "name": "Début du 3ᵉ trimestre",
+    "category": "Emploi du temps",
+    "optional": false,
+    "description": null,
+    "choices": null,
+    "default": null
+  },
+  {
+    "key": "year_end",
+    "type": "DATE",
+    "name": "Fin de l'année scolaire",
+    "category": "Emploi du temps",
+    "optional": false,
+    "description": null,
+    "choices": null,
+    "default": null
+  },
+  {
+    "key": "starting_week_type",
+    "type": "SELECT",
+    "name": "Type de la première semaine",
+    "category": "Emploi du temps",
+    "optional": false,
+    "description": "La plupart du temps, on commence l'année en Q1.\nChangez ceci ici.",
+    "choices": "Q1,Q2",
+    "default": "Q1"
+  },
+  {
+    "key": "offdays",
+    "type": "DATERANGE",
+    "name": "Vacances",
+    "category": "Emploi du temps",
+    "optional": true,
+    "description": "Jours sans cours",
+    "choices": null,
+    "default": "",
+    "multiple": true
+  },
+  {
+    "key": "mnml_mode",
+    "type": "BOOLEAN",
+    "name": "MNML",
+    "category": "__secret__",
+    "optional": false,
+    "description": "Mode MNML",
+    "choices": "",
+    "default": "true"
+  },
+  {
+    "key": "show_completed_exercises",
+    "type": "BOOLEAN",
+    "name": "Montrer les exercices finis",
+    "category": "__hidden__",
+    "optional": false,
+    "description": "",
+    "choices": "",
+    "default": "false"
+  },
+  {
+    "key": "grade_max",
+    "type": "FLOAT",
+    "name": "Unité",
+    "category": "Notes",
+    "optional": true,
+    "description": "",
+    "choices": "",
+    "default": "20",
+    "positive": true
+  },
+  {
+    "key": "grade_weight",
+    "type": "FLOAT",
+    "name": "Coefficient par défaut",
+    "category": "Notes",
+    "optional": true,
+    "description": "",
+    "choices": "",
+    "default": "1",
+    "positive": true
+  },
+  {
+    "key": "theme",
+    "type": "SELECT",
+    "name": "Thème",
+    "category": "Apparence",
+    "optional": true,
+    "description": "",
+    "choices": "AUTO,DARK,LIGHT",
+    "default": "AUTO"
+  }
+]

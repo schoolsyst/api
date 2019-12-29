@@ -14,6 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # Setup, imports...
+from django.http import HttpResponse
+from schedule.views import *
+from homework.views import *
+from learn.views import *
+from common.views import *
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
@@ -21,30 +26,24 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
 
 api = DefaultRouter()
-from users.views import *
-from common.views import *
-from learn.views import *
-from schedule.views import *
 
 # ===================== API ROUTES ======================
-# ----------------------- Users -------------------------
-api.register(r'users', UserViewSet, 'users')
 # ---------------------- Common -------------------------
+api.register(r'users', UserViewSet, 'users')
 api.register(r'settings', SettingsViewSet, 'settings')
-api.register(r'default-settings', DefaultSettingViewSet, 'default_settings')
+api.register(r'settings-definitions', SettingsDefinitionsViewSet, 'default_settings')
 api.register(r'subjects', SubjectsViewSet, 'subjects')
 # ----------------------- Learn -------------------------
-api.register(r'tests', TestsViewSet, 'tests')
 api.register(r'notes', NotesViewSet, 'notes')
-api.register(r'grades', GradesViewSet, 'grades')
+api.register(r'learndata', LearndataViewSet, 'learndata')
 # --------------------- Schedule ------------------------
 api.register(r'events', EventsViewSet, 'events')
-api.register(r'event-additions', AdditionsViewSet, 'additions')
-api.register(r'event-deletions', DeletionsViewSet, 'deletions')
-api.register(r'exercises', ExercisesViewSet, 'exercises')
+api.register(r'events-mutations', MutationsViewSet, 'mutations')
+# --------------------- Homework ------------------------
+api.register(r'grades', GradesViewSet, 'grades')
+api.register(r'homework', HomeworkViewSet, 'homework')
 
 # Add to urlpatterns
-from django.http import HttpResponse
 urlpatterns = [
     path('api/users/self/', CurrentUserViewSet.as_view({'get': 'retrieve'})),
     path('api/auth/', obtain_jwt_token),
