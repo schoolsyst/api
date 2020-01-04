@@ -50,6 +50,7 @@ urlpatterns = [
     path('api/auth/refresh/', refresh_jwt_token),
     path('api/auth/verify/', verify_jwt_token),
     path('api/auth/logout/', lambda req: HttpResponse('')),
+    path('api/password-reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('api/', include(api.urls)),
     path('admin/', admin.site.urls),
     path('', lambda req: redirect('api-root')),

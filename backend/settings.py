@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework', 'django_extensions', 'corsheaders',
+    'rest_framework', 'django_extensions', 
+    'corsheaders', 'django_rest_passwordreset',
     'learn.apps.LearnConfig',
     'schedule.apps.ScheduleConfig',
     'common.apps.CommonConfig',
@@ -142,10 +143,7 @@ REST_FRAMEWORK = {
 
 # CORS
 
-CORS_ORIGIN_REGEX_WHITELIST = [
-    r"http://(?:localhost|127.0.0.1|51.89.116.101)(:\d{4})?",
-    r"http://(?:localhost2|127.0.0.1):\d{4}",
-]
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_EXPOSE_HEADERS = [
     'access-control-allow-origin'
