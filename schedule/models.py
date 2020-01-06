@@ -123,7 +123,8 @@ class Mutation(Model):
         return self.deleted_start is not None \
            and self.deleted_end   is not None
 
-    def _type(self):
+    @property
+    def type(self):
         if self.added()     and self.deleted():
             if self.deleted_same_as_added():
                 return 'EDT'

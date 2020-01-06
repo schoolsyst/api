@@ -41,10 +41,7 @@ class MutationReadSerializer(ModelSerializer):
     subject_url = SerializerMethodField()
     get_subject_url = hyperlinked_field_method('subject')
     
-    type = SerializerMethodField()
-
-    def get_type(self, obj):
-        return obj._type()
+    type = ReadOnlyField()
 
     class Meta:
         model = Mutation
