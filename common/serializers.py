@@ -69,15 +69,10 @@ class UserSerializer(ModelSerializer):
 
 
 class UserReadSerializer(ModelSerializer):
-    is_setup = SerializerMethodField('is_setup')
-
-    def get_is_setup(self, obj):
-        return self.is_setup()
-
     class Meta:
         model = User
         fields = ('id', 'last_login', 'date_joined', 'email',
-                  'username', 'is_staff')
+                  'username', 'is_staff', 'setup_step')
 
 
 class UserCurrentSerializer(ModelSerializer):
@@ -92,8 +87,8 @@ class UserCurrentSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email',
-                  'ip_address', 'is_staff', 'password')
+        fields = ('id', 'last_login', 'date_joined', 'email',
+                  'username', 'is_staff', 'setup_step', 'ip_address')
         extra_kwargs = {
             'password': {'write_only': True},
             'url': {'lookup_field': 'id'}

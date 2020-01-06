@@ -27,26 +27,48 @@ class User(AbstractUser):
     ip_address = GenericIPAddressField(verbose_name="IP Address",
                                        blank=True,
                                        null=True)
-    
-    def is_setup(self):
-        REQUIRED_SCHEDULE_SETTINGS = ('year_start', 'trimester_2_start', 'trimester_3_start', 'year_end')
-        has_subjects = len(self.subjects.objects.all()) > 0
-        using_schedule = self.settings.get(key="use_schedule") == 'true'
-        missing_schedule_settings = len(
-            [s for s in self.settings.all() if 
-                s.setting.key in REQUIRED_SCHEDULE_SETTINGS
-            ]
-        ) == 0
-        missing_essential_settings = len(
-            [s for s in self.settings.all() if 
-                s.setting.key not in REQUIRED_SCHEDULE_SETTINGS 
-                and s.setting.default is None 
-                and not s.setting.optional 
-                and s.value is None
-            ]
-        ) > 0
 
-        return has_subjects and not missing_essential_settings and (not using_schedule or (using_schedule and not missing_schedule_settings))
+    @property
+    def missing_schedule_settings(self):
+        REQUIRED_SCHEDULE_SETTINGS = ['year_start', 'trimester_2_start', 'trimester_3_start', 'year_end']
+        set_schedule_settings = self.settings \
+            .filter(setting__key__in=REQUIRED_SCHEDULE_SETTINGS) \
+            .exclude(value=None) \
+            .values_list('setting__key', flat=True)
+        return [ key for key in REQUIRED_SCHEDULE_SETTINGS if key not in set_schedule_settings ]
+
+    @property
+    def missing_essential_settings(self):
+        return self.settings.exclude(
+            setting__key__in=self.missing_schedule_settings,
+        ).filter(
+            setting__default=None,
+            setting__optional=False,
+            value=None,
+        ).values_list('setting__key', flat=True)
+
+    @property
+    def setup_step(self):
+        """
+        Gives the setup step the user needs to complete before being able to use the app.
+        `None` means that the user is ready to use the app.
+        """
+        has_subjects = self.subjects.all().count() > 0
+
+        if not has_subjects: return 'subjects'
+        if self.missing_essential_settings: return 'settings'
+        if self.using_schedule and self.missing_schedule_settings: return 'schedule'
+        
+        return None
+
+    @property
+    def using_schedule(self):
+            return self.setting_value('use_schedule') in (True, None)
+
+    def setting_value(self, key):
+        setting = self.settings.filter(setting__key='use_schedule')
+        if len(setting) == 0: return None
+        return setting[0].value
         
 
 class SettingDefinition(Model):
