@@ -18,7 +18,7 @@ ALLOWED_HTML_TAGS = [
       'svg', 'span', 'div', 's', 'hr',
       'sub', 'sup', 'code', 'table', 
       'tr', 'td', 'th', 'tbody', 'thead',
-      'pre', 'br'],
+      'pre', 'br', 'u'],
     *all_h_tags()
 ]
 
