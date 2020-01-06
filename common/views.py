@@ -118,13 +118,21 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     else:
         # send w/ sendgrid
         print(f"Getting API key...")
-        sendgrid = SendGridAPIClient(environ.get('SENDGRID_API_KEY'))
-        print(f"Got key: {environ.get('SENDGRID_API_KEY')}")
+        key = environ.get('SENDGRID_API_KEY')
+        if key is None:
+            raise Exception("Environment variable SENDGRID_API_KEY not set")
+        print(f"Got key: {key}")
+        sendgrid = SendGridAPIClient(key)
         print(f"Sending email to {reset_password_token.user.email}...")
         try:
             response = sendgrid.send(msg)
         except Exception as e:
-            print(e.body)
-        print(f"Got {response.status_code} response:")
-        print(response.headers)
-        print(response.body)
+            try:
+                print(e.body)
+            except AttributeError:
+                print(e)
+        else:
+            print(f"Got {response.status_code} response:")
+            print(response.headers)
+            print(response.body)
+
