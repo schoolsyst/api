@@ -57,30 +57,38 @@ class UserSerializer(ModelSerializer):
         fields = ('id', 'password', 'username', 'email')
 
     def create(self, validated_data):
-        user = super(UserSerializer, self).create(validated_data)
+        user = User(
+            **validated_data,
+            ip_address=self.context['request'].META.get('REMOTE_ADDR', None)
+        )
+        user.email = validated_data['email']
+        user.save()
         user.set_password(validated_data['password'])
         user.save()
         return user
 
 
 class UserReadSerializer(ModelSerializer):
+    is_setup = SerializerMethodField('is_setup')
+
+    def get_is_setup(self, obj):
+        return self.is_setup()
+
     class Meta:
         model = User
         fields = ('id', 'last_login', 'date_joined', 'email',
                   'username', 'is_staff')
 
 
-class UserCurrentSerializer(HyperlinkedModelSerializer):
-
-    def create(self, validated_data):
-        _user = user.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
-        _user.save()
-
-        return _user
+class UserCurrentSerializer(ModelSerializer):
+    def update(self, instance, validated_data):
+        if 'password' in validated_data.keys():
+            instance.set_password(validated_data['password'])
+        if 'last_login' in validated_data.keys():
+            instance.last_login = validated_data['last_login']
+        if 'ip_address' in validated_data.keys():
+            instance.last_login = validated_data['ip_address']
+        return super().update(instance, validated_data)
 
     class Meta:
         model = User
@@ -90,4 +98,4 @@ class UserCurrentSerializer(HyperlinkedModelSerializer):
             'password': {'write_only': True},
             'url': {'lookup_field': 'id'}
         }
-        read_only_fields = ('id', 'is_staff', 'ip_address')
+        read_only_fields = ('id', 'is_staff')
