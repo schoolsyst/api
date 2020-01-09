@@ -54,10 +54,12 @@ class User(AbstractUser):
         `None` means that the user is ready to use the app.
         """
         has_subjects = self.subjects.all().count() > 0
+        has_events = self.events.all().count() > 0
 
         if not has_subjects: return 'subjects'
         if self.missing_essential_settings: return 'settings'
         if self.using_schedule and self.missing_schedule_settings: return 'schedule'
+        if self.using_schedule and not has_envents: return 'schedule'
         
         return None
 
