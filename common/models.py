@@ -61,8 +61,8 @@ class User(AbstractUser):
 
         if not has_subjects: return 'subjects'
         if self.missing_essential_settings: return 'settings'
-        if self.using_schedule and self.missing_schedule_settings: return 'schedule'
-        if self.using_schedule and not has_envents: return 'schedule'
+        if self.using_schedule and self.missing_schedule_settings: return 'schedule/settings'
+        if self.using_schedule and not has_envents: return 'schedule/events'
         
         return None
 
