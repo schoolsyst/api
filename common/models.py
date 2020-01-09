@@ -53,8 +53,11 @@ class User(AbstractUser):
         Gives the setup step the user needs to complete before being able to use the app.
         `None` means that the user is ready to use the app.
         """
-        has_subjects = self.subjects.all().count() > 0
-        has_events = self.events.all().count() > 0
+        subjects = self.subjects.all()
+        has_subjects = subjects.count() > 0
+        has_events = False
+        for s in subjects:
+            has_events = s.events.all().count() > 0
 
         if not has_subjects: return 'subjects'
         if self.missing_essential_settings: return 'settings'
