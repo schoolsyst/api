@@ -982,258 +982,251 @@
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 2,
     "fields": {
       "subject": 8,
       "uuid": "2f7eb8f4-7dfe-41fc-b387-22e41afd37e1",
       "due": "2019-09-09",
+      "created": "2019-09-03T13:21:16.397Z",
       "room": "L207",
       "details": "",
-      "progress": 0.0,
-      "added": "2019-09-03T13:21:16.397Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        5,
+        7,
+        8,
+        9
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 6,
     "fields": {
       "subject": 1,
       "uuid": "c9b85ba9-08b7-41b5-9927-594dbd486df3",
       "due": "2019-09-04",
+      "created": "2019-09-06T21:15:57.786Z",
       "room": "L216",
       "details": "Fiche",
-      "progress": 0.0,
-      "added": "2019-09-06T21:15:57.786Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": []
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 9,
     "fields": {
       "subject": 12,
       "uuid": "91bb75f6-e0ba-4fa3-b7f7-d5721cab1b7a",
       "due": "2019-09-16",
+      "created": "2019-09-10T12:00:11.316Z",
       "room": "L225",
       "details": "Faire l'intro",
-      "progress": 0.0,
-      "added": "2019-09-10T12:00:11.316Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        39
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 12,
     "fields": {
       "subject": 4,
       "uuid": "3f5d905a-41ef-45c7-a583-0742b704a921",
       "due": "2019-09-19",
+      "created": "2019-09-11T08:13:30.072Z",
       "room": "L112",
       "details": "",
-      "progress": 0.0,
-      "added": "2019-09-11T08:13:30.072Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        25
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 13,
     "fields": {
       "subject": 8,
       "uuid": "42713353-05be-4def-8bc9-347c01272e71",
       "due": "2019-09-10",
+      "created": "2019-09-12T19:57:05.726Z",
       "room": "L201",
       "details": "Contr\u00f4le surprise",
-      "progress": 0.0,
-      "added": "2019-09-12T19:57:05.726Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        12
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 14,
     "fields": {
       "subject": 4,
       "uuid": "883bc9c0-f535-429e-82d6-8ac0c435860c",
       "due": "2019-09-18",
+      "created": "2019-09-16T12:55:30.927Z",
       "room": "L112",
       "details": "Finir TP",
-      "progress": 0.0,
-      "added": "2019-09-16T12:55:30.927Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": []
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 15,
     "fields": {
       "subject": 8,
       "uuid": "8066d325-40cf-47a4-ba62-265a81c5789c",
       "due": "2019-09-28",
+      "created": "2019-09-16T12:56:12.889Z",
       "room": "L201",
       "details": "",
-      "progress": 0.0,
-      "added": "2019-09-16T12:56:12.889Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        12,
+        15,
+        49
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 20,
     "fields": {
       "subject": 2,
       "uuid": "6cd3e975-555f-4a22-97ee-5d40f1e8d4c6",
       "due": "2019-09-27",
+      "created": "2019-09-20T19:26:14.215Z",
       "room": "L207",
       "details": "On a droit \u00e0 avoir la m\u00e9thodologie avec nous (\u00e0 imprimmer ducoup)",
-      "progress": 0.0,
-      "added": "2019-09-20T19:26:14.215Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": []
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 21,
     "fields": {
       "subject": 9,
       "uuid": "217acc38-456b-4307-b69e-15a7997992ca",
       "due": "2019-09-27",
+      "created": "2019-09-20T19:26:41.548Z",
       "room": "L211",
       "details": "Compr\u00e9hension \u00e9crite",
-      "progress": 0.0,
-      "added": "2019-09-20T19:26:41.548Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        26,
+        28
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 22,
     "fields": {
       "subject": 12,
       "uuid": "f69ced6f-04b9-47ee-9bd2-158f0a2e85d0",
       "due": "2019-10-14",
+      "created": "2019-09-23T18:42:47.250Z",
       "room": "L225",
       "details": "DM: Analys du texte L'\u00c9volution cr\u00e9atrice par Bergson",
-      "progress": 0.0,
-      "added": "2019-09-23T18:42:47.250Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        20
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 23,
     "fields": {
       "subject": 4,
       "uuid": "1720fc2a-510d-425a-8861-b6af13f949b0",
       "due": "2019-09-25",
+      "created": "2019-09-24T20:16:19.007Z",
       "room": "L112",
       "details": "TP #2",
-      "progress": 0.0,
-      "added": "2019-09-24T20:16:19.007Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": []
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 24,
     "fields": {
       "subject": 4,
       "uuid": "40c659d8-a7c8-40cc-bb5b-6769ded412c0",
       "due": "2019-09-26",
+      "created": "2019-09-25T10:45:17.183Z",
       "room": "L112",
       "details": "TP #2",
-      "progress": 0.0,
-      "added": "2019-09-25T10:45:17.183Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": []
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 25,
     "fields": {
       "subject": 7,
       "uuid": "3d453461-dbc8-4531-813a-9e9a14c6f959",
       "due": "2019-10-08",
+      "created": "2019-09-26T12:12:59.869Z",
       "room": "Amphi",
       "details": "",
-      "progress": 0.0,
-      "added": "2019-09-26T12:12:59.869Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        47
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 26,
     "fields": {
       "subject": 4,
       "uuid": "ff721fc4-0a98-4640-9b15-c8b88dedbb4b",
       "due": "2019-10-05",
+      "created": "2019-09-30T08:15:49.094Z",
       "room": "L112",
       "details": "Partie A seulement",
-      "progress": 0.0,
-      "added": "2019-09-30T08:15:49.094Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        55
+      ]
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 28,
     "fields": {
       "subject": 1,
       "uuid": "751a96d3-1d50-430a-b35b-d657b375edb7",
       "due": "2019-09-27",
+      "created": "2019-10-03T06:51:08.135Z",
       "room": "L218",
       "details": "Pop Quiz! #1",
-      "progress": 0.0,
-      "added": "2019-10-03T06:51:08.135Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": []
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 30,
     "fields": {
       "subject": 9,
       "uuid": "ca081f1c-647b-4a1c-8f6a-2859116d9575",
       "due": "2019-10-15",
+      "created": "2019-10-08T10:02:17.965Z",
       "room": "L218",
       "details": "\u00e0 l'oral sur la s\u00e9quence",
-      "progress": 0.0,
-      "added": "2019-10-08T10:02:17.965Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": []
     }
   },
   {
-    "model": "homework.homework",
+    "model": "learn.test",
     "pk": 31,
     "fields": {
       "subject": 1,
       "uuid": "ece20239-3be9-43d2-9243-6706c71372a4",
       "due": "2019-10-11",
+      "created": "2019-10-09T06:13:32.213Z",
       "room": "L218",
       "details": "",
-      "progress": 0.0,
-      "added": "2019-10-09T06:13:32.213Z",
-      "completed": "2020-01-12T02:35:45",
-      "type": "TEST"
+      "notes": [
+        23,
+        32
+      ]
     }
   },
   {
@@ -4313,6 +4306,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+      "action_time": "2019-09-04T14:07:09.619Z",
+      "user": 1,
+      "content_type": 9,
+      "object_id": "25",
+      "object_repr": "ewen-le-bihan's Sciences de l'ing\u00e9nieur at thursday (both) -- 15:50:00 to 18:10:00",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 64,
     "fields": {
       "action_time": "2019-09-04T14:22:55.634Z",
@@ -4320,6 +4326,19 @@
       "content_type": 9,
       "object_id": "52",
       "object_repr": "ewen-le-bihan's Physique at thursday (both) -- 10:10:00 to 11:05:00",
+      "action_flag": 1,
+      "change_message": "[{\"added\": {}}]"
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 96,
+    "fields": {
+      "action_time": "2019-09-09T10:52:42.703Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "21",
+      "object_repr": "Spandam's Histoire-g\u00e9o",
       "action_flag": 1,
       "change_message": "[{\"added\": {}}]"
     }
@@ -4339,6 +4358,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 160,
+    "fields": {
+      "action_time": "2019-09-21T20:02:07.560Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "367",
+      "object_repr": "RipTaBdd_123629",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 192,
     "fields": {
       "action_time": "2019-09-21T20:02:07.777Z",
@@ -4346,6 +4378,19 @@
       "content_type": 16,
       "object_id": "1004",
       "object_repr": "RipTaBdd_151089",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 224,
+    "fields": {
+      "action_time": "2019-09-21T20:02:08.033Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "881",
+      "object_repr": "RipTaBdd_175710",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4365,6 +4410,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 288,
+    "fields": {
+      "action_time": "2019-09-21T20:02:47.606Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "313",
+      "object_repr": "RipTaBdd_230411",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 320,
     "fields": {
       "action_time": "2019-09-21T20:02:47.873Z",
@@ -4372,6 +4430,19 @@
       "content_type": 16,
       "object_id": "91",
       "object_repr": "RipTaBdd_25671",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 352,
+    "fields": {
+      "action_time": "2019-09-21T20:02:48.160Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "162",
+      "object_repr": "RipTaBdd_292287",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4391,6 +4462,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 416,
+    "fields": {
+      "action_time": "2019-09-21T20:02:48.684Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "851",
+      "object_repr": "RipTaBdd_355610",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 448,
     "fields": {
       "action_time": "2019-09-21T20:02:48.943Z",
@@ -4398,6 +4482,19 @@
       "content_type": 16,
       "object_id": "580",
       "object_repr": "RipTaBdd_388559",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 480,
+    "fields": {
+      "action_time": "2019-09-21T20:02:49.160Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "206",
+      "object_repr": "RipTaBdd_422082",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4417,6 +4514,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 544,
+    "fields": {
+      "action_time": "2019-09-21T20:02:49.693Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "315",
+      "object_repr": "RipTaBdd_477934",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 576,
     "fields": {
       "action_time": "2019-09-21T20:02:49.970Z",
@@ -4424,6 +4534,19 @@
       "content_type": 16,
       "object_id": "14",
       "object_repr": "RipTaBdd_503137",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 608,
+    "fields": {
+      "action_time": "2019-09-21T20:02:50.217Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "212",
+      "object_repr": "RipTaBdd_539810",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4443,6 +4566,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 672,
+    "fields": {
+      "action_time": "2019-09-21T20:02:50.766Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "472",
+      "object_repr": "RipTaBdd_599717",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 704,
     "fields": {
       "action_time": "2019-09-21T20:02:51.059Z",
@@ -4450,6 +4586,19 @@
       "content_type": 16,
       "object_id": "159",
       "object_repr": "RipTaBdd_630317",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 736,
+    "fields": {
+      "action_time": "2019-09-21T20:02:51.347Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "765",
+      "object_repr": "RipTaBdd_665157",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4469,6 +4618,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 800,
+    "fields": {
+      "action_time": "2019-09-21T20:02:51.922Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "700",
+      "object_repr": "RipTaBdd_721177",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 832,
     "fields": {
       "action_time": "2019-09-21T20:02:52.211Z",
@@ -4476,6 +4638,19 @@
       "content_type": 16,
       "object_id": "915",
       "object_repr": "RipTaBdd_748360",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 864,
+    "fields": {
+      "action_time": "2019-09-21T20:02:52.503Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "326",
+      "object_repr": "RipTaBdd_777874",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4495,6 +4670,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 928,
+    "fields": {
+      "action_time": "2019-09-21T20:02:53.101Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "387",
+      "object_repr": "RipTaBdd_82704",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 960,
     "fields": {
       "action_time": "2019-09-21T20:02:53.359Z",
@@ -4502,6 +4690,19 @@
       "content_type": 16,
       "object_id": "865",
       "object_repr": "RipTaBdd_852546",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 992,
+    "fields": {
+      "action_time": "2019-09-21T20:02:53.605Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "858",
+      "object_repr": "RipTaBdd_882298",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4521,6 +4722,19 @@
   },
   {
     "model": "admin.logentry",
+    "pk": 1056,
+    "fields": {
+      "action_time": "2019-09-21T20:02:54.155Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "417",
+      "object_repr": "RipTaBdd_936149",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
     "pk": 1088,
     "fields": {
       "action_time": "2019-09-21T20:02:54.456Z",
@@ -4528,6 +4742,19 @@
       "content_type": 16,
       "object_id": "166",
       "object_repr": "RipTaBdd_97103",
+      "action_flag": 3,
+      "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 1120,
+    "fields": {
+      "action_time": "2019-09-21T20:02:54.728Z",
+      "user": 1,
+      "content_type": 16,
+      "object_id": "90",
+      "object_repr": "RipTaBdd_994026",
       "action_flag": 3,
       "change_message": ""
     }
@@ -4543,6 +4770,19 @@
       "object_repr": "sylv's D\u00e9but du 2\u1d49 trimestre",
       "action_flag": 3,
       "change_message": ""
+    }
+  },
+  {
+    "model": "admin.logentry",
+    "pk": 1184,
+    "fields": {
+      "action_time": "2019-10-04T13:25:53.269Z",
+      "user": 1,
+      "content_type": 14,
+      "object_id": "1",
+      "object_repr": "ewen-le-bihan's English",
+      "action_flag": 2,
+      "change_message": "[{\"changed\": {\"fields\": [\"grade_weight\"]}}]"
     }
   }
 ]
