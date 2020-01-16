@@ -156,8 +156,45 @@ package Homework {
     }
 }
 
+package reports {
+    enum ReportType {
+        FEATURE
+        BUG
+    }
+
+    enum Device {
+        PHONE
+        TABLET
+        LAPTOP
+        DESKTOP
+        SMARTWATCH
+        OTHER
+    }
+
+    class Report {
+        + UUID uuid
+        ..metadata..
+        + ReportType report_type
+        + Boolean put_on_github
+        + Boolean send_by_mail
+        + ISO639_1Code language
+        ..dates..
+        + DateTime added
+        + DateTime happened
+        ..description..
+        + HTMLString message
+        ..troubleshooting metadata..
+        + URL current_url
+        + String browser
+        + String os
+        + Device device
+        + GithubIssue as_github_issue()
+    }
+}
+
 User --> Subject
 User --> Setting
+User --> Report
 SettingDefinition --> Setting
 
 Subject ..> Note

@@ -25,6 +25,6 @@ class SettingDefinitionAdmin(ModelAdmin):
 @register(User)
 class UserAdmin(ModelAdmin):
 	list_display = ('ip_address', 'username', 'is_superuser', 'email',
-		'date_joined', 'setup_step', 'using_schedule')
+		'date_joined', 'setup_step', 'using_schedule', 'remaining_daily_github_issues')
 	list_editable = ('username', 'email',)
 	list_filter = ('is_superuser', 'date_joined')

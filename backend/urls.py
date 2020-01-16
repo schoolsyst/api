@@ -19,6 +19,7 @@ from schedule.views import *
 from homework.views import *
 from learn.views import *
 from common.views import *
+from reports.views import *
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
@@ -42,6 +43,9 @@ api.register(r'events-mutations', MutationsViewSet, 'mutations')
 # --------------------- Homework ------------------------
 api.register(r'grades', GradesViewSet, 'grades')
 api.register(r'homework', HomeworkViewSet, 'homework')
+# ---------------------- Reports ------------------------
+api.register(r'reports', ReportsViewSet, 'reports')
+
 # Add to urlpatterns
 urlpatterns = [
     path('api/users/self/', CurrentUserViewSet.as_view({'get': 'retrieve'})),

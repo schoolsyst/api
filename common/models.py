@@ -21,12 +21,45 @@ class UsernameValidator(UnicodeUsernameValidator):
 
 
 class User(AbstractUser):
+    GITHUB_PUBLISH_LIMIT = 2
     username_validator = UsernameValidator()
     email = EmailField(unique=True)
 
     ip_address = GenericIPAddressField(verbose_name="IP Address",
                                        blank=True,
                                        null=True)
+
+    @property
+    def remaining_daily_github_issues(self):
+        from datetime import datetime
+        # Get the user's reports for today
+        reports = self.reports.filter(published__date=datetime.now().date())
+        # Compare the number of reports against the limit
+        return self.GITHUB_PUBLISH_LIMIT - reports.count()
+
+
+
+    @property
+    def setup_step(self):
+        """
+        Gives the setup step the user needs to complete before being able to use the app.
+        `None` means that the user is ready to use the app.
+        """
+        if self.is_staff:
+            return None
+        subjects = self.subjects.all()
+        has_subjects = subjects.count() > 0
+        has_events = False
+        for s in subjects:
+            has_events = s.events.all().count() > 0
+
+        if not has_subjects: return 'subjects'
+        if self.missing_essential_settings: return 'settings'
+        if self.using_schedule and self.missing_schedule_settings: return 'schedule/settings'
+        if self.using_schedule and not has_events: return 'schedule/events'
+
+        return None
+
 
     @property
     def missing_schedule_settings(self):
@@ -48,25 +81,6 @@ class User(AbstractUser):
         ).values_list('setting__key', flat=True)
 
     @property
-    def setup_step(self):
-        """
-        Gives the setup step the user needs to complete before being able to use the app.
-        `None` means that the user is ready to use the app.
-        """
-        subjects = self.subjects.all()
-        has_subjects = subjects.count() > 0
-        has_events = False
-        for s in subjects:
-            has_events = s.events.all().count() > 0
-
-        if not has_subjects: return 'subjects'
-        if self.missing_essential_settings: return 'settings'
-        if self.using_schedule and self.missing_schedule_settings: return 'schedule/settings'
-        if self.using_schedule and not has_envents: return 'schedule/events'
-        
-        return None
-
-    @property
     def using_schedule(self):
             return self.setting_value('use_schedule') in (True, None)
 
@@ -74,7 +88,7 @@ class User(AbstractUser):
         setting = self.settings.filter(setting__key='use_schedule')
         if len(setting) == 0: return None
         return setting[0].value
-        
+
 
 class SettingDefinition(Model):
     TYPES = [

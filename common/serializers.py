@@ -72,7 +72,8 @@ class UserReadSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'last_login', 'date_joined', 'email',
-                  'username', 'is_staff', 'setup_step')
+                  'username', 'is_staff', 'setup_step',
+                  'remaining_daily_github_issues')
 
 
 class UserCurrentSerializer(ModelSerializer):
@@ -88,7 +89,8 @@ class UserCurrentSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'last_login', 'date_joined', 'email',
-                  'username', 'is_staff', 'setup_step', 'ip_address')
+                  'username', 'is_staff', 'setup_step',
+                  'ip_address', 'remaining_daily_github_issues')
         extra_kwargs = {
             'password': {'write_only': True},
             'url': {'lookup_field': 'id'}

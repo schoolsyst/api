@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework', 'django_extensions', 
+    'rest_framework', 'django_extensions',
     'corsheaders', 'django_rest_passwordreset',
     'learn.apps.LearnConfig',
     'schedule.apps.ScheduleConfig',
     'common.apps.CommonConfig',
     'homework.apps.HomeworkConfig',
+    'reports.apps.ReportsConfig'
 ]
 
 MIDDLEWARE = [
