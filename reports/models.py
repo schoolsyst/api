@@ -79,8 +79,7 @@ class Report(Model):
       if self.user.remaining_daily_github_issues <= 0: return False, 'quota_reached'
       import requests, json
       from os import environ
-      # key = environ.get('GITHUB_API_KEY')
-      key = '26637329000bc14d8dc0afd591414077b8b6154e' #XXX
+      key = environ.get('GITHUB_API_KEY')
       if key is None: raise Exception('Please set the environment variable GITHUB_API_KEY')
       print(f'GITHUB_API_KEY={key}')
 
