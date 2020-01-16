@@ -80,8 +80,9 @@ class Report(Model):
       import requests, json
       from os import environ
       key = environ.get('GITHUB_API_KEY')
+      username = environ.get('GITHUB_API_USERNAME')
       if key is None: raise Exception('Please set the environment variable GITHUB_API_KEY')
-      print(f'GITHUB_API_KEY={key}')
+      if username is None: raise Exception('Please set the environment variable GITHUB_API_USERNAME')
 
       data = self.as_github_issue()
 
@@ -91,7 +92,7 @@ class Report(Model):
       res = requests.post(
         f'https://api.github.com/repos/{repo}/issues',
         json=data,
-        auth=('ewen-lbh', key)
+        auth=(username, key)
       )
 
       if str(res.status_code).startswith('2'):
