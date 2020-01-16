@@ -1,4 +1,4 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -9,7 +9,7 @@ from .models import *
 from .serializers import *
 
 
-class SettingsDefinitionsViewSet(ModelViewSet):
+class SettingsDefinitionsViewSet(ReadOnlyModelViewSet):
     lookup_field = 'key'
     queryset = SettingDefinition.objects.all()
     serializer_class = SettingDefinitionSerializer
@@ -91,7 +91,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         'username': reset_password_token.user.username,
         'email': reset_password_token.user.email,
         'expiry_date_human': expiry_date.strftime('%A %d %B %Y à %H:%S'), #TODO: french locale
-        'reset_password_url': 
+        'reset_password_url':
             "http://localhost:3000/"
             "reset-password/choose"
             f"?token={reset_password_token.key}"
