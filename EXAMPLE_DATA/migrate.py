@@ -2,8 +2,8 @@ import re
 import os
 import json
 from restore import *
-from termcolor import cprint
-
+from termcolor import cprint, colored
+import pypandoc
 
 #
 # Utility to change a func's __repr__
@@ -26,7 +26,49 @@ def withrepr(reprfun):
     return _wrap
 
 #
+# Action logger for migrator
 # 
+import shutil, time
+class Log:
+  def __init__(self, instance, msg, color, fallback_data=None):
+    self.instance = instance
+    self.fallback_data = fallback_data
+    self.msg = msg
+    self.color = color
+    self.counter = 0
+    self.get_functions()
+  def __enter__(self, *args, **kwargs): 
+    print(end='')
+    return self.log
+  def __exit__(self, *args, **kwargs): 
+    if not self.counter:
+      self._log_no_counter(self.fallback_data)
+    print('')
+  def get_functions(self):
+    def log_no_counter(*data):
+      if self.fallback_data:
+        data = data or self.fallback_data if len(data) > 1 else data[0]
+        rendered_msg = self.msg % data
+      else:
+        rendered_msg = self.msg
+
+      term_width = shutil.get_terminal_size((80, 20)).columns
+      full_msg = colored(f'[ {self.counter:4} ]', 'white') + ' ' + colored(rendered_msg, self.color)
+      if len(full_msg) > term_width:
+        full_msg = full_msg[0:term_width-1] + '…'
+
+      if True:
+        sys.stdout.write("\033[F") #back to previous line
+        sys.stdout.write("\033[K") #clear line
+        print(full_msg)
+        # time.sleep(0.025)
+    
+    def log(*data):
+      self.counter += 1
+      return log_no_counter(*data)
+
+    self.log = log
+    self._log_no_counter = log_no_counter
 
 class Migrator:
   def __init__(self, model, filename, mutate=True, verbose=True):
@@ -46,11 +88,11 @@ class Migrator:
     self.entries = self.load_datadump()
     return self
   def __exit__(self, *args, **kwargs):
-    self.write_datadump(None, True, indent=2)
+    self.write_datadump(None, False, indent=2)
 
   
   def load_datadump(self):
-    with open(self.filename+'.bak', 'r') as file:
+    with open(self.filename, 'r') as file:
       raw = file.read()
     self.orig_raw = raw
     
@@ -86,104 +128,103 @@ class Migrator:
 
   def rename_model(self, new_name):
     entries = self.entries
-    counter = 0
     app_label, model = new_name.split('.')
 
-    for (i, entry) in enumerate(self.entries):
-      # Modify contenttypes
-      if entry['model'] == 'contenttypes.contenttype':
-        a, m = self.get_entry_fields(entry, as_tuple=True)
-        if a == app_label and m == model:
-          entries[i]['fields']['app_label'] = app_label
-          entries[i]['fields']['model'] = model
+    with Log(self, f'Renamed model to {new_name}', 'magenta') as log:
+      for (i, entry) in enumerate(self.entries):
+        # Modify contenttypes
+        if entry['model'] == 'contenttypes.contenttype':
+          a, m = self.get_entry_fields(entry, as_tuple=True)
+          if a == app_label and m == model:
+            entries[i]['fields']['app_label'] = app_label
+            entries[i]['fields']['model'] = model
 
-      # Modify the model entries itselves
-      if entry['model'] == self.full_model:
-          entries[i]['model'] = new_name
+        # Modify the model entries itselves
+        if entry['model'] == self.full_model:
+            entries[i]['model'] = new_name
+            log()
 
-      # Increment counter
-      counter += 1
     
     self.full_model = new_name
-    print(f'[ {counter:4} ]', end=' ')
     self.model = model
     self.app_label = app_label
 
-    if self.verbose:
-      cprint(f'Renamed model to {new_name}', 'magenta')
+    if self.mutate:
+      self.entries = entries
+    return entries
+
+  def delete_model(self):
+    entries = self.entries
+    with Log(self, f'Deleted model', 'red') as log:
+      for (i, entry) in enumerate(self.entries):
+        # Modify contenttypes
+        if entry['model'] == 'contenttypes.contenttype':
+          a, m = self.get_entry_fields(entry, as_tuple=True)
+          if a == self.app_label and m == self.model:
+            del entries[i]
+
+        # Modify the model entries itselves
+        if entry['model'] == self.full_model:
+            del entries[i]
+            log()
+
+    
     if self.mutate:
       self.entries = entries
     return entries
 
   def rename_field(self, old_name, new_name):
     entries = self.entries
-    counter = 0
-    for (i, entry) in enumerate(self.entries):
-      if entry['model'] == self.full_model:
-        if old_name in self.get_entry_fields(entry).keys():
-          value = entry['fields'][old_name]
-          del entries[i]['fields'][old_name]
-          entries[i]['fields'][self.handle_callable(new_name, entry, old_name)] = value
-
-      # Increment counter
-      counter += 1
-
-    if self.verbose and counter:
-      print(f'[ {counter:4} ]', end=' ')
-      cprint(f'Renamed field {old_name} to {new_name}', 'cyan')
+    with Log(self, f'Rename field {old_name} to {new_name}', 'cyan') as log:
+      for (i, entry) in enumerate(self.entries):
+        if entry['model'] == self.full_model:
+          if old_name in self.get_entry_fields(entry).keys():
+            value = entry['fields'][old_name]
+            del entries[i]['fields'][old_name]
+            entries[i]['fields'][new_name] = value
+            log()
     if self.mutate:
       self.entries = entries
     return entries
 
   def add_field(self, name, value=None):
     entries = self.entries
-    counter = 0
-    for (i, entry) in enumerate(self.entries):
-      if entry['model'] == self.full_model:
-        entries[i]['fields'][name] = self.handle_callable(value, entry, None)
+    with Log(self, f'Added field {name} with value %s', 'green', (value,)) as log:
+      for (i, entry) in enumerate(self.entries):
+        if entry['model'] == self.full_model:
+          val = self.handle_callable(value, entry, None)
+          if name not in entries[i]['fields'].keys():
+            entries[i]['fields'][name] = val
+            log(val.__repr__())
 
-      # Increment counter
-      counter += 1
-    
-    if self.verbose and counter:
-      print(f'[ {counter:4} ]', end=' ')
-      cprint(f'Added field {name} with value {value.__repr__()}', 'green')
     if self.mutate:
       self.entries = entries
     return entries
 
   def delete_field(self, name, condition = lambda value, fields: True):
     entries = self.entries
-    counter = 0
-    for (i, entry) in enumerate(self.entries):
-      if entry['model'] == self.full_model:
-        if name in self.get_entry_fields(entry).keys():
-          if condition(entry['fields'][name], entry['fields']):
-            del entries[i]['fields'][name]
-            # Increment counter
-            counter += 1
-    
-    if self.verbose and counter:
-      print(f'[ {counter:4} ]', end=' ')
-      cprint(f'Deleted field {name}', 'red')
+    with Log(self, f'Deleted field {name}', 'red') as log:
+      for (i, entry) in enumerate(self.entries):
+        if entry['model'] == self.full_model:
+          if name in self.get_entry_fields(entry).keys():
+            if condition(entry['fields'][name], entry['fields']):
+              del entries[i]['fields'][name]
+              log()
+  
     if self.mutate:
       self.entries = entries
     return entries
  
   def set_field(self, field, value):
     entries = self.entries
-    counter = 0
-    for (i, entry) in enumerate(self.entries):
-      if entry['model'] == self.full_model:
-        if field in self.get_entry_fields(entry).keys():
-          entry['fields'][field] = self.handle_callable(value, entry, field)
-
-      # Increment counter
-      counter += 1
-    
-    if self.verbose and counter:
-      print(f'[ {counter:4} ]', end=' ')
-      cprint(f'Set field {field} to {value}', 'blue')
+    with Log(self, f'Set field {field} to %s', 'blue', (value,)) as log:
+      for (i, entry) in enumerate(self.entries):
+        if entry['model'] == self.full_model:
+          if field in self.get_entry_fields(entry).keys():
+            val = self.handle_callable(value, entry, field)
+            entry['fields'][field] = val
+            log(val.__repr__())
+  
     if self.mutate:
       self.entries = entries
     return entries
@@ -231,7 +272,7 @@ def slug_from(using_field):
   return _make_slug
 
 def use(func, apply_as="function", *args, **kwargs):
-  @withrepr(lambda f: f"[ {'.' if apply_as == 'method' else ''}{func.__name__} ]")
+  @withrepr(lambda f: f"[ {'.' if apply_as == 'method' else ''}{func.__name__}() ]")
   def transformer(value, fields):
     if apply_as == 'function':
       return func(value, *args, **kwargs)
@@ -263,6 +304,12 @@ def default(default_value, needs_a_default = lambda value, fields: value is None
       return value
   return transformer
 
+def pandoc_convert(in_format, out_format):
+  @withrepr(lambda f:f"[ pandoc_convert {in_format} ~> {out_format} ]")
+  def transformer(value, fields):
+    return pypandoc.convert_text(value, format=in_format, to=out_format)
+  return transformer
+
 with Migrator('common.defaultsetting', FILE) as m:
   m.rename_field('required', 'optional')
   m.set_field('optional', invert_bool)
@@ -280,22 +327,27 @@ with Migrator('common.subject', FILE) as m:
   
 with Migrator('learn.note', FILE) as m:
   m.rename_field('filetype', 'format')
-  m.set_field('format', uppercase)
-  m.rename_field('last_modifier', 'modified')
+  m.rename_field('last_modified', 'modified')
   m.rename_field('created', 'added')
-  m.add_field('opened', iso_now)
+  m.delete_field('learnt')
+  m.set_field('content', pandoc_convert('markdown_phpextra', 'html'))
+  m.set_field('format', 'HTML')
+  m.set_field('opened', '2019-10-12T17:22:14')
+  m.rename_field('null', 'added')
 
 with Migrator('learn.grade', FILE) as m:
   m.delete_field('test')
   m.rename_field('actual', 'obtained')
   m.rename_field('maximum', 'unit')
+  m.rename_field('null', 'unit')
+  m.rename_model('homework.grade')
 
 with Migrator('schedule.exercise', FILE) as m:
   m.delete_field('event')
   m.rename_field('completed', 'progress')
-  m.set_field('progress', lambda v,f: float(v))
+  m.set_field('progress', use(float))
   m.rename_field('created', 'added')
-  m.add_field('completed', iso_now)
+  m.set_field('completed', iso_now)
   m.rename_field('notes', 'details')
   m.add_field('type', 'EXERCISE')
   m.rename_model('homework.homework')
@@ -308,3 +360,18 @@ with Migrator('learn.test', FILE) as m:
   m.add_field('type', 'TEST')
   m.rename_model('homework.homework')
 
+with Migrator('schedule.event', FILE) as m:
+  def weekday_word_to_int(value, fields):
+    return {
+      'monday': 0,
+      'tuesday': 1,
+      'wednesday': 2,
+      'thursday': 3,
+      'friday': 4,
+      'saturday': 5,
+      'sunday': 6,
+    }[value]
+  m.set_field('day', weekday_word_to_int)
+
+with Migrator('users.user', FILE) as m:
+  m.rename_model('common.user')
