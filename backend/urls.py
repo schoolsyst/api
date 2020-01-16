@@ -42,7 +42,6 @@ api.register(r'events-mutations', MutationsViewSet, 'mutations')
 # --------------------- Homework ------------------------
 api.register(r'grades', GradesViewSet, 'grades')
 api.register(r'homework', HomeworkViewSet, 'homework')
-
 # Add to urlpatterns
 urlpatterns = [
     path('api/users/self/', CurrentUserViewSet.as_view({'get': 'retrieve'})),
@@ -51,6 +50,7 @@ urlpatterns = [
     path('api/auth/verify/', verify_jwt_token),
     path('api/auth/logout/', lambda req: HttpResponse('')),
     path('api/password-reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('api/notes/convert/<slug:uuid_or_in_format>/<slug:out_format>/', NotesViewSet.as_view({"post": "convert", "get": "convert"})),
     path('api/', include(api.urls)),
     path('admin/', admin.site.urls),
     path('', lambda req: redirect('api-root')),

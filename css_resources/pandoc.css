@@ -1,0 +1,78 @@
+@charset "UTF-8";
+@font-face {
+    font-family: "Now";
+    src: url("Now/NOW-BLACK.OTF") format("truetype");
+    font-style: normal;
+    font-weight: 900;
+}
+@font-face {
+    font-family: "Now";
+    src: url("Now/NOW-BOLD.OTF") format("truetype");
+    font-style: normal;
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Now";
+    src: url("Now/NOW-MEDIUM.OTF") format("truetype");
+    font-style: normal;
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Now";
+    src: url("Now/NOW-REGULAR.OTF") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Now";
+    src: url("Now/NOW-LIGHT.OTF") format("truetype");
+    font-style: normal;
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Now";
+    src: url("Now/NOW-THIN.OTF") format("truetype");
+    font-style: normal;
+    font-weight: 100;
+}
+
+body {
+  font-family: 'Now', Arial, sans-serif;
+}
+
+p {
+  margin-bottom: 0.2em;
+}
+h1:not(:first-child),
+h2:not(:first-child),
+h3:not(:first-child),
+h4:not(:first-child),
+h5:not(:first-child),
+h6:not(:first-child) {
+  margin-top: 1.2em;
+}
+h1:not(:last-child),
+h2:not(:last-child),
+h3:not(:last-child),
+h4:not(:last-child),
+h5:not(:last-child),
+h6:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+h1 {
+  text-align: center;
+}
+ul,
+ol {
+  padding-left: 2.5em;
+}
+ul li {
+  list-style-type: disc;
+}
+hr {
+  margin: 1em auto;
+  width: 75%;
+}
+code {
+  font-family: var(--fonts-monospace-light);
+}
