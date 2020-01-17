@@ -2,6 +2,7 @@ from backend.settings import AUTH_USER_MODEL
 import uuid
 from django.db.models import *
 from django.core.validators import RegexValidator
+from os import getenv
 
 # Create your models here.
 class Report(Model):
@@ -79,8 +80,8 @@ class Report(Model):
       if self.user.remaining_daily_github_issues <= 0: return False, 'quota_reached'
       import requests, json
       from os import environ
-      key = environ.get('GITHUB_API_KEY')
-      username = environ.get('GITHUB_API_USERNAME')
+      key = getenv('GITHUB_API_KEY')
+      username = getenv('GITHUB_API_USERNAME')
       if key is None: raise Exception('Please set the environment variable GITHUB_API_KEY')
       if username is None: raise Exception('Please set the environment variable GITHUB_API_USERNAME')
 
