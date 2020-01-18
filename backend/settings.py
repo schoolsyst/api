@@ -170,14 +170,15 @@ SUBDOMAINS = ['app', 'api', 'dev', 'beta', 'www', 'admin']
 
 
 if DEBUG:
-    CORS_ORIGIN_WHITELIST = [ 'http://localhost:3000' ]
+    CORS_ORIGIN_ALLOW_ALL = True
 else:
-    CORS_ORIGIN_WHITELIST = [ 'https://' + subdomain + '.schoolsyst.com' for subdomain in SUBDOMAINS ] + [ 'https://schoolsyst.com' ]
+    CORS_ORIGIN_REGEX_WHITELIST = [ r'https://' + subdomain + r'\.schoolsyst\.com' for subdomain in SUBDOMAINS ] + [ r'https://schoolsyst\.com' ]
 
 
 CORS_EXPOSE_HEADERS = [
     'access-control-allow-origin'
 ]
+
 
 # Security
 # https://docs.djangoproject.com/fr/3.0/howto/deployment/checklist/
@@ -218,3 +219,11 @@ LOGGING = {
         },
     },
 }
+
+# Email backend
+# https://docs.djangoproject.com/en/3.0/topics/email/#email-backends
+
+SEND_MAIL = env('SEND_MAIL', bool)
+
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend' if SEND_MAIL else 'django.core.mail.backends.console.EmailBackend'
+    
