@@ -44,11 +44,11 @@ class NotesViewSet(ModelViewSet):
         /notes/convert/:uuid_or_in_format/:out_format
         """
 
-        IN_FORMATS = 'pdf tex docx png txt odt markdown asciidoc rst epub mediawiki'.split(' ')
-        OUT_FORMATS = [ f for f in IN_FORMATS if f not in 'pdf png'.split(' ') ]
+        IN_FORMATS = 'pdf tex docx txt odt markdown asciidoc rst epub mediawiki'.split(' ')
+        OUT_FORMATS = [ f for f in IN_FORMATS if f not in 'pdf docx'.split(' ') ]
 
         PANDOC_FORMATS = {
-            'markdown': 'markdown_phpextra',
+            'markdown': 'markdown_phpextra+emoji+superscript+subscript',
             'tex': 'latex',
             'txt': 'plain'
         }
