@@ -63,9 +63,8 @@ class CurrentUserViewSet(ModelViewSet):
 
 from django.dispatch import receiver
 from django.template.loader import render_to_string
-from django.urls import reverse
-from django_rest_passwordreset.signals import reset_password_token_created
 from urllib.parse import quote
+from django_rest_passwordreset.signals import reset_password_token_created
 from datetime import datetime, timedelta
 
 @receiver(reset_password_token_created)

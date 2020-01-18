@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import RegexValidator, MinValueValidator
 from learn.models import zero_to_one_validator
+from datetime import timedelta, datetime
 
 HEX_COLOR_VALIDATOR = [RegexValidator(r'^#(?:[A-Fa-f0-9]{3}){1,2}$',
                                       "Please use a valid hexadecimal color format, eg. #268CCE, or #FFF")]
@@ -19,10 +20,18 @@ class UsernameValidator(UnicodeUsernameValidator):
 
 # TODO: case-insensitive checks
 
+class EmailVerificationToken(Model):
+    user = ForeignKey('common.User', on_delete=CASCADE)
+    token = CharField(max_length=500, default=uuid.uuid4)
+    added = DateTimeField(auto_now=True)
+    @property
+    def expiry_date(self):
+        return self.added + timedelta(hours=24)
 
 class User(AbstractUser):
     username_validator = UsernameValidator()
     email = EmailField(unique=True)
+    email_verified = BooleanField(default=False)
 
     ip_address = GenericIPAddressField(verbose_name="IP Address",
                                        blank=True,
@@ -82,14 +91,54 @@ class User(AbstractUser):
 
     @property
     def using_schedule(self):
-            return self.setting_value('use_schedule') in (True, None)
+        return self.setting_value('use_schedule') in (True, None)
 
     def setting_value(self, key):
         setting = self.settings.filter(setting__key='use_schedule')
         if len(setting) == 0: return None
         return setting[0].value
+        
+    def send_email_verification(self):
+        from django.core.mail import send_mail
+        from django.template.loader import render_to_string
+        from urllib.parse import quote
+        user  = User.objects.get(id=self.id)
+        token = EmailVerificationToken.objects.create(user=user)
+        
+        # get data
+        expiry_date = datetime.now() + timedelta(hours=24)
+        context = {
+            'username': user.username,
+            'email': user.email,
+            'expiry_date_human': expiry_date.strftime('%A %d %B %Y à %H:%S'), #TODO: French locale
+            'verify_email_url': 
+                "http://localhost:3000/"
+                "verify-email"
+                f"?token={token}"
+                f"&email={quote(user.email)}"
+        }
+        
+        # render email text
+        message_plaintext = render_to_string('user_verify_email.html', context) # TODO: use https://mjml.io
+        message_html      = render_to_string('user_verify_email.txt', context)
 
-
+        # send email        
+        send_mail(
+            subject="schoolsyst · Vérifiez votre adresse e-mail",
+            message=message_plaintext,
+            html_message=message_html,
+            recipient_list=[self.email],
+        )
+        
+    def verify_email(self, token, email):
+        tokens = EmailVerificationToken.objects.filter(expiry_date__gte=datetime.now(), user__email=email, token=token)
+        if tokens.count() > 0:
+            self.email_verified = True
+    
+    def create(self, *args, **kwargs):
+        super(User, self).create(*args, **kwargs)
+        self.send_email_verification()
+        
 class SettingDefinition(Model):
     TYPES = [
         ('TEXT',      'Texte'),
