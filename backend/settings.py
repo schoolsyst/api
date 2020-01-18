@@ -47,7 +47,7 @@ GITHUB_API_USERNAME = env('GITHUB_API_USERNAME')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*.schoolsyst.com', 'localhost']
 
 AUTH_USER_MODEL = 'common.User'
 
@@ -166,11 +166,30 @@ REST_FRAMEWORK = {
 
 # CORS
 
-CORS_ORIGIN_ALLOW_ALL = True
+SUBDOMAINS = ['app', 'api', 'dev', 'beta', 'www', 'admin']
+
+
+if DEBUG:
+    CORS_ORIGIN_WHITELIST = [ 'http://localhost:3000' ]
+else:
+    CORS_ORIGIN_WHITELIST = [ 'https://' + subdomain + '.schoolsyst.com' for subdomain in SUBDOMAINS ] + [ 'https://schoolsyst.com' ]
+
 
 CORS_EXPOSE_HEADERS = [
     'access-control-allow-origin'
 ]
+
+# Security
+# https://docs.djangoproject.com/fr/3.0/howto/deployment/checklist/
+
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_SSL_REDIRECT = True
+    X_FRAME_OPTIONS = 'DENY'
+
 
 # JWT
 from datetime import timedelta
