@@ -47,7 +47,7 @@ GITHUB_API_USERNAME = env('GITHUB_API_USERNAME')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', bool)
 
-ALLOWED_HOSTS = ['*.schoolsyst.com', 'localhost']
+ALLOWED_HOSTS = ['.schoolsyst.com', 'localhost']
 
 AUTH_USER_MODEL = 'common.User'
 
