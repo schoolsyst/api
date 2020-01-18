@@ -51,7 +51,8 @@ class User(AbstractUser):
         has_subjects = subjects.count() > 0
         has_events = False
         for s in subjects:
-            has_events = s.events.all().count() > 0
+            if not has_events:
+                has_events = s.events.all().count() > 0
 
         if not has_subjects: return 'subjects'
         if self.missing_essential_settings: return 'settings'
