@@ -41,7 +41,7 @@ class Report(Model):
     happened = DateTimeField(blank=True, null=True)
     published = DateTimeField(blank=True, null=True)
     # Message
-    title = CharField(max_length=30, blank=True, null=True)
+    title = CharField(max_length=80, blank=True, null=True)
     content = TextField()
     # Troubleshooting metadata
     url = URLField(default="Unknown")
