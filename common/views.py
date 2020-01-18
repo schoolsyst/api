@@ -7,7 +7,6 @@ from rest_framework.decorators import api_view
 from backend.settings import DEBUG
 from .models import *
 from .serializers import *
-from common.utils import
 
 
 class SettingsDefinitionsViewSet(ReadOnlyModelViewSet):
@@ -66,8 +65,6 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
-from mailjet_rest import Client
-from os import getenv
 from urllib.parse import quote
 from datetime import datetime, timedelta
 
@@ -84,7 +81,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     :return:
     """
 
-    # send an e-mail to the user
+    # get data
     expiry_date = datetime.now() + timedelta(hours=24)
     context = {
         'current_user': reset_password_token.user,
@@ -102,55 +99,12 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     email_html_message = render_to_string('user_reset_password.html', context) # TODO: use https://mjml.io
     email_plaintext_message = render_to_string('user_reset_password.txt', context)
 
-    msg = dict(
-        from_email         = ("passwords@schoolsyst.com", "Schoolsyst"),
-        to_emails          = reset_password_token.user.email,
-        subject            = "Schoolsyst · Demande de réinitialisation de mot de passe",
-        html_content       = email_html_message,
-        plain_text_content = email_plaintext_message,
-        reply_to           = ('ewen.lebihan7@gmail.com', 'Ewen Le Bihan')
+    # send the mail
+    print('Sending mail...')
+    send_mail(
+        subject="schoolsyst · Demande de réinitialisation de mot de passe",
+        message=email_plaintext_message,
+        from_email=("schoolsyst", "passwords@schoolsyst.com"),
+        recipient_list=[reset_password_token.user.email],
+        html_message=email_html_message
     )
-
-    if getenv('SEND_MAIL') == 'True':
-        print('--------EMAIL--------')
-        print(render_to_string('user_reset_password.txt', context))
-        print('-------/EMAIL--------')
-    else:
-        # send w/ sendgrid
-        print(f"Getting API secrets...")
-        key = getenv('MAILJET_API_KEY')
-        secret = getenv('MAILJET_API_SECRET')
-        if key is None or secret is None:
-            raise Exception("Environment variable MAILJET_API_KEY or MAILJET_API_SECRET not set")
-        mailjet = Client(auth=(key, secret), version='v3.1')
-        msg = {
-            'Messages': [{
-                "From": {
-                    "Email": msg['from_email'][0],
-                    "Name": msg['from_email'][1]
-                },
-                "To": [
-                    {
-                    "Email": msg['to_email'][0],
-                    "Name": msg['to_email'][1]
-                    }
-                ],
-                "Subject": msg['subject'],
-                "TextPart": msg['plain_text_content'],
-                "HTMLPart": msg['html_content'],
-                "CustomID": "PasswordReset"
-            }]
-        }
-        print(f"Sending email to {reset_password_token.user.email}...")
-        try:
-            response = mailjet.send.create(data=msg)
-        except Exception as e:
-            try:
-                print(e.body)
-            except AttributeError:
-                print(e)
-        else:
-            print(f"Got {response.status_code} response:")
-            print(response.headers)
-            print(response.body)
-
