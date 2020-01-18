@@ -9,9 +9,11 @@ django-cors-headers==3.0.2
 django-extensions==2.2.3
 django-request-logging==0.7.0
 django-rest-passwordreset==1.0.0
+django-sendgrid-v5==0.8.1
 djangorestframework==3.9.4
 drf-jwt==1.13.2
 drf-rw-serializers==1.0.2
+future==0.18.2
 idna==2.8
 inquirer==2.6.3
 prompt-toolkit==1.0.14
