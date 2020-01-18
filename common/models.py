@@ -21,7 +21,6 @@ class UsernameValidator(UnicodeUsernameValidator):
 
 
 class User(AbstractUser):
-    GITHUB_PUBLISH_LIMIT = 2
     username_validator = UsernameValidator()
     email = EmailField(unique=True)
 
@@ -31,11 +30,12 @@ class User(AbstractUser):
 
     @property
     def remaining_daily_github_issues(self):
+        GITHUB_PUBLISH_LIMIT = 10 if self.is_superuser else 5
         from datetime import datetime
         # Get the user's reports for today
         reports = self.reports.filter(published__date=datetime.now().date())
         # Compare the number of reports against the limit
-        return self.GITHUB_PUBLISH_LIMIT - reports.count()
+        return GITHUB_PUBLISH_LIMIT - reports.count()
 
 
 
