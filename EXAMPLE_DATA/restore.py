@@ -48,7 +48,7 @@ def get_server_data(endpoint, token, base_url=BASE_URL):
     return requests.get(url, headers={'Authorization': f'Bearer {token}'}).json()
 
 def get_distant_value(endpoint, get_prop, search_in_prop, search_for, token):
-    # Example: 
+    # Example:
     # @subjects.uuid:slug=histoire-geographie
     #   |        |     |           |
     #   |        |     |           | search_for
@@ -56,7 +56,7 @@ def get_distant_value(endpoint, get_prop, search_in_prop, search_for, token):
     #   |        | get_prop
     #   | endpoint
     #
-    # will make a request to (BASE_URL + 'subjects') and 
+    # will make a request to (BASE_URL + 'subjects') and
     # return the 'uuid' for a subject whose 'slug' equals 'histoire-geographie'
     #
     # Returns a tuple: (status, error_message if not status else found_value)
@@ -80,7 +80,7 @@ def get_distant_value(endpoint, get_prop, search_in_prop, search_for, token):
         return (True, found[get_prop])
     except KeyError:
         return (False, f'Object found has no {get_prop}')
-    
+
 
 def make_request(data, token):
     print(f'Request to {BASE_URL}{name}/ with data...')
