@@ -1,4 +1,4 @@
-from backend.settings import AUTH_USER_MODEL
+from backend.settings import AUTH_USER_MODEL, DEBUG
 import uuid
 from django.db.models import *
 from django.core.validators import RegexValidator
@@ -61,13 +61,15 @@ class Report(Model):
       import pypandoc
       is_bug = self.type == 'BUG'
       front_matter = f"""
-| Reported by          | URL        | OS        | Browser        | Device type   |{ " Bug happened at |" if is_bug else ''}
-|----------------------|------------|-----------|----------------|---------------|{ "-----------------|" if is_bug else ''}
-| {self.user.username} | {self.url} | {self.os} | {self.browser} | {self.device} |{ f" {self.happened} |" if is_bug else ''}
+| Reported by          | URL        | OS        | Browser        | Device type   | Bug happened at |
+|----------------------|------------|-----------|----------------|---------------| ----------------|
+| {self.user.username} | {self.url} | {self.os} | {self.browser} | {self.device} | {self.happened} |
+
+
 """
       return {
         'title': self.title or self.content[0:30],
-        'body': front_matter.strip() + '\n\n' + self.content,
+        'body': (front_matter.strip() if is_bug else '') + self.content,
         'assignees': ['ewen-lbh'],
         'labels': [
           'lang:' + self.language,
