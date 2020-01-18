@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.generics import ListAPIView
 from .models import *
-from common.models import Subject, Setting
+from common.models import Subject
 from common.utils import daterange
 from schedule.models import WEEK_DAYS
 from .serializers import *

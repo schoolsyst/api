@@ -7,6 +7,8 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.validators import RegexValidator, MinValueValidator
 from learn.models import zero_to_one_validator
+from datetime import datetime, date
+current_year = datetime.now().year
 
 HEX_COLOR_VALIDATOR = [RegexValidator(r'^#(?:[A-Fa-f0-9]{3}){1,2}$',
                                       "Please use a valid hexadecimal color format, eg. #268CCE, or #FFF")]
@@ -19,15 +21,74 @@ class UsernameValidator(UnicodeUsernameValidator):
 
 # TODO: case-insensitive checks
 
-
+class UserSettings(Model):
+    def __str__(self):
+        return f"{self.user}'s settings"
+    
+    THEMES = [
+        ('LIGHT', 'Clair'),
+        ('DARK', 'Sombre'),
+        ('AUTO', 'Automatique')
+    ]
+    
+    year_start = DateField("Rentrée", blank=True, null=True)
+    trimester_2_start = DateField("Début du second trimestre", blank=True, null=True)
+    trimester_3_start = DateField("Début du troisième trimestre", blank=True, null=True)
+    year_end = DateField("Fin de l'année scolaire", blank=True, null=True)
+    theme = CharField(max_length=50, default='AUTO', choices=THEMES)
+    show_completed_exercises = BooleanField("Afficher les exercices complétés", default=False)
+    grades_unit = FloatField("Unité des notes", validators=[MinValueValidator(1)])
+    grades_default_weight = FloatField("Coefficient par défaut", validators=[MinValueValidator(0)], default=1)
+    @property
+    def offdays(self):
+        return Offday.objects.filter(user__id=self.user.id)
+    #offdays = OneToMany: UserSettings 1..* Offday
+    use_schedule = BooleanField("Utiliser l'emploi du temps", default=True)
+    
+    
+    @property
+    def current_trimester(self):
+        now = datetime.now().date()
+        idx = None
+        
+        if now < self.year_start: idx = None
+        elif now < self.trimester_2_start: idx = 1
+        elif now < self.trimester_3_start: idx = 2
+        elif now < self.year_end: idx = 3
+        else: idx = None
+        
+        return (idx, self.trimester_ranges(idx))
+        
+    def trimester_ranges(self, idx):
+        if not self.has_year_settings: return None
+        return {
+            1: (self.start, self.trimester_2),
+            2: (self.trimester_2, self.trimester_3),
+            3: (self.trimester_3, self.end),
+        }
+    
+    @property
+    def has_year_settings(self):
+        return (
+            self.year_start is not None
+            and self.trimester_2_start is not None
+            and self.trimester_3_start is not None
+            and self.year_end is not None
+        )
+        
+class Offday(Model):
+    user_settings = ForeignKey(UserSettings, CASCADE, related_name='offdays')
+    start = DateField("Début")
+    end = DateField("Fin")
+    
 class User(AbstractUser):
+    WEEK_TYPES = [ (c, c) for c in ['Q1', 'Q2'] ]
+    
     username_validator = UsernameValidator()
     email = EmailField(unique=True)
-
-    ip_address = GenericIPAddressField(verbose_name="IP Address",
-                                       blank=True,
-                                       null=True)
-
+    ip_address = GenericIPAddressField(verbose_name="IP Address", blank=True, null=True)
+    settings = OneToOneField(UserSettings, on_delete=CASCADE, blank=True, null=True)
+    # Computed 
     @property
     def remaining_daily_github_issues(self):
         GITHUB_PUBLISH_LIMIT = 10 if self.is_superuser else 5
@@ -36,9 +97,6 @@ class User(AbstractUser):
         reports = self.reports.filter(published__date=datetime.now().date())
         # Compare the number of reports against the limit
         return GITHUB_PUBLISH_LIMIT - reports.count()
-
-
-
     @property
     def setup_step(self):
         """
@@ -54,101 +112,26 @@ class User(AbstractUser):
             has_events = s.events.all().count() > 0
 
         if not has_subjects: return 'subjects'
-        if self.missing_essential_settings: return 'settings'
-        if self.using_schedule and self.missing_schedule_settings: return 'schedule/settings'
-        if self.using_schedule and not has_events: return 'schedule/events'
-
+        if self.settings is None: return 'schedule/settings'
+        if self.settings.using_schedule and self.missing_schedule_settings: return 'schedule/settings'
+        if self.settings.using_schedule and not has_events: return 'schedule/events'
         return None
-
-
     @property
     def missing_schedule_settings(self):
-        REQUIRED_SCHEDULE_SETTINGS = ['year_start', 'trimester_2_start', 'trimester_3_start', 'year_end']
-        set_schedule_settings = self.settings \
-            .filter(setting__key__in=REQUIRED_SCHEDULE_SETTINGS) \
-            .exclude(value=None) \
-            .values_list('setting__key', flat=True)
-        return [ key for key in REQUIRED_SCHEDULE_SETTINGS if key not in set_schedule_settings ]
+        return (
+            self.settings.has_year_settings is None
+        )
 
-    @property
-    def missing_essential_settings(self):
-        return self.settings.exclude(
-            setting__key__in=self.missing_schedule_settings,
-        ).filter(
-            setting__default=None,
-            setting__optional=False,
-            value=None,
-        ).values_list('setting__key', flat=True)
-
-    @property
-    def using_schedule(self):
-            return self.setting_value('use_schedule') in (True, None)
-
-    def setting_value(self, key):
-        setting = self.settings.filter(setting__key='use_schedule')
-        if len(setting) == 0: return None
-        return setting[0].value
-
-
-class SettingDefinition(Model):
-    TYPES = [
-        ('TEXT',      'Texte'),
-        ('DATETIME',  'Date & heure'),
-        ('DATE',      'Date'),
-        ('DATERANGE', 'Plage de date'),
-        ('TIME',      'Heure'),
-        ('TIMERANGE', 'Plage horaire'),
-        ('SELECT',    'Choix'),
-        ('INTEGER',   'Nombre entier'),
-        ('FLOAT',     'Nombre décimal'),
-        ('BOOLEAN',   'Booléen (oui/non)')
-    ]
-    max_kind_len = max([len(k[0]) for k in TYPES])
-
-    uuid = UUIDField("UUID",
-                     default=uuid.uuid4,
-                     editable=False,
-                     unique=True)
-    # Naming
-    name = CharField(max_length=200)
-    key = CharField(max_length=300, unique=True)
-    category = CharField(max_length=150, blank=True, null=True)
-    description = TextField(blank=True, null=True)
-    # Value definition
-    type = CharField(choices=TYPES,
-                     max_length=max_kind_len,
-                     default=TYPES[0])
-    multiple = BooleanField(default=False)
-    default = TextField(blank=True, null=True)
-    optional = BooleanField(default=True)
-    choices = TextField(blank=True, null=True)  # Comma-separated
-    positive = BooleanField(default=False)
-
-    def __str__(self):
-        return f"[{self.category}] {self.key}"
-
-class Setting(Model):
-    # Relations & IDs
-    setting = ForeignKey(to='common.SettingDefinition', on_delete=CASCADE)
-    user = ForeignKey(to=AUTH_USER_MODEL,
-                      on_delete=CASCADE,
-                      related_name='settings')
-    uuid = UUIDField("UUID",
-                     default=uuid.uuid4,
-                     editable=False,
-                     unique=True)
-
-    value = TextField(blank=True, null=True)
-
-    # Avoid duplicate settings for a user
-    class Meta:
-        unique_together = ('user', 'setting')
-
-    def __str__(self):
-        return f"{self.user.username}'s {self.setting.name}"
-
-
-
+    def save(self, *args, **kwargs):
+        super(User, self).save(*args, **kwargs)
+        if self.settings is None:
+            settings = UserSettings.objects.create(
+                user=self,
+                grades_unit=20
+            )
+            self.settings = settings
+            self.save()
+            print(f"Attached UserSettings #{settings.id} to User #{self.id}")
 
 class Subject(Model):
     # Relations & IDs

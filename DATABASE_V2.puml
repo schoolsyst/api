@@ -13,36 +13,6 @@ package common {
         + String room
     }
 
-    enum valueType {
-        DATE
-        TIME
-        DATETIME
-        TIMERANGE
-        DATERANGE
-        SELECT
-        TEXT
-        INTEGER
-        FLOAT
-        BOOLEAN
-    }
-
-    class SettingDefinition {
-        ..Naming..
-        + String name
-        + String key
-        + String category
-        + String description
-        ..Value definition..
-        + valueType type
-        + Boolean multiple
-        + String default
-        + Boolean optional
-    }
-
-    class Setting {
-        + String value
-    }
-
     class User {
         + String username
         - Password password
@@ -51,8 +21,33 @@ package common {
         + Date joined
         + Date last_login
         + IPAddress ip_address
+        ..Settings..
+        + Date year_start
+        + Offday offdays
+        + Date trimester_2_start
+        + Date trimester_3_start
+        + Date year_end
+        + Theme theme
+        + Boolean show_completed_exercises
+        + Float grades_unit
+        + Float grades_default_weight
+    }
+    
+    enum Theme {
+        DARK
+        LIGHT
+        AUTO
+    }
+    
+    class Offday {
+        + Date start
+        + Date end
     }
 }
+
+Year --> User
+Offday --> User
+
 package Learn {
     enum Filetype {
         MARKDOWN
@@ -193,9 +188,7 @@ package reports {
 }
 
 User --> Subject
-User --> Setting
 User --> Report
-SettingDefinition --> Setting
 
 Subject ..> Note
 Subject ..> Homework

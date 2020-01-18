@@ -9,24 +9,6 @@ from .models import *
 from .serializers import *
 
 
-class SettingsDefinitionsViewSet(ReadOnlyModelViewSet):
-    lookup_field = 'key'
-    queryset = SettingDefinition.objects.all()
-    serializer_class = SettingDefinitionSerializer
-
-
-class SettingsViewSet(ModelViewSet):
-    lookup_field = 'setting__key'
-
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return SettingReadSerializer
-        return SettingSerializer
-
-    def get_queryset(self):
-        return Setting.objects.filter(user__id=self.request.user.id)
-
-
 class SubjectsViewSet(ModelViewSet):
     lookup_field = 'uuid'
     serializer_class = SubjectSerializer
