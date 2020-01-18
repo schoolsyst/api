@@ -12,21 +12,40 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Load dotenv
-load_dotenv(os.path.join(BASE_DIR, '.env'))
+# Dotenv configuration
+
+DOTENV_PATH = os.path.join(BASE_DIR, '.env')
+load_dotenv(DOTENV_PATH)
+
+# Helper for dotenv coercing
+def env(key, coerce=str, allow_none=False):
+    val = os.getenv(key)
+    if val is None and not allow_none:
+        raise ImproperlyConfigured(f"Missing environment variable {key}. Add it to {DOTENV_PATH}")
+    if val is None:
+        return None
+    if coerce == bool:
+        return val.lower() == 'true'
+    else:
+        return coerce(val)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^itu$*du(a44myk15!$pei3l-dkvjqr7r94-69*6njw7#rfuh5'
+# SECURITY WARNING: keep the secrets used in production secret!
+SECRET_KEY = env('SECRET_KEY')
+SENDGRID_API_KEY = env('SENDGRID_API_KEY')
+GITHUB_API_KEY = env('GITHUB_API_KEY')
+GITHUB_API_USERNAME = env('GITHUB_API_USERNAME')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.getenv('DEBUG') == 'True')
+DEBUG = env('DEBUG', bool)
 
 ALLOWED_HOSTS = ['*']
 
