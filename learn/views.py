@@ -111,5 +111,57 @@ class NotesViewSet(ModelViewSet):
             return Response({
                 'content': content
             })
-
+            
+    @action(methods=['get'], detail=True)
+    def thumbnail(self, request, uuid):
+        """ Generate the note's png thumbnail
+        
+        GET /notes/:uuid/thumbnail
+        
+        :type uuid: str
+        :param uuid: The note's UUID
+        """
+        import imgkit
+        # from thumbnails import get_thumbnail
+        from django.core.files.storage import default_storage
+        from django.core.files.base import ContentFile
+        import os
+        from backend.settings import BASE_DIR
+        from uuid import uuid4
+        # Get the note
+        note = Note.objects.get(uuid=uuid)
+        # If the note is not HTML, we can't generate a thumb.
+        if note.format != 'HTML': 
+            return None
+        # Get the css filename
+        css  = default_storage.open('css_resources/pandoc.css').name
+        # Add a transparent background
+        content = '<body class="transparent">' + note.content + '</body>'
+        # Create the output image temp file
+        filename = f'temp-{uuid4()}.png'
+        filepath = os.path.join(BASE_DIR, filename)
+        # Generate the image
+        print(f"Generating {filename}")
+        try:
+            imgkit.from_string(content, filepath, css=css, options={
+                'format': 'png',
+            })
+        except OSError as error:
+            #FIXME: Gives errors because it can't load the fonts...
+            if os.path.isfile(filepath):
+                pass
+            else:
+                raise error
+        print("Generated.")
+        # Get the png file
+        file = default_storage.open(filename, 'rb')
+        # # Thumbnail it
+        # get_thumbnail(filepath, '250x350', crop='bottom', scale_up=True, force=True).save(filepath)
+        # Prepare the response
+        response = HttpResponse(File(file), 'image/png')
+        # Delete the temp file
+        default_storage.delete(filename)
+        # Return the response
+        return response
+        
         

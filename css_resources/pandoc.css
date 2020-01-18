@@ -39,6 +39,9 @@
 body {
   font-family: 'Now', Arial, sans-serif;
 }
+body.transparent {
+  background: transparent;
+}
 
 p {
   margin-bottom: 0.2em;

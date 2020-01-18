@@ -15,7 +15,9 @@ drf-jwt==1.13.2
 drf-rw-serializers==1.0.2
 future==0.18.2
 idna==2.8
+imgkit==1.0.2
 inquirer==2.6.3
+Pillow==7.0.0
 prompt-toolkit==1.0.14
 Pygments==2.4.2
 PyInquirer==1.0.3
@@ -25,12 +27,13 @@ python-dotenv==0.10.3
 python-editor==1.0.4
 python-http-client==3.2.1
 python-slugify==4.0.0
+python-thumbnails==0.5.1
 pytz==2019.3
 readchar==2.0.1
 regex==2019.8.19
-requests==2.22.0
+requests==2.6.0
 sendgrid==6.1.0
-six==1.12.0
+six==1.9.0
 sqlparse==0.3.0
 termcolor==1.1.0
 text-unidecode==1.3
