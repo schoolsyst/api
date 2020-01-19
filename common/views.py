@@ -66,6 +66,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
 from urllib.parse import quote
+from django.core.mail import send_mail
 from datetime import datetime, timedelta
 
 @receiver(reset_password_token_created)
@@ -87,7 +88,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         'current_user': reset_password_token.user,
         'username': reset_password_token.user.username,
         'email': reset_password_token.user.email,
-        'expiry_date_human': expiry_date.strftime('%A %d %B %Y à %H:%S'), #TODO: french locale
+        'expiry_date_human': expiry_date.strftime('%d/%m/%Y à %H:%S'), #TODO: french locale
         'reset_password_url':
             "http://localhost:3000/"
             "reset-password/choose"
@@ -96,11 +97,10 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     }
 
     # render email text
-    email_html_message = render_to_string('user_reset_password.html', context) # TODO: use https://mjml.io
+    email_html_message = render_to_string('user_reset_password.html', context)
     email_plaintext_message = render_to_string('user_reset_password.txt', context)
 
     # send the mail
-    print('Sending mail...')
     send_mail(
         subject="schoolsyst · Demande de réinitialisation de mot de passe",
         message=email_plaintext_message,
