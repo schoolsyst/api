@@ -4,6 +4,11 @@ python:
 
 before_install:
   - sudo apt-get -y install wkhtmltopdf pandoc
+  - mv .env.example .env
+  - echo "SECRET_KEY='$DJANGO_SECRET_KEY'\n" >> .env
+  - echo "GITHUB_API_KEY='$GITHUB_API_KEY'\n" >> .env
+  - echo "GITHUB_API_USERNAME='$GITHUB_API_USERNAME'\n" >> .env
+  - echo "SENDGRID_API_KEY='$SENDGRID_API_KEY'\n" >> .env
 
 script:
   - python3 manage.py test
