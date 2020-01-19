@@ -23,9 +23,11 @@ DOTENV_PATH = os.path.join(BASE_DIR, '.env')
 load_dotenv(DOTENV_PATH)
 
 # Helper for dotenv coercing
-def env(key, coerce=str, allow_none=False):
+def env(key, coerce=str, allow_none=False, fallback=None):
     val = os.getenv(key)
     if val is None and not allow_none:
+        if fallback is not None:
+            return fallback
         raise ImproperlyConfigured(f"Missing environment variable {key}. Add it to {DOTENV_PATH}")
     if val is None:
         return None
@@ -46,6 +48,7 @@ GITHUB_API_USERNAME = env('GITHUB_API_USERNAME')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', bool)
+LOG_REQUESTS = env('LOG_REQUESTS', bool, fallback=True)
 
 ALLOWED_HOSTS = ['*'] #FIXME
 
@@ -79,8 +82,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'common.middlewares.AuthenticationMiddlewareJWT',
-    'request_logging.middleware.LoggingMiddleware'
 ]
+
+if LOG_REQUESTS:
+    MIDDLEWARE.append('request_logging.middleware.LoggingMiddleware')
 
 ROOT_URLCONF = 'backend.urls'
 
