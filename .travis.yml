@@ -1,0 +1,8 @@
+language: python
+python:
+  - '3.7'
+
+script:
+  - python3 manage.py test
+  - python3 manage.py migrate
+  - python3 manage.py runserver
