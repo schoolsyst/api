@@ -69,7 +69,7 @@ class Report(Model):
 """
       return {
         'title': self.title or self.content[0:30],
-        'body': (front_matter.strip() if is_bug else '') + self.content,
+        'body': (front_matter.strip() if is_bug else '') + pypandoc.convert_text(self.content, 'markdown_github', format='html'),
         'assignees': ['ewen-lbh'],
         'labels': [
           'lang:' + self.language,
