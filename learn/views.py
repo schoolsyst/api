@@ -35,7 +35,6 @@ class NotesViewSet(ModelViewSet):
 
     @action(methods=['get', 'post'], detail=True)
     def convert(self, request, uuid_or_in_format, out_format):
-        print(dir(request.data))
         import pypandoc, uuid, os
         from django.core.files.storage import default_storage
         from django.core.files.base import ContentFile
@@ -74,33 +73,31 @@ class NotesViewSet(ModelViewSet):
         pandoc_in = PANDOC_FORMATS.get(in_format, in_format)
         pandoc_out = PANDOC_FORMATS.get(out_format, out_format)
         
+        print(f"Converting w/ pandoc: {pandoc_in} ~> {pandoc_out}")
+        
         if pandoc_out in FILE_ONLY_FORMATS:
             filename = f'temp-{uuid.uuid4()}'
             default_storage.save(filename, ContentFile(
                 f'<head><title>{title}</title></head><body>{content}</body>'
             ))
             converted_filename = filename+'-converted.'+pandoc_out
-            pandoc_args = []
+            pandoc_args = tuple()
             if pandoc_out == 'pdf':
                 css_filepath = default_storage.open('css_resources/pandoc.css').name
-                pypandoc.convert_file(
-                    default_storage.open(filename).name,
-                    format=pandoc_in,
-                    outputfile=converted_filename,
-                    to="html5",
-                    extra_args=(
-                        '--standalone',
-                        '--pdf-engine', 'wkhtmltopdf',
-                        '-c', css_filepath,
-                    )
+                pandoc_out = 'html5'
+                pandoc_args=(
+                    '--standalone',
+                    '--pdf-engine', 'wkhtmltopdf',
+                    '-c', css_filepath,
                 )
-            else:
-                pypandoc.convert_file(
-                    default_storage.open(filename).name,
-                    format=pandoc_in,
-                    to=pandoc_out,
-                    outputfile=converted_filename,
-                )
+            
+            pypandoc.convert_file(
+                default_storage.open(filename).name,
+                format=pandoc_in,
+                to=pandoc_out,
+                outputfile=converted_filename,
+                extra_args=pandoc_args
+            )
             file = default_storage.open(converted_filename, 'rb')
             response = HttpResponse(File(file), MIME_TYPES[out_format])
             default_storage.delete(filename)
