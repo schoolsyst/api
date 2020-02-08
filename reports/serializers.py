@@ -7,7 +7,7 @@ from datetime import datetime
 class ReportSerializer(ModelSerializer):
   class Meta:
     model = Report
-    exclude = ('github_issue', 'published')
+    exclude = ('github_issue', 'published', 'on_github', 'resolved')
 
   def create(self, validated_data):
     validated_data['user'] = self.context['request'].user
@@ -33,4 +33,22 @@ class ReportReadSerializer(ModelSerializer):
 
   class Meta:
     model = Report
-    fields ='__all__'
+    fields = (
+      'type',
+      'language',
+      'github_issue',
+      'added',
+      'happened',
+      'published', 
+      'title', 
+      'content', 
+      'url', 
+      'browser', 
+      'os', 
+      'device', 
+      'screen_size', 
+      'resolved',
+      'user',
+      'uuid',
+      'on_github'
+    )

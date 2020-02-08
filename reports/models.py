@@ -104,4 +104,22 @@ class Report(Model):
 
       return False, None
 
-
+    @property
+    def resolved(self) -> bool:
+      import requests
+      if not self.github_issue or type(self.github_issue) is not int:
+        return None
+        
+      key = getenv('GITHUB_API_KEY')
+      username = getenv('GITHUB_API_USERNAME')
+      if key is None: raise Exception('Please set the environment variable GITHUB_API_KEY')
+      if username is None: raise Exception('Please set the environment variable GITHUB_API_USERNAME')
+      
+      repo = 'schoolsyst/frontend'
+      url = f'https://api.github.com/repos/{repo}/issues/{self.github_issue}'
+      issue = requests.get(url, auth=(username, key)).json()
+      print(issue)
+      is_open = issue['state'] == 'open'
+      
+      return not is_open
+      
