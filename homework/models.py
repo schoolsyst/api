@@ -71,7 +71,7 @@ class Homework(Model):
     progress = FloatField(validators=zero_to_one_validator, default=0)
     # Dates
     due = DateTimeField(blank=True, null=True)
-    added = DateTimeField(blank=True, null=True)
+    added = DateTimeField(blank=True, null=True, auto_now=True)
     completed = DateTimeField(blank=True, null=True)
     # Fields containing user-controllable raw HTML (to be cleaned)
     details = TextField(blank=True, null=True)
