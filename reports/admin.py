@@ -8,6 +8,7 @@ from common.utils import auto_list_display
 @register(Report)
 class ReportAdmin(ModelAdmin):
   list_display = ('uuid', 'type', 'user', 'title', 'github_issue_link')
+  list_sort = ('github_issue_link', 'user', 'type')
 
   def github_issue_link(self, obj):
     if not obj.github_issue: return None
