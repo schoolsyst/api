@@ -82,7 +82,7 @@ class NotesViewSet(ModelViewSet):
             title = request.data['title']
         else:
             from learn.models import Note
-            note = Note.objects.get(uuid=uuid_or_in_format)
+            note = Note.objects.get(uuid=uuid_or_in_format, user__id=request.user.id)
             in_format = note.format.lower()
             content = note.content
             title = note.name
