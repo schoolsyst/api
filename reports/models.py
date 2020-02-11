@@ -117,9 +117,11 @@ class Report(Model):
       
       repo = 'schoolsyst/frontend'
       url = f'https://api.github.com/repos/{repo}/issues/{self.github_issue}'
-      issue = requests.get(url, auth=(username, key)).json()
-      print(issue)
-      is_open = issue['state'] == 'open'
+      try:
+        issue = requests.get(url, auth=(username, key)).json()
+        is_open = issue['state'] == 'open'
+      except Exception:
+        return None
       
       return not is_open
       
