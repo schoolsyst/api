@@ -1,3 +1,4 @@
+asgiref==3.2.3
 bleach==3.1.0
 blessings==1.7
 certifi==2019.11.28
@@ -16,11 +17,13 @@ drf-rw-serializers==1.0.2
 future==0.18.2
 idna==2.8
 inquirer==2.6.3
+pkg-resources==0.0.0
 prompt-toolkit==1.0.14
 Pygments==2.4.2
 PyInquirer==1.0.3
 PyJWT==1.7.1
 pypandoc==1.4
+python-dateutil==2.8.1
 python-dotenv==0.10.3
 python-editor==1.0.4
 python-http-client==3.2.1
