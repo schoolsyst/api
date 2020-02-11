@@ -31,7 +31,24 @@ class NotesViewSet(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Note.objects.filter(subject__user__id=user.id)
+        queryset = Note.objects.filter(subject__user__id=user.id)
+
+        params = self.request.query_params
+        search_q = params.get('search', None)
+        filter_subjects = params.get('subjects', None)
+        sort_q = params.get('order', None)
+
+        if search_q:
+            queryset = queryset.filter(content__contains=search_q)
+
+        if filter_subjects:
+            subject_uuids = [ uuid.strip() for uuid in filter_subjects.split(',') ]
+            queryset = queryset.filter(subject__uuid__in=subject_uuids)
+            
+        if sort_q:
+            queryset = queryset.order_by(sort_q) # Yes, this *is* SQL-injections-safe. Thanks Django!
+
+        return queryset
 
     @action(methods=['get', 'post'], detail=True)
     def convert(self, request, uuid_or_in_format, out_format):
