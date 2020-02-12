@@ -9,13 +9,13 @@ def auto_list_display(Model, add=None, exclude=None):
         and field.name not in exclude] + add            # Add additional fields, remove excluded fields
 
 
-# @ https://www.w3resource.com/python-exercises/date-time-exercise/python-date-time-exercise-50.php
-def daterange(date1, date2):
-    """ Returns a range of datetime objects between date1 & date2
+def daterange(start, end):
+    """ Returns a range of datetime objects between start and end
     """
+    #TODO: configurable precision (years, months, weeks, days, hours, minutes, secs.)
     from datetime import timedelta
-    for n in range(int((date2 - date1).days) + 1):
-        yield date1 + timedelta(n)
+    for n in range(int((end - start).days) + 1):
+        yield start + timedelta(n)
 
 def hyperlinked_field_method(prop, prop2='uuid', name=None):
     if name is None: name = prop+'s'
