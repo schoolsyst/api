@@ -52,6 +52,13 @@ class NotesViewSet(ModelViewSet):
 
     @action(methods=['get', 'post'], detail=True)
     def convert(self, request, uuid_or_in_format, out_format):
+        """TODO: tests: check...
+        * no temp files are left dangling
+        * output is generated
+        * response type is set accordingly
+        * the appropriate note is outputed
+        * access to other people's notes is forbidden (404, cuz else we know the UUID exists.)
+        """
         import pypandoc, uuid, os
         from django.core.files.storage import default_storage
         from django.core.files.base import ContentFile
