@@ -1,7 +1,10 @@
 from rest_framework.serializers import *
+from rest_framework import serializers
 from common.models import Subject
 from common.serializers import *
 from .models import *
+import schedule.models
+
 
 
 class EventSerializer(ModelSerializer):
@@ -46,3 +49,15 @@ class MutationReadSerializer(ModelSerializer):
     class Meta:
         model = Mutation
         fields = '__all__'
+
+class CourseReadSerializer(Serializer):
+    subject = SubjectSerializer()
+    uuid = serializers.UUIDField()
+    room = serializers.CharField(max_length=300)
+    week_type = serializers.ChoiceField(choices=schedule.models.WEEK_TYPES)
+    day = serializers.ChoiceField(choices=schedule.models.WEEK_DAYS)
+    mutation = MutationReadSerializer()
+
+    # This is the difference w/ Event:
+    start = serializers.DateTimeField()
+    end = serializers.DateTimeField()
