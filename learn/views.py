@@ -82,8 +82,9 @@ class NotesViewSet(ModelViewSet):
             title = request.data['title']
         else:
             from learn.models import Note
-            note = Note.objects.get(uuid=uuid_or_in_format, user__id=request.user.id)
-            in_format = note.format.lower()
+            note = Note.objects.get(uuid=uuid_or_in_format, subject__user__id=request.user.id)
+            #FIXME: ugly code. explanation: somehow, note.format contains a (actual, verbose) tuple, but as a _string_ repr.
+            in_format = note.format.replace('(','').split(' ')[0].replace(',','').replace("'",'').lower()
             content = note.content
             title = note.name
         
