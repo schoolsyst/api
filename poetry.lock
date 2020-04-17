@@ -59,7 +59,7 @@ description = "A high-level Python Web framework that encourages rapid developme
 name = "django"
 optional = false
 python-versions = ">=3.5"
-version = "2.2.8"
+version = "2.2.10"
 
 [package.dependencies]
 pytz = "*"
@@ -448,7 +448,7 @@ version = "0.34.2"
 test = ["pytest (>=3.0.0)", "pytest-cov"]
 
 [metadata]
-content-hash = "0bfe73cba9d498effd12d4a6d901726da63947bac1add7deb84239cbf7c836ad"
+content-hash = "b14af86232af7af88f6bba17d3fdeb6e17ba7539b53c72db5a3b8fbd1a2779f6"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -478,8 +478,8 @@ dict-deep = [
     {file = "dict_deep-2.0.2-py3-none-any.whl", hash = "sha256:b30fef55add77505b14abd9f9a0bfa1995b385abcde4902ea48ee68aea2c35d6"},
 ]
 django = [
-    {file = "Django-2.2.8-py3-none-any.whl", hash = "sha256:fa98ec9cc9bf5d72a08ebf3654a9452e761fbb8566e3f80de199cbc15477e891"},
-    {file = "Django-2.2.8.tar.gz", hash = "sha256:a4ad4f6f9c6a4b7af7e2deec8d0cbff28501852e5010d6c2dc695d3d1fae7ca0"},
+    {file = "Django-2.2.10-py3-none-any.whl", hash = "sha256:9a4635813e2d498a3c01b10c701fe4a515d76dd290aaa792ccb65ca4ccb6b038"},
+    {file = "Django-2.2.10.tar.gz", hash = "sha256:1226168be1b1c7efd0e66ee79b0e0b58b2caa7ed87717909cd8a57bb13a7079a"},
 ]
 django-cors-headers = [
     {file = "django-cors-headers-3.0.2.tar.gz", hash = "sha256:ebf3e2cf25aa6993b959a8e6a87828ebb3c8fe5bc3ec4a2d6e65f3b8d9b4212c"},
