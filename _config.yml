@@ -7,4 +7,4 @@ include:
   - README.md
   - docs/index.md
 
-theme: jekyll-theme-hacker
+theme: jekyll-theme-minimal
