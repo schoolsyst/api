@@ -6,3 +6,5 @@ relative_links:
 include:
   - README.md
   - docs/index.md
+
+theme: jekyll-theme-hacker
