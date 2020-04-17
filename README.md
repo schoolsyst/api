@@ -42,6 +42,10 @@ python3 manage.py migrate
 python3 manage.py runserver 9999
 ```
 
+## API Documentation
+
+What the API describes is what I aim to release as `v1.0.0`. A lot of things differ from the API's current state. Still, you can read it right now [here](docs/index.md)
+
 ## Commit types distribution
 
 ![](./commit-types-distribution.png)
