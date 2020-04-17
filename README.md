@@ -1,4 +1,4 @@
-<h1 align="center"> <img width="80%" src="https://www.schoolsyst.com/assets/logotype-horizontal.png"><br>Backend API  <img alt="Build status" src="https://img.shields.io/travis/com/schoolsyst/backend?label=stable%20build&style=flat-square"> </h1> </center>
+<h1 align="center"> <img width="80%" src="https://www.schoolsyst.com/assets/logotype-black.svg"><br>Backend API  <img alt="Build status" src="https://img.shields.io/travis/com/schoolsyst/backend?label=stable%20build&style=flat-square"> </h1> </center>
 
 ## What is schoolsyst?
 
