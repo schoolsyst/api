@@ -11,34 +11,33 @@ For now, this API is closed and can only be used from `*.schoolsyst.com` domains
 
 1. Clone the repository
 
-```bash
+```sh-session
 git clone http://git.schoolsyst.com/backend
 ```
 
-2. Create a virtual environment & activate it
+2. Install the dependencies
 
-```bash
-python3 -m venv ./env
-source env/bin/activate # On linux (bash)
-. env/bin/activate.fish # On linux (fish)
-.\env\Scripts\activate.bat # On windows
+```sh-session
+poetry install
 ```
 
-3. Install the dependencies
+3. Activate the virtual environment
 
-```bash
-pip install -r requirements.txt
+Alternatively, you can prefix commands with `poetry run` (see `poetry help run`)
+
+```sh-session
+poetry shell
 ```
 
 4. Run the migrations
 
-```bash
+```sh-session
 python3 manage.py migrate
 ```
 
 5. Serve the server on port 9999
 
-```bash
+```sh-session
 python3 manage.py runserver 9999
 ```
 
