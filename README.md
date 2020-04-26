@@ -12,13 +12,30 @@ For now, this API is closed and can only be used from `*.schoolsyst.com` domains
 1. Clone the repository
 
 ```sh-session
-git clone http://git.schoolsyst.com/backend
+$ git clone https://github.com/schoolsyst/backend/
+Cloning into 'backend'...
+remote: Enumerating objects: 29, done.
+remote: Counting objects: 100% (29/29), done.
+remote: Compressing objects: 100% (24/24), done.
+remote: Total 1237 (delta 14), reused 8 (delta 4), pack-reused 1208
+Receiving objects: 100% (1237/1237), 1.12 MiB | 1.08 MiB/s, done.
+Resolving deltas: 100% (878/878), done.
+$ cd backend
 ```
 
 2. Install the dependencies
 
 ```sh-session
-poetry install
+$ poetry install
+The currently activated Python version 3.6.9 is not supported by the project (^3.7).
+Trying to find and use a compatible version. 
+Using python3.7 (3.7.7)
+Creating virtualenv schoolsyst-api-sixfdjYz-py3.7 in /home/ewen/.cache/pypoetry/virtualenvs
+Installing dependencies from lock file
+
+
+Package operations: 43 installs, 0 updates, 0 removals
+...
 ```
 
 3. Activate the virtual environment
@@ -26,19 +43,43 @@ poetry install
 Alternatively, you can prefix commands with `poetry run` (see `poetry help run`)
 
 ```sh-session
-poetry shell
+$ poetry shell
+The currently activated Python version 3.6.9 is not supported by the project (^3.7).
+Trying to find and use a compatible version. 
+Using python3.7 (3.7.7)
+Spawning shell within /home/ewen/.cache/pypoetry/virtualenvs/backend-1LkjBKQ6-py3.7
+```
+
+4. Add required sensitive variables in `.env`
+
+```sh-session
+$ cp .env.example .env
+$ nano .env  # Use any text editor to fill in the variables
 ```
 
 4. Run the migrations
 
 ```sh-session
-python3 manage.py migrate
+$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, common, contenttypes, django_rest_passwordreset, homework, learn, reports, schedule, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+...
 ```
 
 5. Serve the server on port 9999
 
 ```sh-session
-python3 manage.py runserver 9999
+$ python manage.py runserver 9999
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+April 26, 2020 - 10:54:42
+Django version 2.2.8, using settings 'backend.settings'
+Starting development server at http://127.0.0.1:9999/
+Quit the server with CONTROL-C.
 ```
 
 ## API Documentation
@@ -46,6 +87,8 @@ python3 manage.py runserver 9999
 What the API describes is what I aim to release as `v1.0.0`. A lot of things differ from the API's current state. Still, you can read it right now [here](docs/index.md)
 
 ## Commit types distribution
+
+(really out of date)
 
 ![](./commit-types-distribution.png)
 
