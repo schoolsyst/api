@@ -1,10 +1,11 @@
-FROM python:3.6
+FROM python:3.7
 WORKDIR /api
 
 RUN apt update \
     && apt install -y pandoc git curl tree \
     && git clone https://github.com/schoolsyst/api . \
     && pip install poetry==1.0.5 \
+    && poetry config virtualenvs.create false \
     && poetry install
 
 
