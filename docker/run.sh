@@ -1,1 +1,1 @@
-poetry run python manage.py runserver 9999
+python manage.py runserver 9999 
