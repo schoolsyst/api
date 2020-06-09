@@ -137,18 +137,18 @@ category = "main"
 description = "JSON Web Token based authentication for Django REST framework"
 name = "drf-jwt"
 optional = false
-python-versions = ">= 2.7, != 3.0.*, != 3.1.*, != 3.2.*"
-version = "1.13.2"
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
+version = "1.15.1"
 
 [package.dependencies]
 Django = ">=1.11"
 PyJWT = ">=1.5.2,<2.0.0"
-djangorestframework = ">=3.7,<3.10"
+djangorestframework = ">=3.7"
 
 [package.extras]
 dev = ["tox"]
 docs = ["mkdocs (0.13.2)"]
-lint = ["isort", "yapf", "pylint", "pylint-django (0.11.1)"]
+lint = ["isort", "black", "flake8"]
 test = ["mock", "pytest (>=3.0)", "pytest-cov", "pytest-django", "pytest-runner", "cryptography (2.0.3)"]
 
 [[package]]
@@ -448,7 +448,7 @@ version = "0.34.2"
 test = ["pytest (>=3.0.0)", "pytest-cov"]
 
 [metadata]
-content-hash = "0e9af106b56223b2064649de9178c448e85074a4960d67911b1a2a7953344f78"
+content-hash = "e7d434bf301eb57fae233c7f69f05c8287743f39cbe9d41c51d76a720f9017c3"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -505,8 +505,8 @@ djangorestframework = [
     {file = "djangorestframework-3.9.4.tar.gz", hash = "sha256:c12869cfd83c33d579b17b3cb28a2ae7322a53c3ce85580c2a2ebe4e3f56c4fb"},
 ]
 drf-jwt = [
-    {file = "drf-jwt-1.13.2.tar.gz", hash = "sha256:aab523761a5ef30358ecdda4167c5b2b89a02441d5aa0b429fb18616ea7d918e"},
-    {file = "drf_jwt-1.13.2-py2.py3-none-any.whl", hash = "sha256:b5dba174216c58773ef5919046724c96e4cd038bc10c1db5e51cb9ace319f757"},
+    {file = "drf-jwt-1.15.1.tar.gz", hash = "sha256:2efffe9e22340eea168a1b78a7a4b43af913c748b4cf047a95607068592cfcf8"},
+    {file = "drf_jwt-1.15.1-py2.py3-none-any.whl", hash = "sha256:761b0bafd68ae1932f94f0ebddded917fbf103932a86deb755fbf12e223f9b0a"},
 ]
 drf-rw-serializers = [
     {file = "drf-rw-serializers-1.0.2.tar.gz", hash = "sha256:30d7209f8f259adf5e12973731ea7e3dc7f331c9664674184a28f27b4c254fc9"},
